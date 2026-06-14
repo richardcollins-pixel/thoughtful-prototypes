@@ -3,981 +3,134 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Thoughtful — Onboarding</title>
+  <title>Thoughtful</title>
   <style>
+    /* Shell-only styles — just enough to show the loading screen before config arrives */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    /* Prevent iOS from bouncing/scrolling the page — critical for keyboard behaviour */
-    html {
-      height: 100%;
-      overflow: hidden;
-    }
-
-    body {
-      background: #0a0a0c;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      height: 100%;
-      overflow: hidden;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── Phone shell ── */
-    #phone-wrapper {
-      width: 430px;
-      height: 956px;
-      transform-origin: center center;
-    }
-
-    .phone {
-      width: 430px;
-      height: 956px;
-      background: #000;
-      border-radius: 52px;
-      overflow: hidden;
-      position: relative;
-      box-shadow:
-        0 0 0 1px rgba(255,255,255,0.08),
-        0 0 0 10px rgba(255,255,255,0.02),
-        0 50px 120px rgba(0,0,0,0.9);
-    }
-
-    /* ══════════════════════════════════════
-       MOBILE — full screen, keyboard-aware
-    ══════════════════════════════════════ */
+    html, body { height: 100%; overflow: hidden; background: #000; position: fixed; width: 100%; font-family: -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { display: flex; align-items: center; justify-content: center; }
+    #phone-wrapper { width: 430px; height: 956px; transform-origin: center; }
+    .phone { width: 430px; height: 956px; background: #000; border-radius: 52px; overflow: hidden; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 50px 120px rgba(0,0,0,0.9); }
+    #app { position: absolute; inset: 0; }
+    #loading { position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transition: opacity 0.4s; }
+    #loading.out { opacity: 0; pointer-events: none; }
+    .loading-blob { width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle at 38% 30%, #ff9060 0%, #ff5580 40%, #c050c8 72%, #8038b8 100%); animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.08)} }
+    .loading-text { color: rgba(255,255,255,0.4); font-size: 14px; }
     @media (max-width: 500px) {
-
-      /* Seamless black — no body/container seam */
-      html, body {
-        background: #000;
-        position: fixed; /* KEY: prevents iOS auto-scroll when keyboard opens */
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        align-items: flex-start;
-        margin: 0;
-        padding: 0;
-      }
-
-      /* Phone = full viewport, locked */
-      #phone-wrapper {
-        width: 100vw !important;
-        height: 100vh !important;
-        transform: none !important;
-        margin: 0 !important;
-      }
-      .phone {
-        width: 100vw !important;
-        height: 100vh !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-        background: #000 !important;
-      }
-
-      /* Intro: push content below status bar */
-      #intro-screen {
-        padding-top: env(safe-area-inset-top, 44px);
-      }
-      /* Chat: padding handled below by the fixed nav override */
-
-      /* Intro: blob smaller so it fits even with keyboard open */
-      .blob-hero { width: 160px; height: 160px; }
-      /* intro-body already has padding-top from safe-area on #intro-screen */
-      .intro-body { gap: 20px; padding-bottom: 90px; justify-content: center; }
-
-      /* Name bar: fixed to bottom, JS lifts it above keyboard */
-      .name-bar {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        padding: 10px 16px env(safe-area-inset-bottom, 16px);
-        background: #000;
-        z-index: 100;
-      }
-
-      /* Chat nav: fixed to viewport top — survives keyboard opening */
-      .nav-bar {
-        position: fixed;
-        top: env(safe-area-inset-top, 0px);
-        left: 0;
-        right: 0;
-        background: #131316;
-        z-index: 50;
-        height: 52px;
-      }
-
-      /* Chat screen safe area + nav height offset so content doesn't go under it */
-      #chat-screen {
-        padding-top: calc(env(safe-area-inset-top, 0px) + 52px);
-      }
-
-      /* Chat input bar: fixed to bottom, JS lifts above keyboard */
-      .input-bar {
-        position: fixed !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        padding-bottom: env(safe-area-inset-bottom, 16px) !important;
-        background: #131316 !important;
-        z-index: 100;
-      }
-
-      /* Chat scroll: enough bottom padding for chips + fixed input bar */
-      .chat-scroll { padding-bottom: 160px; }
-
-      /* Chips section: sits above the fixed input bar */
-      .chips-section { margin-bottom: 70px; }
-
-      /* Next button section: above fixed input bar */
-      .next-section { margin-bottom: 70px; }
-
-      /* Prevent iOS zoom: all inputs must be >= 16px */
-      #name-input  { font-size: 16px !important; }
-      .chat-input  { font-size: 16px !important; }
-
-      /* Go button: needs explicit background on mobile */
-      #go-btn { background: #fff; color: #000; }
-    }
-
-    /* ═══════════════════════════════════════
-       INTRO SCREEN
-    ═══════════════════════════════════════ */
-    #intro-screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      background: #000;
-      transition: opacity 0.35s ease, transform 0.35s ease;
-    }
-
-    #intro-screen.out {
-      opacity: 0;
-      transform: translateY(-24px);
-      pointer-events: none;
-    }
-
-    /* Blob */
-    .blob-hero {
-      width: 260px;
-      height: 260px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 38% 30%,
-        #ff9060 0%,
-        #ff5580 40%,
-        #c050c8 72%,
-        #8038b8 100%
-      );
-      flex-shrink: 0;
-      animation: blobPulse 3.5s ease-in-out infinite;
-    }
-
-    @keyframes blobPulse {
-      0%, 100% { transform: scale(1);    filter: brightness(1); }
-      50%       { transform: scale(1.04); filter: brightness(1.06); }
-    }
-
-    /* Body — centers blob + text */
-    .intro-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 36px;
-      padding: 0 32px;
-    }
-
-    .intro-text {
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .intro-title {
-      font-size: 44px;
-      font-weight: 400;
-      color: #fff;
-      letter-spacing: -0.5px;
-      line-height: 1.1;
-    }
-
-    .intro-subtitle {
-      font-size: 17px;
-      color: rgba(255,255,255,0.45);
-      font-weight: 400;
-      letter-spacing: -0.1px;
-    }
-
-    /* Name input bar */
-    .name-bar {
-      padding: 16px 24px 48px;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-      flex-shrink: 0;
-    }
-
-    #name-input {
-      flex: 1;
-      background: rgba(255,255,255,0.11);
-      border: none;
-      border-radius: 100px;
-      padding: 14px 20px;
-      font-size: 17px;
-      font-family: inherit;
-      color: #fff;
-      outline: none;
-      caret-color: #fff;
-    }
-
-    #name-input::placeholder {
-      color: rgba(255,255,255,0.3);
-    }
-
-    #go-btn {
-      background: #fff;
-      color: #000;
-      border: none;
-      border-radius: 100px;
-      padding: 14px 24px;
-      font-size: 17px;
-      font-weight: 600;
-      font-family: inherit;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: opacity 0.15s, transform 0.15s;
-    }
-
-    #go-btn:disabled {
-      opacity: 0.35;
-      cursor: default;
-    }
-
-    #go-btn:not(:disabled):active {
-      transform: scale(0.95);
-    }
-
-    /* ═══════════════════════════════════════
-       CHAT SCREEN
-    ═══════════════════════════════════════ */
-    #chat-screen {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      background: #131316;
-      opacity: 0;
-      /* No transform — transform creates a containing block that breaks
-         position:fixed children (nav bar, input bar) on iOS */
-      pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-
-    #chat-screen.in {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    /* Nav bar */
-    .nav-bar {
-      height: 52px;
-      padding: 0 22px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-    }
-
-    .back-btn {
-      width: 34px;
-      height: 34px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-    }
-
-    .progress-track { display: flex; gap: 5px; }
-
-    .progress-pill {
-      height: 4px;
-      width: 30px;
-      border-radius: 2px;
-      background: rgba(255,255,255,0.1);
-      transition: background 0.3s;
-    }
-    .progress-pill.active {
-      background: #5eead4;
-      box-shadow: 0 0 8px rgba(94,234,212,0.5);
-    }
-
-    .skip-btn {
-      font-size: 13px;
-      font-weight: 500;
-      color: rgba(255,255,255,0.35);
-      cursor: pointer;
-    }
-
-    /* Chat scroll */
-    .chat-scroll {
-      flex: 1;
-      overflow-y: auto;
-      overflow-x: hidden;
-      padding: 12px 20px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      scroll-behavior: smooth;
-    }
-    .chat-scroll::-webkit-scrollbar { display: none; }
-
-    /* T row */
-    .t-row {
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-    }
-
-    /* T avatar — small version for chat */
-    .t-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: radial-gradient(circle at 38% 30%, #ff9060, #ff5580, #c050c8);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: #fff;
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-    .t-avatar img {
-      width: 100%; height: 100%; object-fit: cover; display: none;
-    }
-    .t-avatar-text { line-height: 1; }
-
-    /* Bubbles */
-    .t-bubble {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 18px 18px 18px 4px;
-      padding: 13px 15px;
-      max-width: 275px;
-    }
-    .t-bubble .msg {
-      font-size: 15px;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.9);
-      font-weight: 450;
-    }
-    .t-bubble .sub {
-      font-size: 12px;
-      color: rgba(255,255,255,0.35);
-      margin-top: 5px;
-    }
-
-    .user-row { display: flex; justify-content: flex-end; }
-    .user-bubble {
-      background: #5eead4;
-      color: #052b24;
-      border-radius: 18px 18px 4px 18px;
-      padding: 12px 15px;
-      max-width: 275px;
-      font-size: 15px;
-      line-height: 1.5;
-      font-weight: 500;
-    }
-
-    /* Typing dots */
-    .typing-row { display: flex; align-items: flex-end; gap: 8px; }
-    .typing-dots {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.07);
-      border-radius: 18px 18px 18px 4px;
-      padding: 14px 16px;
-    }
-    .dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.35);
-      animation: dotBounce 1.3s infinite ease-in-out;
-    }
-    .dot:nth-child(2) { animation-delay: 0.18s; }
-    .dot:nth-child(3) { animation-delay: 0.36s; }
-    @keyframes dotBounce {
-      0%, 60%, 100% { transform: translateY(0);    opacity: 0.35; }
-      30%            { transform: translateY(-5px); opacity: 1; }
-    }
-
-    /* Chips */
-    .chips-section {
-      padding: 4px 20px 10px;
-      flex-shrink: 0;
-      transition: max-height 0.35s ease, opacity 0.3s ease, padding 0.35s ease;
-      max-height: 200px;
-      overflow: hidden;
-    }
-    .chips-section.collapsed {
-      max-height: 0; opacity: 0;
-      padding-top: 0; padding-bottom: 0;
-      pointer-events: none;
-    }
-    .chips-grid { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip {
-      padding: 10px 16px;
-      border-radius: 100px;
-      border: 1.5px solid rgba(255,255,255,0.13);
-      background: rgba(255,255,255,0.04);
-      color: rgba(255,255,255,0.65);
-      font-size: 14px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    .chip:active { transform: scale(0.95); }
-    .chip.selected {
-      border-color: #5eead4;
-      background: rgba(94,234,212,0.1);
-      color: #5eead4;
-    }
-
-    /* Next button */
-    .next-section {
-      padding: 0 20px;
-      display: flex;
-      justify-content: flex-end;
-      flex-shrink: 0;
-      overflow: hidden;
-      max-height: 0;
-      opacity: 0;
-      transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
-    }
-    .next-section.visible {
-      max-height: 56px; opacity: 1; padding-bottom: 10px;
-    }
-    .next-btn {
-      padding: 12px 26px;
-      border-radius: 100px;
-      background: #5eead4;
-      border: none;
-      color: #052b24;
-      font-size: 15px;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: inherit;
-      box-shadow: 0 4px 20px rgba(94,234,212,0.25);
-      animation: nextAppear 0.4s cubic-bezier(0.34,1.56,0.64,1) forwards;
-    }
-    .next-btn:active { transform: scale(0.96); }
-    @keyframes nextAppear {
-      from { transform: scale(0.8); opacity: 0; }
-      to   { transform: scale(1);   opacity: 1; }
-    }
-
-    /* Chat input bar */
-    .input-bar {
-      padding: 10px 16px 28px;
-      border-top: 1px solid rgba(255,255,255,0.05);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      background: #131316;
-      flex-shrink: 0;
-    }
-    .input-wrap {
-      flex: 1;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 22px;
-      display: flex;
-      align-items: center;
-      padding: 0 14px;
-      transition: border-color 0.2s;
-    }
-    .input-wrap:focus-within { border-color: rgba(94,234,212,0.3); }
-    .chat-input {
-      flex: 1;
-      background: transparent;
-      border: none;
-      outline: none;
-      font-size: 15px;
-      color: rgba(255,255,255,0.9);
-      padding: 11px 0;
-      caret-color: #5eead4;
-      font-family: inherit;
-    }
-    .chat-input::placeholder { color: rgba(255,255,255,0.25); }
-
-    .send-btn {
-      width: 38px; height: 38px;
-      border-radius: 50%;
-      background: rgba(94,234,212,0.1);
-      border: 1.5px solid rgba(94,234,212,0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-      transition: all 0.2s ease;
-    }
-    .send-btn.ready { background: #5eead4; border-color: #5eead4; }
-    .send-btn:active { transform: scale(0.92); }
-    .send-btn svg { width: 15px; height: 15px; }
-    .send-btn:not(.ready) svg { opacity: 0.3; }
-    .send-btn.ready svg path { stroke: #052b24; }
-
-    /* Timing debug */
-    .timing {
-      font-size: 10px;
-      color: rgba(255,255,255,0.2);
-      margin-top: 4px;
-      padding-left: 4px;
-      letter-spacing: 0.3px;
-    }
-
-    /* Animations */
-    .fade-up {
-      animation: fadeUp 0.28s ease forwards;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(6px); }
-      to   { opacity: 1; transform: translateY(0); }
+      #phone-wrapper { width: 100vw !important; height: 100vh !important; transform: none !important; margin: 0 !important; }
+      .phone { width: 100vw !important; height: 100vh !important; border-radius: 0 !important; box-shadow: none !important; }
     }
   </style>
 </head>
-
 <body>
   <div id="phone-wrapper">
     <div class="phone">
-
-      <!-- ═══ INTRO SCREEN ═══ -->
-      <div id="intro-screen">
-
-        <div class="intro-body">
-          <div class="blob-hero"></div>
-          <div class="intro-text">
-            <div class="intro-title">Hi, I'm T.</div>
-            <div class="intro-subtitle">What should I call you?</div>
-          </div>
+      <div id="app">
+        <div id="loading">
+          <div class="loading-blob"></div>
+          <p class="loading-text" id="loading-text">Getting things ready…</p>
         </div>
-
-        <div class="name-bar">
-          <input id="name-input" type="text" placeholder="Name"
-            autocomplete="off" autocorrect="on" autofocus>
-          <button id="go-btn" disabled>Go</button>
-        </div>
-
       </div>
-
-      <!-- ═══ CHAT SCREEN ═══ -->
-      <div id="chat-screen">
-
-        <div class="nav-bar">
-          <div class="back-btn">
-            <svg width="9" height="15" viewBox="0 0 9 15" fill="none">
-              <path d="M8 1L1.5 7.5L8 14" stroke="rgba(255,255,255,0.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-          <div class="progress-track">
-            <div class="progress-pill active"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-            <div class="progress-pill"></div>
-          </div>
-          <div class="skip-btn">Skip</div>
-        </div>
-
-        <div class="chat-scroll" id="chat-scroll"></div>
-
-        <div class="chips-section collapsed" id="chips-section">
-          <div class="chips-grid" id="chips-grid"></div>
-        </div>
-
-        <div class="next-section" id="next-section">
-          <button class="next-btn" id="next-btn">Continue →</button>
-        </div>
-
-        <div class="input-bar">
-          <div class="input-wrap">
-            <input class="chat-input" id="chat-input" type="text"
-              placeholder="Or tell me in your own words…"
-              autocomplete="off" autocorrect="on">
-          </div>
-          <div class="send-btn" id="send-btn">
-            <svg viewBox="0 0 15 15" fill="none">
-              <path d="M1.5 7.5H13.5M8.5 2.5L13.5 7.5L8.5 12.5"
-                stroke="rgba(255,255,255,0.9)" stroke-width="1.8"
-                stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </div>
-        </div>
-
-      </div><!-- #chat-screen -->
-
-    </div><!-- .phone -->
-  </div><!-- #phone-wrapper -->
+    </div>
+  </div>
 
   <script>
-    // ─────────────────────────────────────────────
-    // CONFIG
-    // ─────────────────────────────────────────────
-    const CHAT_ENDPOINT     = 'https://eo788adwbaal2cv.m.pipedream.net';
-    const FETCH_CONFIG_URL  = 'https://eopom7sc0bfe0rw.m.pipedream.net';
-    const T_AVATAR_URL      = ''; // GIF URL — leave empty for gradient circle
+    // ── The only hardcoded value: where to fetch config from ──
+    const FETCH_CONFIG_URL = 'https://eopom7sc0bfe0rw.m.pipedream.net';
 
-    // Template T responds with after name — no LLM call.
-    const NAME_RESPONSE = `Good to meet you, {{name}}. What brings you here today?`;
-
-    // ─────────────────────────────────────────────
-    // STATE
-    // ─────────────────────────────────────────────
-    const state = {
-      name:          '',
-      selectedChips: [],
-      submitted:     false,
-      config:        null, // full config from fetch-config: { tokens, avatar, steps }
-    };
-
-    // ─────────────────────────────────────────────
-    // PRELOAD CONFIG — fires immediately on page load.
-    // Fetches everything from Confluence via fetch-config.
-    // Stored as a promise so later steps can await it.
-    // ─────────────────────────────────────────────
-    const configReady = (async function preloadConfig() {
-      try {
-        const res  = await fetch(FETCH_CONFIG_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
-        const data = await res.json();
-        state.config = data;
-        console.log('Config cached — steps:', Object.keys(data.steps || {}), '| tokens:', Object.keys(data.tokens || {}).length);
-      } catch (err) {
-        console.warn('Config preload failed — using fallbacks:', err);
-      }
-    })();
-
-    // ─────────────────────────────────────────────
-    // RESPONSIVE SCALING
-    // ─────────────────────────────────────────────
+    // ── Scale phone container on desktop ──
     function scalePhone() {
-      const scale = Math.min(window.innerWidth / 430, window.innerHeight / 956, 1);
-      const el    = document.getElementById('phone-wrapper');
-      el.style.transform = `scale(${scale})`;
-      const mw = (430 * scale - 430) / 2;
-      const mh = (956 * scale - 956) / 2;
-      el.style.margin = `${mh}px ${mw}px`;
+      const s = Math.min(window.innerWidth/430, window.innerHeight/956, 1);
+      const w = document.getElementById('phone-wrapper');
+      w.style.transform = `scale(${s})`;
+      w.style.margin = `${(956*s-956)/2}px ${(430*s-430)/2}px`;
     }
     scalePhone();
     window.addEventListener('resize', scalePhone);
 
-    // ─────────────────────────────────────────────
-    // KEYBOARD HANDLING — lift pinned inputs above keyboard on mobile
-    // Uses visualViewport API: when keyboard opens, viewport height
-    // shrinks. We measure the gap and lift the input bars up by that
-    // amount + 16px breathing room above the accessory bar.
-    // ─────────────────────────────────────────────
-    if (window.visualViewport && window.innerWidth <= 500) {
-      const KEYBOARD_THRESHOLD = 80; // ignore tiny viewport shifts (address bar etc)
-      const GAP_ABOVE_KEYBOARD  = 16;
-
-      function onViewportChange() {
-        const keyboardH = Math.max(0,
-          window.innerHeight - window.visualViewport.height - window.visualViewport.offsetTop
-        );
-        // Only react when the keyboard is meaningfully open
-        const lift = keyboardH > KEYBOARD_THRESHOLD
-          ? keyboardH + GAP_ABOVE_KEYBOARD
-          : 0;
-
-        const nameBar  = document.querySelector('.name-bar');
-        const inputBar = document.querySelector('.input-bar');
-        if (nameBar)  nameBar.style.bottom  = lift + 'px';
-        if (inputBar) inputBar.style.bottom = lift + 'px';
-      }
-
-      window.visualViewport.addEventListener('resize', onViewportChange);
-      window.visualViewport.addEventListener('scroll', onViewportChange);
-    }
-
-    // ─────────────────────────────────────────────
-    // INTRO SCREEN — name input + Go
-    // ─────────────────────────────────────────────
-    const nameInput = document.getElementById('name-input');
-    const goBtn     = document.getElementById('go-btn');
-
-    // Auto-focus — opens keyboard on mobile
-    setTimeout(() => nameInput.focus(), 300);
-
-    nameInput.addEventListener('input', () => {
-      goBtn.disabled = nameInput.value.trim().length === 0;
-    });
-
-    nameInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && nameInput.value.trim()) submitName();
-    });
-
-    goBtn.addEventListener('click', () => {
-      if (nameInput.value.trim()) submitName();
-    });
-
-    async function submitName() {
-      const raw  = nameInput.value.trim();
-      if (!raw) return;
-      // Capitalize first letter
-      const name = raw.charAt(0).toUpperCase() + raw.slice(1);
-      state.name = name;
-
-      // Transition: intro out, chat in
-      document.getElementById('intro-screen').classList.add('out');
-
-      // Pre-populate chat with T's template response
-      const tMessage = NAME_RESPONSE.replace('{{name}}', name);
-
-      // Small delay so transition feels smooth before chat appears
-      await new Promise(r => setTimeout(r, 180));
-      document.getElementById('chat-screen').classList.add('in');
-
-      // After chat is visible, show T typing → then message
-      await new Promise(r => setTimeout(r, 300));
-      const typingEl = appendTypingIndicator();
-      scrollBottom();
-      await new Promise(r => setTimeout(r, 700));
-      typingEl.remove();
-      appendTBubble(tMessage);
-
-      // Chip options from Confluence via fetch-config, fallback to hardcoded
-      const FALLBACK_CHIPS = [
-        { value: 'Stress and anxiety',  label: 'Stress and anxiety' },
-        { value: 'Relationship issues', label: 'Relationship issues' },
-        { value: 'Feeling low',         label: 'Feeling low' },
-        { value: 'Work and burnout',    label: 'Work and burnout' },
-        { value: 'Something happened',  label: 'Something happened' },
-        { value: 'Not sure yet',        label: 'Not sure yet' },
-      ];
-      const stepOptions = state.config?.steps?.['02-what-brings-you']?.options;
-      const chips = (stepOptions && stepOptions.length > 0)
-        ? stepOptions.map(o => ({ value: o.label, label: o.label }))
-        : FALLBACK_CHIPS;
-      showChips(chips);
-
-      scrollBottom();
-    }
-
-    // Populate chips-grid and expand chips-section
-    function showChips(options) {
-      const grid = document.getElementById('chips-grid');
-      grid.innerHTML = options
-        .map(o => `<div class="chip" data-value="${escHtml(o.value)}">${escHtml(o.label)}</div>`)
-        .join('');
-      document.getElementById('chips-section').classList.remove('collapsed');
-      // Reset selection state for this step
-      state.selectedChips = [];
-      state.submitted = false;
-      updateSendReady();
-    }
-
-    // ─────────────────────────────────────────────
-    // CHAT SCREEN — chips + input
-    // ─────────────────────────────────────────────
-    document.getElementById('chips-grid').addEventListener('click', (e) => {
-      const chip = e.target.closest('.chip');
-      if (!chip || state.submitted) return;
-      chip.classList.toggle('selected');
-      const val = chip.dataset.value;
-      if (chip.classList.contains('selected')) {
-        state.selectedChips.push(val);
-      } else {
-        state.selectedChips = state.selectedChips.filter(v => v !== val);
-      }
-      updateSendReady();
-    });
-
-    const chatInput = document.getElementById('chat-input');
-    const sendBtn   = document.getElementById('send-btn');
-
-    chatInput.addEventListener('input', updateSendReady);
-    chatInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (isReady()) sendChat(); }
-    });
-    sendBtn.addEventListener('click', () => { if (isReady()) sendChat(); });
-
-    function isReady() {
-      return (state.selectedChips.length > 0 || chatInput.value.trim().length > 0) && !state.submitted;
-    }
-
-    function updateSendReady() {
-      sendBtn.classList.toggle('ready', isReady());
-    }
-
-    async function sendChat() {
-      if (!isReady()) return;
-      state.submitted = true;
-
-      const typed = chatInput.value.trim();
-      const chips = [...state.selectedChips];
-
-      let userText = chips.join(', ');
-      if (typed) userText += userText ? ' — ' + typed : typed;
-
-      appendUserBubble(userText);
-      document.getElementById('chips-section').classList.add('collapsed');
-      chatInput.value = '';
-      sendBtn.classList.remove('ready');
-
-      const typingEl = appendTypingIndicator();
-      scrollBottom();
-
-      // Assemble context variables
-      const contextLines = [];
-      if (chips.length > 0) contextLines.push(`What brought them here: ${chips.join(', ')}`);
-      if (typed) contextLines.push(`Also said: ${typed}`);
-      const collectedContext = contextLines.join('\n') || '(none yet)';
-
-      // System prompt from Confluence via fetch-config, fallback to hardcoded
-      await configReady; // ensure preload is done before assembling
-
-      const FALLBACK_PROMPT =
-`## 1. High-Level Context
-You are T — a warm, clear-eyed guide inside Thoughtful, an app that pairs people with a licensed therapist and supports them between sessions with AI. You appear as a chat bubble during onboarding. The user has just shared their name and what brought them to therapy.
-## 2. Directive
-The user just told you their name and what brought them here. Reflect what they said, assure them you can help with this, and ask one gentle follow up question.
-## 3. Output Format
-Plain text. 2–3 sentences maximum. No markdown. No lists. Return only T's message — nothing else. No preamble, no quotes.
-## 4. Required Inputs
-- USER_NAME (Grounding): The name the user typed. Required. Use it once, naturally.
-- COLLECTED_CONTEXT (Enrichment): What the user selected and/or typed — their reasons for seeking therapy. Required. Respond to this specifically.
-## 5. Guidelines
-- Reference what they actually said — not a generic acknowledgment
-- If they mentioned something serious (loss, grief, trauma), respond with particular care — don't rush past it
-- Use the name once in the response, naturally
-- 2–3 sentences hard limit
-## 6. Additional Context
-=== USER NAME ===
-{{USER_NAME}}
-=== COLLECTED CONTEXT ===
-{{COLLECTED_CONTEXT}}`;
-
-      const rawPrompt    = state.config?.steps?.['02-what-brings-you']?.system_prompt || FALLBACK_PROMPT;
-      const systemPrompt = rawPrompt
-        .replace(/\{\{USER_NAME\}\}/g,         state.name)
-        .replace(/\{\{COLLECTED_CONTEXT\}\}/g, collectedContext);
-
-      let tMessage = '';
-      let elapsed  = null;
-      const t0 = performance.now();
+    // ── Boot ──
+    (async function boot() {
+      let config = {};
       try {
-        const res = await fetch(CHAT_ENDPOINT, {
+        const res = await fetch(FETCH_CONFIG_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            step_id:          '02-what-brings-you',
-            selected_options: chips,
-            user_message:     typed,
-            collected_vars:   { name: state.name },
-            system_prompt:    systemPrompt, // pre-assembled — no Maxim call in Pipedream
-          }),
+          body: '{}'
         });
-        elapsed = ((performance.now() - t0) / 1000).toFixed(2);
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = await res.json();
-        tMessage = stripMarkdown(data.message || '');
-      } catch (err) {
-        elapsed = elapsed || ((performance.now() - t0) / 1000).toFixed(2);
-        console.error(err);
-        tMessage = `${state.name ? state.name + ', t' : 'T'}hat's really worth exploring. Let me help you find the right therapist for exactly this.`;
+        config = await res.json();
+        console.log('Config loaded:', {
+          steps: Object.keys(config.steps || {}),
+          components: Object.keys(config.components || {}),
+          tokens: Object.keys(config.tokens || {}).length
+        });
+      } catch (e) {
+        console.warn('Config fetch failed, using defaults:', e);
       }
 
-      typingEl.remove();
-      appendTBubble(tMessage, elapsed);
-      document.getElementById('next-section').classList.add('visible');
-      scrollBottom();
-    }
-
-    // ─────────────────────────────────────────────
-    // DOM HELPERS
-    // ─────────────────────────────────────────────
-    function tAvatarHTML() {
-      if (T_AVATAR_URL) {
-        return `<div class="t-avatar"><img src="${T_AVATAR_URL}" style="display:block;width:100%;height:100%;object-fit:cover" alt="T"></div>`;
+      // 1. Apply design tokens as CSS custom properties
+      for (const [k, v] of Object.entries(config.tokens || {})) {
+        if (v) document.documentElement.style.setProperty(`--${k}`, v);
       }
-      return `<div class="t-avatar"><span class="t-avatar-text">T</span></div>`;
-    }
 
-    function appendUserBubble(text) {
-      const el = document.createElement('div');
-      el.className = 'user-row fade-up';
-      el.innerHTML = `<div class="user-bubble">${escHtml(text)}</div>`;
-      document.getElementById('chat-scroll').appendChild(el);
-    }
+      // 2. Store chat endpoint from _config (only non-hardcoded URL)
+      config._chatUrl = config.config_vars?.chat_endpoint || '';
 
-    function appendTBubble(text, elapsed) {
-      const el = document.createElement('div');
-      el.className = 't-row fade-up';
-      const timing = elapsed ? `<div class="timing">${elapsed}s</div>` : '';
-      el.innerHTML = `
-        ${tAvatarHTML()}
-        <div>
-          <div class="t-bubble"><div class="msg">${escHtml(text)}</div></div>
-          ${timing}
-        </div>`;
-      document.getElementById('chat-scroll').appendChild(el);
-    }
+      // 3. Inject component CSS into <head>
+      for (const [name, comp] of Object.entries(config.components || {})) {
+        if (comp.css) {
+          const style = document.createElement('style');
+          style.dataset.component = name;
+          style.textContent = comp.css;
+          document.head.appendChild(style);
+        }
+      }
 
-    function appendTypingIndicator() {
-      const el = document.createElement('div');
-      el.className = 'typing-row fade-up';
-      el.innerHTML = `
-        ${tAvatarHTML()}
-        <div class="typing-dots">
-          <div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>`;
-      document.getElementById('chat-scroll').appendChild(el);
-      return el;
-    }
+      // 4. Execute component JS — each registers on window.Components
+      window.Components = {};
+      for (const [name, comp] of Object.entries(config.components || {})) {
+        if (comp.js) {
+          try {
+            new Function('Components', comp.js)(window.Components);
+            console.log(`Component registered: ${name}`);
+          } catch (e) {
+            console.error(`Component ${name} failed:`, e);
+          }
+        }
+      }
 
-    function scrollBottom() {
-      const cs = document.getElementById('chat-scroll');
-      cs.scrollTo({ top: cs.scrollHeight, behavior: 'smooth' });
-    }
+      // 5. Hide loading, render first step
+      document.getElementById('loading').classList.add('out');
+      setTimeout(() => document.getElementById('loading').remove(), 450);
 
-    // Strip markdown formatting from LLM responses before rendering
-    function stripMarkdown(s) {
-      return String(s)
-        .replace(/#{1,6}\s+/g, '')        // ## headings
-        .replace(/\*\*(.+?)\*\*/g, '$1')  // **bold**
-        .replace(/\*(.+?)\*/g, '$1')      // *italic*
-        .replace(/^[-*]\s+/gm, '')        // bullet points
-        .replace(/\n{2,}/g, ' ')          // multiple newlines → space
-        .replace(/\n/g, ' ')              // remaining newlines → space
-        .trim();
-    }
+      const steps = config.steps || {};
+      const first = Object.values(steps).sort((a,b) => (a.step_number||0)-(b.step_number||0))[0];
+      if (first) renderStep(first, config, steps);
+      else console.error('No steps found in config');
+    })();
 
-    function escHtml(s) {
-      return String(s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-        .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    function renderStep(step, config, allSteps) {
+      const componentName = step.component || step.type;
+      const Component     = window.Components?.[componentName];
+      if (!Component) {
+        console.error(`No component registered for: ${componentName}`);
+        return;
+      }
+      Component.render(
+        document.getElementById('app'),
+        step,
+        config,
+        allSteps,
+        (nextStepId) => {
+          const next = allSteps[nextStepId];
+          if (next) renderStep(next, config, allSteps);
+          else console.log('Flow complete — no next step:', nextStepId);
+        }
+      );
     }
-
-    document.getElementById('next-btn').addEventListener('click', () => {
-      alert('Next step coming soon');
-    });
   </script>
 </body>
 </html>
