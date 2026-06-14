@@ -76,8 +76,9 @@
         if (v) document.documentElement.style.setProperty(`--${k}`, v);
       }
 
-      // 2. Store chat endpoint from _config (only non-hardcoded URL)
-      config._chatUrl = config.config_vars?.chat_endpoint || '';
+      // 2. Store runtime vars from _config so components can read them
+      config._chatUrl  = config.config_vars?.chat_endpoint || '';
+      config._llmModel = config.config_vars?.llm_model     || 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
 
       // 3. Inject component CSS into <head>
       for (const [name, comp] of Object.entries(config.components || {})) {
