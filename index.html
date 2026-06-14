@@ -640,9 +640,9 @@
     // ─────────────────────────────────────────────
     // CONFIG
     // ─────────────────────────────────────────────
-    const CHAT_ENDPOINT        = 'https://eo788adwbaal2cv.m.pipedream.net';
-    const FETCH_PROMPTS_URL    = 'https://eopom7sc0bfe0rw.m.pipedream.net';
-    const T_AVATAR_URL         = ''; // GIF URL — leave empty for gradient circle
+    const CHAT_ENDPOINT     = 'https://eo788adwbaal2cv.m.pipedream.net';
+    const FETCH_CONFIG_URL  = 'https://eopom7sc0bfe0rw.m.pipedream.net';
+    const T_AVATAR_URL      = ''; // GIF URL — leave empty for gradient circle
 
     // Template T responds with after name — no LLM call.
     const NAME_RESPONSE = `Good to meet you, {{name}}. What brings you here today?`;
@@ -654,22 +654,22 @@
       name:          '',
       selectedChips: [],
       submitted:     false,
-      prompts:       {}, // keyed by step_id → raw system prompt text with {{PLACEHOLDERS}}
+      config:        null, // full config from fetch-config: { tokens, avatar, steps }
     };
 
     // ─────────────────────────────────────────────
-    // PRELOAD PROMPTS — fires immediately on page load.
-    // Stored as a promise so sendChat can await it if
-    // the user submits before the fetch completes.
+    // PRELOAD CONFIG — fires immediately on page load.
+    // Fetches everything from Confluence via fetch-config.
+    // Stored as a promise so later steps can await it.
     // ─────────────────────────────────────────────
-    const promptsReady = (async function preloadPrompts() {
+    const configReady = (async function preloadConfig() {
       try {
-        const res  = await fetch(FETCH_PROMPTS_URL);
+        const res  = await fetch(FETCH_CONFIG_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: '{}' });
         const data = await res.json();
-        state.prompts = data.prompts || {};
-        console.log('Prompts cached:', Object.keys(state.prompts));
+        state.config = data;
+        console.log('Config cached — steps:', Object.keys(data.steps || {}), '| tokens:', Object.keys(data.tokens || {}).length);
       } catch (err) {
-        console.warn('Prompt preload failed — falling back to no system prompt:', err);
+        console.warn('Config preload failed — using fallbacks:', err);
       }
     })();
 
@@ -762,17 +762,20 @@
       typingEl.remove();
       appendTBubble(tMessage);
 
-      // Show what-brings-you chip options.
-      // These come from Confluence 02-what-brings-you → Options table.
-      // Update labels here or wire to fetch-steps once that's live.
-      showChips([
+      // Chip options from Confluence via fetch-config, fallback to hardcoded
+      const FALLBACK_CHIPS = [
         { value: 'Stress and anxiety',  label: 'Stress and anxiety' },
         { value: 'Relationship issues', label: 'Relationship issues' },
         { value: 'Feeling low',         label: 'Feeling low' },
         { value: 'Work and burnout',    label: 'Work and burnout' },
         { value: 'Something happened',  label: 'Something happened' },
         { value: 'Not sure yet',        label: 'Not sure yet' },
-      ]);
+      ];
+      const stepOptions = state.config?.steps?.['02-what-brings-you']?.options;
+      const chips = (stepOptions && stepOptions.length > 0)
+        ? stepOptions.map(o => ({ value: o.label, label: o.label }))
+        : FALLBACK_CHIPS;
+      showChips(chips);
 
       scrollBottom();
     }
@@ -847,8 +850,9 @@
       if (typed) contextLines.push(`Also said: ${typed}`);
       const collectedContext = contextLines.join('\n') || '(none yet)';
 
-      // Use preloaded prompt if available, otherwise fall back to hardcoded.
-      // Hardcoded version matches sh-onboarding-question-1 in Maxim exactly.
+      // System prompt from Confluence via fetch-config, fallback to hardcoded
+      await configReady; // ensure preload is done before assembling
+
       const FALLBACK_PROMPT =
 `## 1. High-Level Context
 You are T — a warm, clear-eyed guide inside Thoughtful, an app that pairs people with a licensed therapist and supports them between sessions with AI. You appear as a chat bubble during onboarding. The user has just shared their name and what brought them to therapy.
@@ -870,7 +874,7 @@ Plain text. 2–3 sentences maximum. No markdown. No lists. Return only T's mess
 === COLLECTED CONTEXT ===
 {{COLLECTED_CONTEXT}}`;
 
-      const rawPrompt    = state.prompts['02-what-brings-you'] || FALLBACK_PROMPT;
+      const rawPrompt    = state.config?.steps?.['02-what-brings-you']?.system_prompt || FALLBACK_PROMPT;
       const systemPrompt = rawPrompt
         .replace(/\{\{USER_NAME\}\}/g,         state.name)
         .replace(/\{\{COLLECTED_CONTEXT\}\}/g, collectedContext);
