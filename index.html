@@ -9,16 +9,16 @@
   <style>
     /* Shell-only styles — just enough to show the loading screen before config arrives */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; background: #000; position: fixed; width: 100%; font-family: -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    html, body { height: 100%; overflow: hidden; background: #1F0E41; position: fixed; width: 100%; font-family: -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
     body { display: flex; align-items: center; justify-content: center; }
     #phone-wrapper { width: 430px; height: 956px; transform-origin: center; }
-    .phone { width: 430px; height: 956px; background: #000; border-radius: 52px; overflow: hidden; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 50px 120px rgba(0,0,0,0.9); }
+    .phone { width: 430px; height: 956px; background: #1F0E41; border-radius: 52px; overflow: hidden; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 50px 120px rgba(0,0,0,0.9); }
     #app { position: absolute; inset: 0; }
-    #loading { position: absolute; inset: 0; background: #000; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; transition: opacity 0.4s; }
+    #loading { position: absolute; inset: 0; background: #1F0E41; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; transition: opacity 0.4s; }
     #loading.out { opacity: 0; pointer-events: none; }
-    .loading-blob { width: 80px; height: 80px; border-radius: 50%; background: radial-gradient(circle at 38% 30%, #ff9060 0%, #ff5580 40%, #c050c8 72%, #8038b8 100%); animation: pulse 1.5s ease-in-out infinite; }
-    @keyframes pulse { 0%,100%{transform:scale(1)}50%{transform:scale(1.08)} }
-    .loading-text { color: rgba(255,255,255,0.4); font-size: 14px; }
+    .loading-spinner { width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.12); border-top-color: rgba(255,255,255,0.55); animation: spin 0.75s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { color: rgba(255,255,255,0.3); font-size: 13px; }
     @media (max-width: 500px) {
       /* On mobile/PWA: fill the full screen exactly. Use 100dvh (dynamic viewport
          height) so iOS accounts for safe areas correctly. align-items:stretch
@@ -35,7 +35,7 @@
     <div class="phone">
       <div id="app">
         <div id="loading">
-          <div class="loading-blob"></div>
+          <div class="loading-spinner"></div>
           <p class="loading-text" id="loading-text">Getting things ready…</p>
         </div>
       </div>
