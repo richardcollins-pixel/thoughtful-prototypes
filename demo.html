@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>T — Leave it with T</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; background: #1F0E41; position: fixed; width: 100%; font-family: -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    body { display: flex; align-items: center; justify-content: center; }
+    #phone-wrapper { width: 430px; height: 956px; transform-origin: center; }
+    .phone { width: 430px; height: 956px; background: #1F0E41; border-radius: 52px; overflow: hidden; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 50px 120px rgba(0,0,0,0.9); }
+    #app { position: absolute; inset: 0; }
+    #loading { position: absolute; inset: 0; background: #1F0E41; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; transition: opacity 0.4s; }
+    #loading.out { opacity: 0; pointer-events: none; }
+    .loading-spinner { width: 32px; height: 32px; border-radius: 50%; border: 2.5px solid rgba(255,255,255,0.12); border-top-color: rgba(255,255,255,0.55); animation: spin 0.75s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-text { color: rgba(255,255,255,0.3); font-size: 13px; }
+    @media (max-width: 500px) {
+      html, body { height: 100dvh; }
+      body { align-items: stretch; }
+      #phone-wrapper { width: 100vw !important; height: 100dvh !important; transform: none !important; margin: 0 !important; }
+      .phone { width: 100vw !important; height: 100dvh !important; border-radius: 0 !important; box-shadow: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="phone-wrapper">
+    <div class="phone">
+      <div id="app">
+        <div id="loading">
+          <div class="loading-spinner"></div>
+          <p class="loading-text" id="loading-text">Getting things ready…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── The only hardcoded value: where to fetch demo config from ──
+    const FETCH_CONFIG_URL = 'https://eogxbz3p54s5vng.m.pipedream.net';
+
+    function scalePhone() {
+      const s = Math.min(window.innerWidth/430, window.innerHeight/956, 1);
+      const w = document.getElementById('phone-wrapper');
+      w.style.transform = `scale(${s})`;
+      w.style.margin = `${(956*s-956)/2}px ${(430*s-430)/2}px`;
+    }
+    scalePhone();
+    window.addEventListener('resize', scalePhone);
+
+    (async function boot() {
+      let config = {};
+      try {
+        const res = await fetch(FETCH_CONFIG_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: '{}'
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        config = await res.json();
+        console.log('Demo config loaded:', {
+          components: Object.keys(config.components || {}),
+          prompts: Object.keys(config.prompts || {})
+        });
+      } catch (e) {
+        console.warn('Config fetch failed:', e);
+        showError('Could not load demo config: ' + e.message);
+        return;
+      }
+
+      // Apply design tokens
+      for (const [k, v] of Object.entries(config.tokens || {})) {
+        if (v) document.documentElement.style.setProperty(`--${k}`, v);
+      }
+
+      // Store runtime vars
+      config._chatUrl  = config.config_vars?.chat_endpoint || '';
+      config._llmModel = config.config_vars?.llm_model || 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
+
+      // Inject component CSS
+      for (const [name, comp] of Object.entries(config.components || {})) {
+        if (comp.css) {
+          const style = document.createElement('style');
+          style.dataset.component = name;
+          style.textContent = comp.css;
+          document.head.appendChild(style);
+        }
+      }
+
+      // Execute component JS
+      window.Components = {};
+      const compErrors = [];
+      for (const [name, comp] of Object.entries(config.components || {})) {
+        if (comp.js) {
+          try {
+            new Function('Components', comp.js)(window.Components);
+            console.log('Component registered: ' + name);
+          } catch (e) {
+            console.error('Component ' + name + ' failed:', e);
+            console.log('JS length:', comp.js.length, '| first 200:', comp.js.substring(0, 200));
+            compErrors.push(name + ': ' + e.message + ' (JS len=' + comp.js.length + ' first80=' + comp.js.substring(0, 80).replace(/\n/g, '\\n') + ')');
+          }
+        }
+      }
+      if (compErrors.length) {
+        showError('Component error(s):\n' + compErrors.join('\n'));
+        return;
+      }
+
+      document.getElementById('loading').classList.add('out');
+      setTimeout(() => document.getElementById('loading').remove(), 450);
+
+      const steps = config.steps || {};
+      const first = Object.values(steps).sort((a,b) => (a.step_number||0)-(b.step_number||0))[0];
+      if (first) renderStep(first, config, steps);
+      else showError('No steps found in config');
+    })();
+
+    function showError(msg) {
+      const app = document.getElementById('app');
+      const e = document.createElement('div');
+      e.style.cssText = 'position:absolute;inset:0;background:#1F0E41;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px;gap:12px;z-index:9999;';
+      const title = document.createElement('p');
+      title.style.cssText = 'color:rgba(255,100,100,0.9);font-size:13px;font-weight:600;text-align:center';
+      title.textContent = 'Demo error';
+      const body = document.createElement('p');
+      body.style.cssText = 'color:rgba(255,255,255,0.6);font-size:11px;text-align:center;word-break:break-all;line-height:1.5;max-width:320px';
+      body.textContent = String(msg);
+      e.appendChild(title);
+      e.appendChild(body);
+      app.appendChild(e);
+    }
+
+    function renderStep(step, config, allSteps) {
+      const componentName = step.component || step.type;
+      const Component = window.Components?.[componentName];
+      if (!Component) {
+        showError('No component: "' + componentName + '". Registered: ' + Object.keys(window.Components || {}).join(', '));
+        return;
+      }
+      try {
+        Component.render(
+          document.getElementById('app'),
+          step,
+          config,
+          allSteps,
+          (nextStepId) => {
+            const next = allSteps[nextStepId];
+            if (next) renderStep(next, config, allSteps);
+          }
+        );
+      } catch(err) {
+        showError(componentName + ' render error: ' + err.message);
+      }
+    }
+  </script>
+</body>
+</html>
