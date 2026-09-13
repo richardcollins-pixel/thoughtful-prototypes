@@ -6,9 +6,12 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <title>T — Leave it with T</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; background: #1F0E41; position: fixed; width: 100%; font-family: -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
+    html, body { height: 100%; overflow: hidden; background: #1F0E41; position: fixed; width: 100%; font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; -webkit-font-smoothing: antialiased; }
     body { display: flex; align-items: center; justify-content: center; }
     #phone-wrapper { width: 430px; height: 956px; transform-origin: center; }
     .phone { width: 430px; height: 956px; background: #1F0E41; border-radius: 52px; overflow: hidden; position: relative; box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 50px 120px rgba(0,0,0,0.9); }
@@ -20,13 +23,32 @@
       .phone { width: 100vw !important; height: 100dvh !important; border-radius: 0 !important; box-shadow: none !important; }
     }
 
+    /* ── Opening loader ── */
+    #ld-screen {
+      position: absolute; inset: 0; z-index: 100; background: #1F0E41;
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; gap: 18px;
+      opacity: 1; transition: opacity 0.35s ease;
+    }
+    #ld-screen.out { opacity: 0; pointer-events: none; }
+    .ld-spinner {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.20);
+      border-top-color: rgba(255,255,255,0.95);
+      animation: ld-spin 0.75s linear infinite;
+    }
+    @keyframes ld-spin { to { transform: rotate(360deg); } }
+    .ld-text { color: rgba(255,255,255,0.60); font-size: 15px; text-align: center; }
+
     /* ── Onboarding screen ── */
     #ob-screen {
       position: absolute; inset: 0; background: #1F0E41;
       display: flex; flex-direction: column; align-items: center;
       justify-content: flex-start; padding: 80px 32px 44px; overflow: hidden;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.35s ease, transform 0.3s ease;
     }
+    #ob-screen.ready { opacity: 1; pointer-events: auto; }
     #ob-screen.out { opacity: 0; transform: translateY(-16px); pointer-events: none; }
     .ob-glow-wrap {
       position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
@@ -34,11 +56,25 @@
     }
     .ob-glow-wrap canvas { display: block; width: 100%; height: 100%;
       filter: blur(90px); -webkit-filter: blur(90px); opacity: 0.6; }
-    .ob-blob-wrap { width: 140px; height: 140px; margin-bottom: 32px; flex-shrink: 0; position: relative; z-index: 1; }
-    .ob-blob-canvas { width: 140px; height: 140px; border-radius: 50%; display: block; }
-    .ob-title { position: relative; z-index: 1; }
-    .ob-sub  { position: relative; z-index: 1; }
-    .ob-title { color: #fff; font-size: 32px; font-weight: 600; text-align: center; margin-bottom: 10px; letter-spacing: -0.3px; }
+    .ob-blob-wrap {
+      width: 150px; height: 150px; flex-shrink: 0; position: absolute; z-index: 1;
+      top: 155px; left: 50%; opacity: 0;
+      transform: translate(-50%, -50%);
+      transition: opacity 1.5s ease;
+    }
+    #ob-screen.ready .ob-blob-wrap { opacity: 1; }
+    .ob-blob-canvas { width: 150px; height: 150px; border-radius: 50%; display: block; }
+    .ob-content {
+      width: 100%; align-self: stretch; margin-top: 204px; display: flex; flex-direction: column;
+      opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #ob-screen.settled .ob-content { opacity: 1; transform: translateY(0); }
+    .ob-content .ob-title { width: 100%; text-align: center; }
+    .ob-content .ob-sub { align-self: center; text-align: center; }
+    .ob-title, .ob-sub, .ob-input, .ob-btn { position: relative; z-index: 1; }
+    .blob-handoff { position: absolute; z-index: 20; width: 150px; height: 150px; pointer-events: none; opacity: 1; transition: opacity 0.8s ease; }
+    .blob-handoff.out { opacity: 0; }
+    .ob-title { color: #fff; font-size: 36px; font-weight: 300; text-align: center; margin-bottom: 10px; letter-spacing: -0.5px; }
     .ob-sub { color: rgba(255,255,255,0.50); font-size: 15px; text-align: center; line-height: 1.55; margin-bottom: 32px; max-width: 280px; }
     .ob-input {
       width: 100%; padding: 15px 18px; border-radius: 16px;
@@ -57,18 +93,6 @@
     }
     .ob-btn:active { opacity: 0.82; }
 
-    /* ── Loading screen ── */
-    #ld-screen {
-      position: absolute; inset: 0; background: #1F0E41;
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: center; gap: 28px;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.35s ease;
-    }
-    #ld-screen.active { opacity: 1; pointer-events: auto; }
-    .ld-blob-wrap { width: 140px; height: 140px; }
-    .ld-blob-canvas { width: 140px; height: 140px; border-radius: 50%; display: block; }
-    .ld-text { color: rgba(255,255,255,0.50); font-size: 16px; }
   </style>
 </head>
 <body>
@@ -79,16 +103,18 @@
         <div id="ob-screen">
           <div class="ob-glow-wrap"><canvas id="ob-glow"></canvas></div>
           <div class="ob-blob-wrap"><canvas class="ob-blob-canvas" id="ob-blob"></canvas></div>
-          <p class="ob-title">Hi, I'm T</p>
-          <p class="ob-sub">Let's get to know each other. This is just a demo to show you what I can do.</p>
-          <input class="ob-input" id="ob-name" type="text" placeholder="Enter Name" autocomplete="given-name">
-          <input class="ob-input" id="ob-email" type="email" placeholder="Enter Email" autocomplete="email">
-          <button class="ob-btn" id="ob-btn">Try a demo</button>
+          <div class="ob-content">
+            <p class="ob-title">Hi, I'm T</p>
+            <p class="ob-sub">Let's get to know each other. This is just a demo to show you what I can do.</p>
+            <input class="ob-input" id="ob-name" type="text" placeholder="Enter Name" autocomplete="given-name">
+            <input class="ob-input" id="ob-email" type="email" placeholder="Enter Email" autocomplete="email">
+            <button class="ob-btn" id="ob-btn">Try a demo</button>
+          </div>
         </div>
-        <!-- Loading -->
+        <!-- Initial config loading -->
         <div id="ld-screen">
-          <div class="ld-blob-wrap"><canvas class="ld-blob-canvas" id="ld-blob"></canvas></div>
-          <p class="ld-text" id="ld-text">Getting things ready…</p>
+          <div class="ld-spinner" aria-hidden="true"></div>
+          <p class="ld-text">Loading your demo</p>
         </div>
       </div>
     </div>
@@ -238,13 +264,7 @@
       };
     }());
 
-    /* Start onboarding blob + glow */
-    setTimeout(() => {
-      window.TAvatar.mountAmbient(document.getElementById('ob-glow'));
-      window.TAvatar.mount(document.getElementById('ob-blob'));
-    }, 50);
-
-    /* ── Config fetch — starts immediately in background ── */
+    /* ── Config fetch — finish all setup before onboarding is shown ── */
     let configReady = false;
     let configResult = null;
     const configWaiters = [];
@@ -271,41 +291,20 @@
       configWaiters.length = 0;
     })();
 
-    /* ── Onboarding submit ── */
-    async function submitOnboarding() {
-      const nameEl  = document.getElementById('ob-name');
-      const name    = nameEl.value.trim();
-      const email   = document.getElementById('ob-email').value.trim();
-      if (!name) { nameEl.focus(); return; }
-
-      // Animate out onboarding, show loading
-      document.getElementById('ob-screen').classList.add('out');
-      const ldText = document.getElementById('ld-text');
-      ldText.textContent = `Loading ${name}'s demo...`;
-      document.getElementById('ld-screen').classList.add('active');
-
-      // Wait for config (may already be ready)
+    async function prepareDemo() {
       const config = await waitForConfig();
-
       if (config._error) {
         showError('Could not load demo: ' + config._error);
         return;
       }
 
-      // Apply design tokens
       for (const [k, v] of Object.entries(config.tokens || {})) {
         if (v) document.documentElement.style.setProperty(`--${k}`, v);
       }
 
-      // Store runtime vars + session
       config._chatUrl  = config.config_vars?.chat_endpoint || '';
       config._llmModel = config.config_vars?.llm_model || 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
-      config._session  = {
-        name: name.charAt(0).toUpperCase() + name.slice(1),
-        email
-      };
 
-      // Inject component CSS
       for (const [compName, comp] of Object.entries(config.components || {})) {
         if (comp.css) {
           const style = document.createElement('style');
@@ -315,7 +314,16 @@
         }
       }
 
-      // Execute component JS
+      // Keep the first Home arrival gentle without changing the remote components.
+      const motionStyle = document.createElement('style');
+      motionStyle.textContent = `
+        .hm-screen { animation: hm-soft-in 0.8s ease both; }
+        .hm-blob-wrap { transition: opacity 0.9s ease !important; }
+        .hm-title, .hm-sub, .hm-card, .hm-sections { transition: opacity 0.8s ease !important; }
+        @keyframes hm-soft-in { from { opacity: 0; } to { opacity: 1; } }
+      `;
+      document.head.appendChild(motionStyle);
+
       window.Components = {};
       const compErrors = [];
       for (const [compName, comp] of Object.entries(config.components || {})) {
@@ -323,7 +331,7 @@
           try {
             new Function('Components', comp.js)(window.Components);
           } catch (e) {
-            compErrors.push(compName + ': ' + e.message + ' (JS len=' + comp.js.length + ' first80=' + comp.js.substring(0, 80).replace(/\n/g, '\\n') + ')');
+            compErrors.push(compName + ': ' + e.message);
           }
         }
       }
@@ -332,9 +340,50 @@
         return;
       }
 
-      // Clean up onboarding/loading, show home
+      const loader = document.getElementById('ld-screen');
+      const onboarding = document.getElementById('ob-screen');
+      onboarding.classList.add('ready');
+      window.TAvatar.mountAmbient(document.getElementById('ob-glow'));
+      window.TAvatar.mount(document.getElementById('ob-blob'));
+      requestAnimationFrame(() => loader.classList.add('out'));
+      setTimeout(() => loader.remove(), 400);
+      setTimeout(() => onboarding.classList.add('settled'), 1000);
+    }
+
+    function preserveBlobDuringHomeTransition() {
+      const source = document.getElementById('ob-blob');
+      if (!source) return;
+      const handoff = document.createElement('canvas');
+      handoff.className = 'blob-handoff';
+      handoff.width = source.width;
+      handoff.height = source.height;
+      handoff.style.left = '50%';
+      handoff.style.top = '80px';
+      handoff.style.transform = 'translateX(-50%)';
+      handoff.getContext('2d').drawImage(source, 0, 0);
+      document.getElementById('app').appendChild(handoff);
+      setTimeout(() => handoff.classList.add('out'), 120);
+      setTimeout(() => handoff.remove(), 980);
+    }
+
+    /* ── Onboarding submit ── */
+    async function submitOnboarding() {
+      const nameEl  = document.getElementById('ob-name');
+      const name    = nameEl.value.trim();
+      const email   = document.getElementById('ob-email').value.trim();
+      if (!name) { nameEl.focus(); return; }
+
+      // Everything is already loaded; retain the animated blob as Home takes over.
+      document.getElementById('ob-screen').classList.add('out');
+      preserveBlobDuringHomeTransition();
+      const config = configResult;
+      config._chatUrl  = config.config_vars?.chat_endpoint || '';
+      config._llmModel = config.config_vars?.llm_model || 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
+      config._session  = {
+        name: name.charAt(0).toUpperCase() + name.slice(1),
+        email
+      };
       document.getElementById('ob-screen').remove();
-      document.getElementById('ld-screen').remove();
 
       const steps = config.steps || {};
       const first = Object.values(steps).sort((a, b) => (a.step_number || 0) - (b.step_number || 0))[0];
@@ -345,6 +394,8 @@
     document.getElementById('ob-btn').addEventListener('click', submitOnboarding);
     document.getElementById('ob-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('ob-email').focus(); });
     document.getElementById('ob-email').addEventListener('keydown', e => { if (e.key === 'Enter') submitOnboarding(); });
+
+    prepareDemo();
 
     /* ── Helpers ── */
     function showError(msg) {
