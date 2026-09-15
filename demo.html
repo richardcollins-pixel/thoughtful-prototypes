@@ -40,77 +40,12 @@
     @keyframes ld-spin { to { transform: rotate(360deg); } }
     .ld-text { color: rgba(255,255,255,0.60); font-size: 15px; text-align: center; }
 
-    /* ── Onboarding screen ── */
-    #ob-screen {
-      position: absolute; inset: 0; background: #1F0E41;
-      display: flex; flex-direction: column; align-items: center;
-      justify-content: flex-start; padding: 80px 32px 44px; overflow: hidden;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.35s ease, transform 0.3s ease;
-    }
-    #ob-screen.ready { opacity: 1; pointer-events: auto; }
-    #ob-screen.out { opacity: 0; transform: translateY(-16px); pointer-events: none; }
-    .ob-glow-wrap {
-      position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
-      width: 460px; height: 460px; pointer-events: none; z-index: 0;
-    }
-    .ob-glow-wrap canvas { display: block; width: 100%; height: 100%;
-      filter: blur(90px); -webkit-filter: blur(90px); opacity: 0.6; }
-    .ob-blob-wrap {
-      width: 150px; height: 150px; flex-shrink: 0; position: absolute; z-index: 1;
-      top: 155px; left: 50%; opacity: 0;
-      transform: translate(-50%, -50%);
-      transition: opacity 1.5s ease;
-    }
-    #ob-screen.ready .ob-blob-wrap { opacity: 1; }
-    .ob-blob-canvas { width: 150px; height: 150px; border-radius: 50%; display: block; }
-    .ob-content {
-      width: 100%; align-self: stretch; margin-top: 204px; display: flex; flex-direction: column;
-      opacity: 0; transform: translateY(10px); transition: opacity 0.5s ease, transform 0.5s ease;
-    }
-    #ob-screen.settled .ob-content { opacity: 1; transform: translateY(0); }
-    .ob-content .ob-title { width: 100%; text-align: center; }
-    .ob-content .ob-sub { align-self: center; text-align: center; }
-    .ob-title, .ob-sub, .ob-input, .ob-btn { position: relative; z-index: 1; }
-    .blob-handoff { position: absolute; z-index: 20; width: 150px; height: 150px; pointer-events: none; opacity: 1; transition: opacity 0.8s ease; }
-    .blob-handoff.out { opacity: 0; }
-    .ob-title { color: #fff; font-size: 36px; font-weight: 300; text-align: center; margin-bottom: 10px; letter-spacing: -0.5px; }
-    .ob-sub { color: rgba(255,255,255,0.50); font-size: 15px; text-align: center; line-height: 1.55; margin-bottom: 32px; max-width: 280px; }
-    .ob-input {
-      width: 100%; padding: 15px 18px; border-radius: 16px;
-      background: rgba(255,255,255,0.09); border: 1px solid rgba(255,255,255,0.14);
-      color: #fff; font-size: 16px; font-family: inherit; outline: none;
-      margin-bottom: 12px;
-      transition: border-color 0.2s, background 0.2s;
-    }
-    .ob-input::placeholder { color: rgba(255,255,255,0.30); }
-    .ob-input:focus { border-color: rgba(255,255,255,0.32); background: rgba(255,255,255,0.12); }
-    .ob-btn {
-      width: 100%; margin-top: 8px; padding: 17px; border-radius: 28px;
-      background: #fff; border: none; color: #1F0E41;
-      font-size: 16px; font-weight: 600; cursor: pointer; font-family: inherit;
-      transition: opacity 0.2s;
-    }
-    .ob-btn:active { opacity: 0.82; }
-
   </style>
 </head>
 <body>
   <div id="phone-wrapper">
     <div class="phone">
       <div id="app">
-        <!-- Onboarding -->
-        <div id="ob-screen">
-          <div class="ob-glow-wrap"><canvas id="ob-glow"></canvas></div>
-          <div class="ob-blob-wrap"><canvas class="ob-blob-canvas" id="ob-blob"></canvas></div>
-          <div class="ob-content">
-            <p class="ob-title">Hi, I'm T</p>
-            <p class="ob-sub">Let's get to know each other. This is just a demo to show you what I can do.</p>
-            <input class="ob-input" id="ob-name" type="text" placeholder="Enter Name" autocomplete="given-name">
-            <input class="ob-input" id="ob-email" type="email" placeholder="Enter Email" autocomplete="email">
-            <button class="ob-btn" id="ob-btn">Try a demo</button>
-          </div>
-        </div>
         <!-- Initial config loading -->
         <div id="ld-screen">
           <div class="ld-spinner" aria-hidden="true"></div>
@@ -314,16 +249,6 @@
         }
       }
 
-      // Keep the first Home arrival gentle without changing the remote components.
-      const motionStyle = document.createElement('style');
-      motionStyle.textContent = `
-        .hm-screen { animation: hm-soft-in 0.8s ease both; }
-        .hm-blob-wrap { transition: opacity 0.9s ease !important; }
-        .hm-title, .hm-sub, .hm-card, .hm-sections { transition: opacity 0.8s ease !important; }
-        @keyframes hm-soft-in { from { opacity: 0; } to { opacity: 1; } }
-      `;
-      document.head.appendChild(motionStyle);
-
       window.Components = {};
       const compErrors = [];
       for (const [compName, comp] of Object.entries(config.components || {})) {
@@ -341,59 +266,14 @@
       }
 
       const loader = document.getElementById('ld-screen');
-      const onboarding = document.getElementById('ob-screen');
-      onboarding.classList.add('ready');
-      window.TAvatar.mountAmbient(document.getElementById('ob-glow'));
-      window.TAvatar.mount(document.getElementById('ob-blob'));
       requestAnimationFrame(() => loader.classList.add('out'));
       setTimeout(() => loader.remove(), 400);
-      setTimeout(() => onboarding.classList.add('settled'), 1000);
-    }
-
-    function preserveBlobDuringHomeTransition() {
-      const source = document.getElementById('ob-blob');
-      if (!source) return;
-      const handoff = document.createElement('canvas');
-      handoff.className = 'blob-handoff';
-      handoff.width = source.width;
-      handoff.height = source.height;
-      handoff.style.left = '50%';
-      handoff.style.top = '80px';
-      handoff.style.transform = 'translateX(-50%)';
-      handoff.getContext('2d').drawImage(source, 0, 0);
-      document.getElementById('app').appendChild(handoff);
-      setTimeout(() => handoff.classList.add('out'), 120);
-      setTimeout(() => handoff.remove(), 980);
-    }
-
-    /* ── Onboarding submit ── */
-    async function submitOnboarding() {
-      const nameEl  = document.getElementById('ob-name');
-      const name    = nameEl.value.trim();
-      const email   = document.getElementById('ob-email').value.trim();
-      if (!name) { nameEl.focus(); return; }
-
-      // Everything is already loaded; retain the animated blob as Home takes over.
-      document.getElementById('ob-screen').classList.add('out');
-      preserveBlobDuringHomeTransition();
-      const config = configResult;
-      config._chatUrl  = config.config_vars?.chat_endpoint || '';
-      config._llmModel = config.config_vars?.llm_model || 'us.anthropic.claude-sonnet-4-5-20250929-v1:0';
-      config._session  = {
-        name: name.charAt(0).toUpperCase() + name.slice(1),
-        email
-      };
-      document.getElementById('ob-screen').remove();
-
+      config._session = {};
       const steps = config.steps || {};
       const first = Object.values(steps).sort((a, b) => (a.step_number || 0) - (b.step_number || 0))[0];
       if (first) renderStep(first, config, steps);
       else showError('No steps found in config');
     }
-
-    document.getElementById('ob-btn').addEventListener('click', submitOnboarding);
-    document.getElementById('ob-name').addEventListener('keydown', e => { if (e.key === 'Enter') document.getElementById('ob-email').focus(); });
-    document.getElementById('ob-email').addEventListener('keydown', e => { if (e.key === 'Enter') submitOnboarding(); });
 
     prepareDemo();
 
