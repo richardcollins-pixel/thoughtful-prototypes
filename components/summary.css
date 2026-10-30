@@ -40,3 +40,7 @@
 
 /* Glow: the design system's glow, held inside the frame behind the content */
 .sum-glow-wrap{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;pointer-events:none;z-index:0}
+
+/* The 24px design-system blob: pinned to its slot and centred */
+.sum-blob-slot .blob{position:absolute;left:0;top:0;width:24px;height:24px;transform:none}
+.sum-blob-slot .blob > canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
