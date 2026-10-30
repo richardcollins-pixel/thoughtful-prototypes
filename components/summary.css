@@ -17,3 +17,9 @@
 .ap-chat-send{width:36px;height:36px;flex:none;border:0;border-radius:50%;background:transparent;color:#1F0E41;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .ap-chat-send .icon{width:22px;height:22px;background-color:currentColor}
 .ap-chat-wrap{align-self:center;border:0;background:none;color:rgba(255,255,255,.85);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}
+
+/* Layout to match the design: clear status bar, side margins, the screen's gradient */
+.ap-summary{padding-top:56px;background:linear-gradient(180deg,#4A2C6E 0%,#2A1450 40%,#1F0E41 100%)}
+.ap-summary .summary__sections{padding:0 24px}
+.ap-summary .summary__header{padding:0 0 8px}
+.ap-summary .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}

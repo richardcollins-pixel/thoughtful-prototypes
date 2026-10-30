@@ -890,7 +890,8 @@ Components['home'] = {
     };
 
     window.onAppointmentEnded = function (p) {
-      session.appointment = { provider: p, status: 'completed' };
+      var booked = session.appointment || {};
+      session.appointment = { provider: p, status: 'completed', d: booked.d, t: booked.t };
       sections.appendChild(therapistSec);
       renderNextCard(p);
     };
