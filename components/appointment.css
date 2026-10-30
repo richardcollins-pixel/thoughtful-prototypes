@@ -51,3 +51,8 @@
 .ap-call .ap-bottom{display:contents}
 .ap-call .ap-self{position:absolute;top:68.2%;right:4%;width:31%;aspect-ratio:3/4;margin:0}
 .ap-call .ap-notes{position:absolute;left:8%;bottom:12.6%;padding:0}
+
+/* Call: your video overlaps the bottom of the therapist video; the group is centred on the screen */
+.ap-call .ap-remote{top:19.8%;height:54.2%}
+.ap-call .ap-self{top:65%}
+.ap-call .ap-notes{bottom:19.5%}
