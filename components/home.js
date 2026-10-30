@@ -849,7 +849,7 @@ Components['home'] = {
     function renderNextCard(p) {
       therapistCard.innerHTML = '';
       therapistCard.className = 'hm-next-card';
-      therapistCard.addEventListener('click', openBookingFlow);
+      therapistCard.addEventListener('click', openModal);
       var row = document.createElement('div'); row.className = 'hm-next-row';
       var av = document.createElement('img'); av.className = 'hm-next-avatar'; av.src = providerImage(p); av.alt = '';
       var col = document.createElement('div'); col.className = 'hm-next-col';
