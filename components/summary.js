@@ -312,6 +312,8 @@
         state.question = data.question;
         render();
       }
-    }).catch(function () {});
+    }).catch(function (err) {
+      console.error('Summary failed to render', err);
+    });
   };
 })();
