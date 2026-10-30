@@ -222,9 +222,15 @@
   }
 
   function finish() {
-    closeAll();
-    restoreHome();
-    if (window.onAppointmentSummaryClosed) window.onAppointmentSummaryClosed();
+    var sum = document.querySelector('.ap-summary');
+    var done = function () {
+      closeAll();
+      restoreHome();
+      if (window.onAppointmentSummaryClosed) window.onAppointmentSummaryClosed();
+    };
+    if (!sum) return done();
+    sum.classList.add('ap-summary--out');
+    setTimeout(done, 380);
   }
 
   /* ── Entry point ── */

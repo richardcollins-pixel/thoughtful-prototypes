@@ -19,10 +19,17 @@
 .ap-chat-wrap{align-self:center;border:0;background:none;color:rgba(255,255,255,.85);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}
 
 /* Layout to match the design: clear status bar, side margins, the screen's gradient */
-.ap-summary{padding-top:56px;background:linear-gradient(180deg,#4A2C6E 0%,#2A1450 40%,#1F0E41 100%)}
+.ap-summary{padding-top:0;overflow-x:hidden;isolation:isolate;background:linear-gradient(180deg,#4A2C6E 0%,#2A1450 40%,#1F0E41 100%);animation:ap-sum-in .38s cubic-bezier(.32,.72,0,1) both}
+.ap-summary--out{animation:ap-sum-out .38s cubic-bezier(.32,.72,0,1) both}
+@keyframes ap-sum-in{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes ap-sum-out{from{transform:translateY(0)}to{transform:translateY(100%)}}
+.ap-summary .glow{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.ap-summary .header,.ap-summary .header__status{background:transparent}
+.ap-summary .summary__sections{margin-top:40px}
 .ap-summary .summary__sections{padding:0 24px}
 .ap-summary .summary__header{padding:0 0 8px}
-.ap-summary .avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.ap-summary .avatar{position:relative;width:88px;height:88px;flex:none}
+.ap-summary .avatar img{width:88px;height:88px;object-fit:cover;border-radius:50%;display:block}
 
 /* Header card: rounded bottom, the photo centred, the close button at the top right */
 .ap-summary .header-card{border-radius:0 0 32px 32px;background:linear-gradient(180deg,#4D3A7A 0%,#4A2C6E 100%);padding:0 24px 28px;text-align:center}
@@ -38,3 +45,7 @@
 
 /* Prompt card: taller, with the arrow clear of the edge */
 .ap-summary .chat-input{min-height:120px;padding:16px 20px;border-radius:24px}
+
+/* Header content: the photo sits above the title, with room before the sections */
+.ap-summary .header-card__content{display:flex;flex-direction:column;align-items:center;gap:8px}
+.ap-summary .header-card__chat{margin-top:12px}
