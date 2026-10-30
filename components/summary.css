@@ -1,60 +1,38 @@
-/* Summary: the design system's summary screen (summary.css in ds.css) fills the frame; this file adds the close button and the PAT chat. */
-.ap-summary{display:block;padding:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+/* Summary: plain layout from the design. Spacing and colours follow the design system's summary and header-card styles. */
+.ap-summary{display:block;padding:0;overflow-x:hidden;overflow-y:auto;scrollbar-width:none;color:#fff;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:linear-gradient(180deg,#1F0E41 0%,#2B1258 55%,#3F0786 100%);animation:ap-sum-in .38s cubic-bezier(.32,.72,0,1) both}
 .ap-summary::-webkit-scrollbar{display:none}
-.ap-sum-close{position:absolute;top:56px;right:20px;z-index:10;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-.ap-sum-close .icon{width:22px;height:22px;background-color:currentColor}
-
-/* PAT chat, shown under T's follow-up prompt */
-.ap-chat{display:flex;flex-direction:column;gap:12px;margin:16px 16px 0;padding:16px;border-radius:20px;background:rgba(255,255,255,.08)}
-.ap-chat-thread{display:flex;flex-direction:column;gap:10px;max-height:340px;overflow-y:auto}
-.ap-bubble{max-width:85%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.45;white-space:pre-wrap}
-.ap-bubble.is-t{align-self:flex-start;background:rgba(255,255,255,.16)}
-.ap-bubble.is-user{align-self:flex-end;background:rgba(255,255,255,.88);color:#1F0E41}
-.ap-bubble.is-typing{letter-spacing:3px}
-.ap-chat-bar{display:flex;align-items:center;gap:8px;height:48px;padding:0 6px 0 16px;border-radius:999px;background:rgba(255,245,250,.84)}
-.ap-chat-input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#1F0E41;font:inherit;font-size:16px}
-.ap-chat-input::placeholder{color:rgba(31,14,65,.6)}
-.ap-chat-send{width:36px;height:36px;flex:none;border:0;border-radius:50%;background:transparent;color:#1F0E41;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.ap-chat-send .icon{width:22px;height:22px;background-color:currentColor}
-.ap-chat-wrap{align-self:center;border:0;background:none;color:rgba(255,255,255,.85);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}
-
-/* Layout to match the design: clear status bar, side margins, the screen's gradient */
-.ap-summary{padding-top:0;overflow-x:hidden;isolation:isolate;background:linear-gradient(180deg,#4A2C6E 0%,#2A1450 40%,#1F0E41 100%);animation:ap-sum-in .38s cubic-bezier(.32,.72,0,1) both}
 .ap-summary--out{animation:ap-sum-out .38s cubic-bezier(.32,.72,0,1) both}
 @keyframes ap-sum-in{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes ap-sum-out{from{transform:translateY(0)}to{transform:translateY(100%)}}
-.ap-summary .header__status,.ap-summary .status-bar{display:none}
-.ap-summary .summary__sections{margin-top:40px}
-.ap-summary .summary__sections{padding:0 24px}
-.ap-summary .summary__header{padding:0 0 8px}
-.ap-summary .avatar{position:relative;width:88px;height:88px;flex:none}
-.ap-summary .avatar img{width:88px;height:88px;object-fit:cover;border-radius:50%;display:block}
 
-/* Header card: rounded bottom, the photo centred, the close button at the top right */
-.ap-summary .header-card{border-radius:0 0 32px 32px;background:linear-gradient(180deg,#4D3A7A 0%,#4A2C6E 100%);padding:0 24px 28px;text-align:center}
-.ap-summary .header-card__top{position:relative}
-.ap-summary .header-card__top button{position:absolute;top:0;right:0;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;cursor:pointer}
-.ap-summary .header-card__content .avatar{display:block;width:88px;height:88px;margin:8px auto 12px}
-.ap-summary .header-card__content .avatar img{border-radius:50%}
+/* Header: the card runs to the edges, with rounded bottom corners */
+.sum-hero{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:72px 24px 32px;background:#4D3B73;border-radius:0 0 40px 40px}
+.sum-close{position:absolute;top:24px;right:20px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.sum-close .icon{width:22px;height:22px;background-color:currentColor;display:block}
+.sum-photo{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;margin:0 auto}
+.sum-when{margin:16px 0 0;font-size:16px;color:rgba(255,255,255,.7)}
+.sum-title{margin:6px 0 0;font-size:30px;font-weight:400;line-height:1.2;letter-spacing:-.4px}
+.sum-body{margin:16px 0 0;font-size:16px;line-height:1.5;color:rgba(255,255,255,.8);max-width:320px}
+.sum-duration{display:flex;align-items:center;gap:8px;margin:16px 0 0;font-size:16px}
+.sum-duration .icon{width:18px;height:18px;background-color:currentColor}
 
-/* Sections: serif headings, comfortable body copy and spacing */
-.ap-summary .text-section{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
-.ap-summary .text-section__title{margin:0;font-family:'PP Editorial New',Georgia,serif;font-size:24px;font-weight:400;line-height:1.2}
-.ap-summary .text-section__body{margin:0;font-size:16px;line-height:1.55;color:rgba(255,255,255,.82)}
+/* Prompt state: T's lead line and the follow-up box */
+.sum-lead{display:flex;align-items:center;justify-content:center;gap:10px;margin:28px 0 0;font-size:17px;color:rgba(255,255,255,.9)}
+.sum-blob{flex:none}
+.sum-prompt{position:relative;width:100%;box-sizing:border-box;margin-top:16px;min-height:150px;padding:20px 20px 52px;border-radius:24px;background:rgba(255,255,255,.72);color:#1F0E41;text-align:left;font-size:18px;line-height:1.45;cursor:pointer}
+.sum-prompt p{margin:0}
+.sum-prompt .icon{position:absolute;right:20px;bottom:18px;width:22px;height:22px;background-color:currentColor}
 
-/* Prompt card: taller, with the arrow clear of the edge */
-.ap-summary .chat-input{min-height:120px;padding:16px 20px;border-radius:24px}
+/* Sections */
+.sum-sections{display:flex;flex-direction:column;gap:40px;padding:40px 28px 48px}
+.sum-section{display:flex;flex-direction:column;gap:10px}
+.sum-h{margin:0;font-family:'PP Editorial New',Georgia,serif;font-size:26px;font-weight:400;line-height:1.2}
+.sum-copy{margin:0;font-size:16px;line-height:1.55;color:rgba(255,255,255,.82);white-space:pre-line}
 
-/* Header content: the photo sits above the title, with room before the sections */
-.ap-summary .header-card__content{display:flex;flex-direction:column;align-items:center;gap:8px}
-.ap-summary .header-card__chat{margin-top:12px}
-
-/* Photo above the title: stacked in the content column, not absolutely positioned */
-.ap-summary .header-card__content > .avatar{position:static;transform:none;order:-1;margin:0 auto}
-.ap-summary .header-card__titles{order:0}
-.ap-summary .header-card__chat{order:1}
-
-/* T line: the blob only, no provider photo */
-.ap-summary .t-avatar[data-type="t"] .t-avatar__provider{display:none}
-/* Room for the hero now that the status bar is gone */
-.ap-summary .header-card{padding-top:64px}
+/* Loading skeleton for Your Thoughts */
+.sum-skel{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.sum-skel span{display:block;height:14px;border-radius:7px;background:linear-gradient(90deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.22) 50%,rgba(255,255,255,.10) 100%);background-size:200% 100%;animation:sum-shimmer 1.4s linear infinite}
+.sum-skel span:nth-child(1){width:92%}
+.sum-skel span:nth-child(2){width:100%}
+.sum-skel span:nth-child(3){width:64%}
+@keyframes sum-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
