@@ -56,3 +56,6 @@
 .ap-call .ap-remote{top:19.8%;height:54.2%}
 .ap-call .ap-self{top:65%}
 .ap-call .ap-notes{bottom:19.5%}
+
+/* Your video sits on top of the therapist video */
+.ap-call .ap-self{z-index:4}
