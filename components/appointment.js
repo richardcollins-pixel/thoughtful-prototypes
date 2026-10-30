@@ -1,15 +1,14 @@
 /* Appointment: preview → fake video call → loader → summary.
    Entry point: window.launchAppointment(provider), called by the home Join Appointment button.
-   Markup and blobs follow the design system's video, appointment-preview and loading screens. */
+   Icons, blobs and the loader are the design system's (ds.css, ds.js). */
 (function () {
   var REPO = 'https://richardcollins-pixel.github.io/thoughtful-prototypes/';
-  var DS = REPO + 'design-system/';
   // Videos stay on the design-system site: they are large and were not copied into this repo.
   var DS_SITE = 'https://richardcollins-pixel.github.io/thoughtful-design-system/tds/';
   var PROVIDER_VIDEO = DS_SITE + 'assets/videos/provider-video.mp4';
   var USER_VIDEO = DS_SITE + 'assets/videos/user-video.mp4';
-  var GLYPHS = DS + 'atoms/icon/glyphs/';
-  var LOADER_MS = 3000;
+  // Long enough for the loader's three captions to play through once (see behaviors/loader.js).
+  var LOADER_MS = 20000;
 
   var loaderToken = 0;
 
@@ -32,18 +31,16 @@
     return p.n.split(' ')[0];
   }
 
-  function glyph(name) {
-    var img = el('img', 'ap-glyph');
-    img.src = GLYPHS + encodeURI(name);
-    img.alt = '';
-    return img;
+  // The design system's icon classes (icon-x, icon-mic-on, …)
+  function icon(name) {
+    return el('i', 'icon icon-' + name);
   }
 
-  function iconButton(label, glyphName, onClick, extraCls) {
+  function iconButton(label, iconName, onClick, extraCls) {
     var b = el('button', 'ap-icon-btn' + (extraCls ? ' ' + extraCls : ''));
     b.type = 'button';
     b.setAttribute('aria-label', label);
-    b.appendChild(glyph(glyphName));
+    b.appendChild(icon(iconName));
     if (onClick) b.addEventListener('click', onClick);
     return b;
   }
@@ -89,7 +86,7 @@
 
     var top = el('div', 'ap-top');
     top.appendChild(el('span', 'ap-spacer'));
-    top.appendChild(iconButton('Close', 'Name=X.svg', leaveAppointment));
+    top.appendChild(iconButton('Close', 'x', leaveAppointment));
     s.appendChild(top);
 
     s.appendChild(el('h1', 'ap-preview-title', 'Get Ready for Your Appointment'));
@@ -107,8 +104,8 @@
     setVideo(tileVideo, USER_VIDEO);
     tile.appendChild(tileVideo);
     var controls = el('div', 'ap-tile-controls');
-    controls.appendChild(iconButton('Microphone', 'Name=Mic on.svg', null, 'ap-icon-btn--light'));
-    controls.appendChild(iconButton('Camera', 'Name=Video on.svg', null, 'ap-icon-btn--light'));
+    controls.appendChild(iconButton('Microphone', 'mic-on', null, 'ap-icon-btn--light'));
+    controls.appendChild(iconButton('Camera', 'video-on', null, 'ap-icon-btn--light'));
     tile.appendChild(controls);
     s.appendChild(tile);
 
@@ -129,16 +126,18 @@
 
     var top = el('div', 'ap-top');
     var left = el('div', 'ap-top-left');
-    left.appendChild(iconButton('Microphone', 'Name=Mic on.svg', function (e) {
-      var isOff = e.currentTarget.classList.toggle('is-off');
-      e.currentTarget.querySelector('img').src = GLYPHS + encodeURI(isOff ? 'Name=Mic off.svg' : 'Name=Mic on.svg');
+    left.appendChild(iconButton('Microphone', 'mic-on', function (e) {
+      var btn = e.currentTarget;
+      var isOff = btn.classList.toggle('is-off');
+      btn.querySelector('.icon').className = 'icon icon-' + (isOff ? 'mic-off' : 'mic-on');
     }));
-    left.appendChild(iconButton('Camera', 'Name=Video on.svg', function (e) {
-      var isOff = e.currentTarget.classList.toggle('is-off');
-      e.currentTarget.querySelector('img').src = GLYPHS + encodeURI(isOff ? 'Name=video off.svg' : 'Name=Video on.svg');
+    left.appendChild(iconButton('Camera', 'video-on', function (e) {
+      var btn = e.currentTarget;
+      var isOff = btn.classList.toggle('is-off');
+      btn.querySelector('.icon').className = 'icon icon-' + (isOff ? 'video-off' : 'video-on');
     }));
     top.appendChild(left);
-    top.appendChild(iconButton('Leave call', 'Name=X.svg', function () { renderLoader(p); }));
+    top.appendChild(iconButton('Leave call', 'x', function () { renderLoader(p); }));
     s.appendChild(top);
 
     var remote = el('div', 'ap-remote');
@@ -161,20 +160,23 @@
     s.appendChild(notes);
   }
 
-  /* ── Loader while the summary is prepared: the design system's large blob ── */
+  /* ── Loader: the design system's loading state (organisms/loading-state), which plays T's morph loader ── */
   function renderLoader(p) {
     closeAll();
     var token = loaderToken;
     var s = makeScreen('ap-loader');
-
-    var inner = el('div', 'ap-loader-inner');
-    var blobWrap = el('div', 'ap-loader-blob');
-    var blob = el('div', 'blob');
-    blob.setAttribute('data-size', '180');
-    blobWrap.appendChild(blob);
-    inner.appendChild(blobWrap);
-    inner.appendChild(el('p', 'ap-loader-text', 'Finishing up my notes...'));
-    s.appendChild(inner);
+    s.innerHTML =
+      '<section class="loading-state" data-loader data-loader-shapes="blob,pencil,bubble" data-loader-themes="ember,bloom,bloom">' +
+        '<div class="glow loading-state__glow" data-for="loader-blob" data-placement="bottom" aria-hidden="true"><canvas></canvas></div>' +
+        '<div class="loading-state__content">' +
+          '<span class="blob loading-state__blob" id="loader-blob" data-theme="ember"><canvas aria-hidden="true"></canvas></span>' +
+          '<div class="loading-state__captions">' +
+            '<p class="loading-state__line">Wrapping up your appointment...</p>' +
+            '<p class="loading-state__line">Finishing up my notes...</p>' +
+            '<p class="loading-state__line">Packaging it up for you...</p>' +
+          '</div>' +
+        '</div>' +
+      '</section>';
 
     setTimeout(function () {
       if (token !== loaderToken) return;

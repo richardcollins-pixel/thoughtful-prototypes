@@ -1,0 +1,76 @@
+{
+  "name": "Icon label",
+  "tier": "molecules",
+  "category": "content",
+  "stateful": false,
+  "uses": [
+    "atoms/icon",
+    "atoms/skeleton"
+  ],
+  "markup": "<div class=\"icon-label\"><i class=\"icon icon-calendar\" data-size=\"sm\"></i><span>Next available Tue, Oct 13 · 2:30 PM</span></div>",
+  "attributes": {
+    "data-emphasis": {
+      "type": "enum",
+      "values": [
+        "secondary",
+        "primary"
+      ],
+      "default": "secondary"
+    },
+    "data-size": {
+      "type": "enum",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "sm"
+    }
+  },
+  "states": [],
+  "variables": {
+    "--icon-label-text": "color",
+    "--icon-label-icon": "color",
+    "--icon-label-gap": "padding"
+  },
+  "styles": [],
+  "description": "An icon with a line of text. Use it for short facts such as a date, a duration or a location. Primary emphasis for key details, secondary for supporting ones.",
+  "content": [
+    {
+      "label": "Text",
+      "selector": ":scope > span"
+    }
+  ],
+  "props": {
+    "text": {
+      "type": "text",
+      "label": "Label",
+      "default": "Label",
+      "vars": true
+    },
+    "icon": {
+      "type": "icon",
+      "label": "Icon",
+      "default": "calendar"
+    },
+    "emphasis": {
+      "type": "enum",
+      "label": "Emphasis",
+      "values": [
+        "secondary",
+        "primary"
+      ],
+      "default": "secondary"
+    },
+    "size": {
+      "type": "enum",
+      "label": "Size",
+      "values": [
+        "sm",
+        "md"
+      ],
+      "default": "sm"
+    }
+  },
+  "template": "<div class=\"icon-label\" data-emphasis=\"{{emphasis}}\" data-size=\"{{size}}\"><i class=\"icon icon-{{icon}}\" data-size=\"sm\"></i><span>{{text}}</span></div>",
+  "skeleton": "<div class=\"icon-label\" data-size=\"{{size}}\"><span class=\"skeleton\" data-shape=\"dot\"></span><span class=\"skeleton\" data-shape=\"line\" style=\"width:calc({{text.length}} * 1ch)\"></span></div>"
+}
