@@ -136,8 +136,9 @@
     };
 
     if (isPrompt) {
-      // T's follow-up prompt sits in place of the summary
-      SECTION_KEYS.forEach(function (k) { props[k + '.hide'] = true; });
+      // The follow-up prompt sits at the top; the sections stay below it, without the thoughts section
+      props['thoughts.hide'] = true;
+      ['suggestions', 'therapist', 'resources'].forEach(function (k) { props[k + '.hide'] = true; });
     } else {
       props['thoughts.loading'] = phase === 'thoughts-loading' ? 'yes' : 'no';
       props['thoughts.body'] = s.yourThoughts || 'Nothing new came up today.';
