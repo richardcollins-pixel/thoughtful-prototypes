@@ -104,7 +104,7 @@
       '<h1 class="sum-title">Appointment with ' + esc(state.first) + '</h1>';
 
     if (isPrompt) {
-      html += '<div class="sum-lead"><div class="blob" data-size="24" data-theme="warm"><canvas aria-hidden="true"></canvas></div><span>I’m here to chat</span></div>' +
+      html += '<div class="sum-lead"><div class="blob" data-size="32" data-theme="warm"><canvas aria-hidden="true"></canvas></div><span>I’m here to chat</span></div>' +
         '<div class="sum-prompt"><p>' + esc(state.question || FALLBACK_QUESTION) + '</p><i class="icon icon-arrow-up"></i></div>';
     } else {
       html += '<p class="sum-body">' + esc(SUMMARY_BODY) + '</p>' +
