@@ -19,7 +19,6 @@
 
 /* Prompt state: T's lead line and the follow-up box */
 .sum-lead{display:flex;align-items:center;justify-content:center;gap:8px;margin:28px 0 0;font-size:17px;color:rgba(255,255,255,.9)}
-.sum-blob-slot{position:relative;display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;flex:none}
 .sum-prompt{position:relative;width:100%;box-sizing:border-box;margin-top:16px;min-height:150px;padding:20px 20px 52px;border-radius:24px;background:rgba(255,255,255,.72);color:#1F0E41;text-align:left;font-size:18px;line-height:1.45;cursor:pointer}
 .sum-prompt p{margin:0}
 .sum-prompt .icon{position:absolute;right:20px;bottom:18px;width:22px;height:22px;background-color:currentColor}
@@ -41,6 +40,3 @@
 /* Glow: the design system's glow, held inside the frame behind the content */
 .sum-glow-wrap{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;pointer-events:none;z-index:0}
 
-/* The 24px design-system blob: pinned to its slot and centred */
-.sum-blob-slot .blob{position:absolute;left:0;top:0;width:24px;height:24px;transform:none}
-.sum-blob-slot .blob > canvas{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
