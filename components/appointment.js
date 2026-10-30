@@ -148,11 +148,12 @@
 
     var bottom = el('div', 'ap-bottom');
     var notes = el('div', 'ap-notes');
-    var dot = el('span', 'ap-dot');
     var dotBlob = el('div', 'blob');
-    dotBlob.setAttribute('data-size', '24');
-    dot.appendChild(dotBlob);
-    notes.appendChild(dot);
+    dotBlob.setAttribute('data-size', '32');
+    dotBlob.setAttribute('data-theme', 'warm');
+    dotBlob.appendChild(el('canvas'));
+    dotBlob.lastChild.setAttribute('aria-hidden', 'true');
+    notes.appendChild(dotBlob);
     notes.appendChild(el('span', null, 'T is taking notes'));
     bottom.appendChild(notes);
 
