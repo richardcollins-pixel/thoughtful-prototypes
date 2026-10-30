@@ -17,8 +17,9 @@
 .sum-duration .icon{width:18px;height:18px;background-color:currentColor}
 
 /* Prompt state: T's lead line and the follow-up box */
-.sum-lead{display:flex;align-items:center;justify-content:center;gap:10px;margin:28px 0 0;font-size:17px;color:rgba(255,255,255,.9)}
-.sum-blob{flex:none}
+.sum-lead{display:flex;align-items:center;justify-content:center;gap:8px;margin:28px 0 0;font-size:17px;color:rgba(255,255,255,.9)}
+.sum-blob-wrap{position:relative;display:block;width:24px;height:24px;flex:none}
+.sum-blob-wrap .blob{position:absolute;left:0;top:0}
 .sum-prompt{position:relative;width:100%;box-sizing:border-box;margin-top:16px;min-height:150px;padding:20px 20px 52px;border-radius:24px;background:rgba(255,255,255,.72);color:#1F0E41;text-align:left;font-size:18px;line-height:1.45;cursor:pointer}
 .sum-prompt p{margin:0}
 .sum-prompt .icon{position:absolute;right:20px;bottom:18px;width:22px;height:22px;background-color:currentColor}
@@ -36,3 +37,7 @@
 .sum-skel span:nth-child(2){width:100%}
 .sum-skel span:nth-child(3){width:64%}
 @keyframes sum-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* Glow: the design system's glow, held inside the frame behind the content */
+.sum-glow-wrap{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;pointer-events:none;z-index:0}
+.sum-hero,.sum-sections{position:relative;z-index:1}
