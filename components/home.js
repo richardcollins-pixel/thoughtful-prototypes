@@ -872,6 +872,16 @@ Components['home'] = {
 
     restoreTherapistState();
 
+    window.demoConfig = config;
+
+    // Called by the summary when it closes: a new recent topic is now in session.recentTopics.
+    window.onAppointmentSummaryClosed = function () {
+      renderRecentTopics();
+      requestAnimationFrame(function () {
+        page.scrollTop = Math.max(0, topicSec.offsetTop - 20);
+      });
+    };
+
     window.onAppointmentEnded = function (p) {
       session.appointment = { provider: p, status: 'completed' };
       sections.appendChild(therapistSec);
