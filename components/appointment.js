@@ -4,8 +4,10 @@
 (function () {
   var REPO = 'https://richardcollins-pixel.github.io/thoughtful-prototypes/';
   var DS = REPO + 'design-system/';
-  var PROVIDER_VIDEO = DS + 'assets/videos/provider-video.mp4';
-  var USER_VIDEO = DS + 'assets/videos/user-video.mp4';
+  // Videos stay on the design-system site: they are large and were not copied into this repo.
+  var DS_SITE = 'https://richardcollins-pixel.github.io/thoughtful-design-system/tds/';
+  var PROVIDER_VIDEO = DS_SITE + 'assets/videos/provider-video.mp4';
+  var USER_VIDEO = DS_SITE + 'assets/videos/user-video.mp4';
   var GLYPHS = DS + 'atoms/icon/glyphs/';
   var LOADER_MS = 3000;
 
@@ -150,8 +152,10 @@
     s.appendChild(self);
 
     var notes = el('div', 'ap-notes');
-    var dot = el('div', 'blob');
-    dot.setAttribute('data-size', '24');
+    var dot = el('span', 'ap-dot');
+    var dotBlob = el('div', 'blob');
+    dotBlob.setAttribute('data-size', '24');
+    dot.appendChild(dotBlob);
     notes.appendChild(dot);
     notes.appendChild(el('span', null, 'T is taking notes'));
     s.appendChild(notes);
@@ -163,10 +167,14 @@
     var token = loaderToken;
     var s = makeScreen('ap-loader');
 
+    var inner = el('div', 'ap-loader-inner');
+    var blobWrap = el('div', 'ap-loader-blob');
     var blob = el('div', 'blob');
     blob.setAttribute('data-size', '180');
-    s.appendChild(blob);
-    s.appendChild(el('p', 'ap-loader-text', 'Finishing up my notes...'));
+    blobWrap.appendChild(blob);
+    inner.appendChild(blobWrap);
+    inner.appendChild(el('p', 'ap-loader-text', 'Finishing up my notes...'));
+    s.appendChild(inner);
 
     setTimeout(function () {
       if (token !== loaderToken) return;
