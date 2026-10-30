@@ -23,8 +23,7 @@
 .ap-summary--out{animation:ap-sum-out .38s cubic-bezier(.32,.72,0,1) both}
 @keyframes ap-sum-in{from{transform:translateY(100%)}to{transform:translateY(0)}}
 @keyframes ap-sum-out{from{transform:translateY(0)}to{transform:translateY(100%)}}
-.ap-summary .glow{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.ap-summary .header,.ap-summary .header__status{background:transparent}
+.ap-summary .header,.ap-summary .header__status,.ap-summary .status-bar{display:none}
 .ap-summary .summary__sections{margin-top:40px}
 .ap-summary .summary__sections{padding:0 24px}
 .ap-summary .summary__header{padding:0 0 8px}
@@ -49,3 +48,8 @@
 /* Header content: the photo sits above the title, with room before the sections */
 .ap-summary .header-card__content{display:flex;flex-direction:column;align-items:center;gap:8px}
 .ap-summary .header-card__chat{margin-top:12px}
+
+/* Photo above the title: stacked in the content column, not absolutely positioned */
+.ap-summary .header-card__content > .avatar{position:static;transform:none;order:-1;margin:0 auto}
+.ap-summary .header-card__titles{order:0}
+.ap-summary .header-card__chat{order:1}
