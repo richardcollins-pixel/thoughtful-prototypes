@@ -102,7 +102,7 @@
     Object.keys(props || {}).forEach(function (k) { all[k] = props[k]; });
 
     var tpl = meta.template;
-    if (meta.states) {
+    if (meta.states && meta.states.length) {
       var st = meta.states.filter(function (s) { return s.id === all.state; })[0] || meta.states[0];
       tpl = st.template;
     }
