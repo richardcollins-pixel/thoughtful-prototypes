@@ -104,7 +104,7 @@
       '<h1 class="sum-title">Appointment with ' + esc(state.first) + '</h1>';
 
     if (isPrompt) {
-      html += '<p class="sum-lead"><span class="sum-blob-wrap"><span class="blob" data-size="24"></span></span><span>I’m here to chat</span></p>' +
+      html += '<p class="sum-lead"><span class="sum-blob" aria-hidden="true"></span><span>I’m here to chat</span></p>' +
         '<div class="sum-prompt"><p>' + esc(state.question || FALLBACK_QUESTION) + '</p><i class="icon icon-arrow-up"></i></div>';
     } else {
       html += '<p class="sum-body">' + esc(SUMMARY_BODY) + '</p>' +
@@ -120,7 +120,8 @@
       '</section>';
 
     // The design system's glow, from the summary's provider states; it stays inside the frame.
-    html = '<div class="sum-glow-wrap"><div class="glow" data-theme="cool" data-placement="bottom" aria-hidden="true"><canvas></canvas></div></div>' + html;
+    // The glow sits outside the scrolling area, so it stays in place.
+    html = '<div class="sum-glow-wrap"><div class="glow" data-theme="cool" data-placement="bottom" aria-hidden="true"><canvas></canvas></div></div><div class="sum-scroll">' + html + '</div>';
 
     screen.innerHTML = html;
     screen.querySelector('.sum-close').addEventListener('click', finish);
