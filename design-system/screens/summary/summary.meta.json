@@ -1,0 +1,625 @@
+{
+  "name": "Summary",
+  "tier": "screens",
+  "category": "screens",
+  "stateful": false,
+  "uses": [
+    "organisms/header-card",
+    "molecules/text-section",
+    "patterns/suggestions-section",
+    "patterns/therapist-section",
+    "patterns/resources-section",
+    "organisms/loading-state"
+  ],
+  "figma": "https://www.figma.com/design/pdq8KcTCIJAtXwcgReiwlC/Thoughtful-Design-System?node-id=4197-43941",
+  "align": "top",
+  "states": [
+    {
+      "id": "t",
+      "name": "T",
+      "template": "<main class=\"summary\"><div class=\"summary__header\" data-slot=\"header\">{{item:header}}</div><div class=\"summary__sections\" data-slot=\"sections\">{{item:thoughts}}{{item:topic}}{{item:reframe}}{{item:plan}}{{item:suggestions}}{{item:therapist}}{{item:resources}}</div></main>",
+      "slots": [
+        {
+          "id": "header",
+          "label": "Header slot",
+          "items": [
+            "header"
+          ]
+        },
+        {
+          "id": "sections",
+          "label": "Sections slot",
+          "items": [
+            "thoughts",
+            "topic",
+            "reframe",
+            "plan",
+            "suggestions",
+            "therapist",
+            "resources"
+          ]
+        }
+      ],
+      "personas": [
+        "provider"
+      ],
+      "overrides": {
+        "header": {
+          "props": {
+            "state": "default"
+          }
+        }
+      }
+    },
+    {
+      "id": "provider",
+      "name": "Provider",
+      "template": "<main class=\"summary\"><div class=\"glow summary__glow\" data-theme=\"cool\" data-placement=\"bottom\" aria-hidden=\"true\"><canvas></canvas></div><div class=\"summary__header\" data-slot=\"header\">{{item:header}}</div><div class=\"summary__sections\" data-slot=\"sections\">{{item:thoughts}}{{item:topic}}{{item:reframe}}{{item:plan}}{{item:suggestions}}{{item:therapist}}{{item:resources}}</div></main>",
+      "slots": [
+        {
+          "id": "header",
+          "label": "Header slot",
+          "items": [
+            "header"
+          ]
+        },
+        {
+          "id": "sections",
+          "label": "Sections slot",
+          "items": [
+            "thoughts",
+            "topic",
+            "reframe",
+            "plan",
+            "suggestions",
+            "therapist",
+            "resources"
+          ]
+        }
+      ],
+      "personas": [
+        "provider"
+      ],
+      "overrides": {
+        "header": {
+          "props": {
+            "state": "provider",
+            "headline": "Appointment with Kristina",
+            "duration.text": "45 min"
+          }
+        }
+      }
+    },
+    {
+      "id": "provider-follow-up",
+      "name": "Provider, follow-up prompt",
+      "template": "<main class=\"summary\"><div class=\"glow summary__glow\" data-theme=\"cool\" data-placement=\"bottom\" aria-hidden=\"true\"><canvas></canvas></div><div class=\"summary__header\" data-slot=\"header\">{{item:header}}</div><div class=\"summary__sections\" data-slot=\"sections\">{{item:thoughts}}{{item:topic}}{{item:reframe}}{{item:plan}}{{item:suggestions}}{{item:therapist}}{{item:resources}}</div></main>",
+      "slots": [
+        {
+          "id": "header",
+          "label": "Header slot",
+          "items": [
+            "header"
+          ]
+        },
+        {
+          "id": "sections",
+          "label": "Sections slot",
+          "items": [
+            "thoughts",
+            "topic",
+            "reframe",
+            "plan",
+            "suggestions",
+            "therapist",
+            "resources"
+          ]
+        }
+      ],
+      "personas": [
+        "provider"
+      ],
+      "overrides": {
+        "header": {
+          "props": {
+            "state": "prompt",
+            "headline": "Appointment with Kristina",
+            "duration.text": "45 min"
+          }
+        }
+      }
+    },
+    {
+      "id": "provider-thoughts-loading",
+      "name": "Provider, your thoughts loading",
+      "template": "<main class=\"summary\"><div class=\"glow summary__glow\" data-theme=\"cool\" data-placement=\"bottom\" aria-hidden=\"true\"><canvas></canvas></div><div class=\"summary__header\" data-slot=\"header\">{{item:header}}</div><div class=\"summary__sections\" data-slot=\"sections\">{{item:thoughts}}{{item:topic}}{{item:reframe}}{{item:plan}}{{item:suggestions}}{{item:therapist}}{{item:resources}}</div></main>",
+      "slots": [
+        {
+          "id": "header",
+          "label": "Header slot",
+          "items": [
+            "header"
+          ]
+        },
+        {
+          "id": "sections",
+          "label": "Sections slot",
+          "items": [
+            "thoughts",
+            "topic",
+            "reframe",
+            "plan",
+            "suggestions",
+            "therapist",
+            "resources"
+          ]
+        }
+      ],
+      "personas": [
+        "provider"
+      ],
+      "overrides": {
+        "header": {
+          "props": {
+            "state": "provider",
+            "headline": "Appointment with Kristina",
+            "duration.text": "45 min"
+          }
+        },
+        "thoughts": {
+          "props": {
+            "show": "on",
+            "loading": "yes",
+            "tag": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "provider-thoughts",
+      "name": "Provider, your thoughts added",
+      "template": "<main class=\"summary\"><div class=\"glow summary__glow\" data-theme=\"cool\" data-placement=\"bottom\" aria-hidden=\"true\"><canvas></canvas></div><div class=\"summary__header\" data-slot=\"header\">{{item:header}}</div><div class=\"summary__sections\" data-slot=\"sections\">{{item:thoughts}}{{item:topic}}{{item:reframe}}{{item:plan}}{{item:suggestions}}{{item:therapist}}{{item:resources}}</div></main>",
+      "slots": [
+        {
+          "id": "header",
+          "label": "Header slot",
+          "items": [
+            "header"
+          ]
+        },
+        {
+          "id": "sections",
+          "label": "Sections slot",
+          "items": [
+            "thoughts",
+            "topic",
+            "reframe",
+            "plan",
+            "suggestions",
+            "therapist",
+            "resources"
+          ]
+        }
+      ],
+      "personas": [
+        "provider"
+      ],
+      "overrides": {
+        "header": {
+          "props": {
+            "state": "provider",
+            "headline": "Appointment with Kristina",
+            "duration.text": "45 min"
+          }
+        },
+        "thoughts": {
+          "props": {
+            "show": "on",
+            "loading": "no",
+            "tag": ""
+          }
+        }
+      }
+    },
+    {
+      "id": "loading",
+      "name": "Loading",
+      "template": "<section class=\"summary-loading\"><div class=\"summary-loading__body\" data-slot=\"loader\">{{item:loader}}</div></section>",
+      "slots": [
+        {
+          "id": "loader",
+          "label": "Loader slot",
+          "items": [
+            "loader"
+          ]
+        }
+      ],
+      "personas": []
+    }
+  ],
+  "variables": {},
+  "styles": [],
+  "selector": ".summary",
+  "description": "What T writes up after a session. A header (the date, the title, a line and how long it took) over sections you can show or hide in the Sections slot: Today’s Topic, The Reframe and The Plan (T can leave one out if it does not fit the session), Suggestions (only for LIWT conversations), and, for higher acuity, Your therapist and Support Resources. Off the record shows a label in the header when the person chose it, in any conversation. T is the version T writes; Provider is the version a provider reads, with their photo in a flat header. The provider’s summary has the post-appointment thoughts flow as states: T’s follow-up prompt in place of the summary, then Your Thoughts loading, then added by you.",
+  "items": {
+    "header": {
+      "type": "component",
+      "component": "organisms/header-card",
+      "label": "Header",
+      "props": {
+        "state": "default",
+        "overline": "Thurs, Oct 20 at 12:38pm",
+        "headline": "Managing Financial Stress",
+        "body": "You mentioned feeling anxious at work. We could slow this down together and look at what might help you feel more steady.",
+        "duration.text": "10 min"
+      },
+      "expose": [
+        "overline",
+        "headline",
+        "body"
+      ]
+    },
+    "topic": {
+      "type": "component",
+      "component": "molecules/text-section",
+      "label": "Today’s Topic",
+      "props": {
+        "heading": "Today’s Topic",
+        "body": "You came in feeling overwhelmed by low-grade depression and anxiety primarily driven by the financial uncertainty of your work situation.",
+        "show": "on"
+      },
+      "expose": [
+        "heading",
+        "body"
+      ]
+    },
+    "reframe": {
+      "type": "component",
+      "component": "molecules/text-section",
+      "label": "The Reframe",
+      "props": {
+        "heading": "The Reframe",
+        "body": "We reframed your challenge of paralyzing anxiety to a matter of reclaiming your power by focusing on what you can control",
+        "show": "on"
+      },
+      "expose": [
+        "heading",
+        "body"
+      ]
+    },
+    "plan": {
+      "type": "component",
+      "component": "molecules/text-section",
+      "label": "The Plan",
+      "props": {
+        "heading": "The Plan",
+        "body": "Immediate Self-Care: Try meditating today (after this session or at 3 PM) to create a clear moment of peace.\n\nSkill Use: Use the 4-4-6 breathing technique when anxiety spikes to reclaim calm.\n\nRoutine Fix: Introduce a “tech reward” system for your children to ease the stressful bedtime routine and lower your evening tension.",
+        "show": "on"
+      },
+      "expose": [
+        "heading",
+        "body"
+      ]
+    },
+    "suggestions": {
+      "type": "component",
+      "component": "patterns/suggestions-section",
+      "label": "Suggestions",
+      "props": {
+        "state": "default",
+        "show": "off"
+      },
+      "expose": [
+        "heading",
+        "copy"
+      ]
+    },
+    "therapist": {
+      "type": "component",
+      "component": "patterns/therapist-section",
+      "label": "Want to talk to someone?",
+      "props": {
+        "state": "summary-find",
+        "show": "off"
+      },
+      "expose": [
+        "state",
+        "heading"
+      ]
+    },
+    "resources": {
+      "type": "component",
+      "component": "patterns/resources-section",
+      "label": "Support Resources",
+      "props": {
+        "state": "default",
+        "show": "off"
+      },
+      "expose": [
+        "heading",
+        "copy"
+      ]
+    },
+    "thoughts": {
+      "type": "component",
+      "component": "molecules/text-section",
+      "label": "Your Thoughts",
+      "props": {
+        "heading": "Your Thoughts",
+        "body": "You came in feeling overwhelmed by low-grade depression and anxiety primarily driven by the financial uncertainty of your work situation.",
+        "show": "off"
+      },
+      "expose": [
+        "heading",
+        "body",
+        "tag",
+        "loading"
+      ]
+    },
+    "loader": {
+      "type": "component",
+      "component": "organisms/loading-state",
+      "label": "Loading state",
+      "props": {
+        "state": "default"
+      },
+      "expose": [
+        "msg1",
+        "msg2",
+        "msg3"
+      ]
+    }
+  },
+  "personas": [
+    "provider"
+  ],
+  "properties": [],
+  "prompts": [],
+  "inputs": [
+    {
+      "id": "session",
+      "label": "Session",
+      "type": "select",
+      "options": [
+        {
+          "value": "5 min",
+          "set": [
+            [
+              "header",
+              "duration.text",
+              "5 min"
+            ]
+          ]
+        },
+        {
+          "value": "10 min",
+          "set": [
+            [
+              "header",
+              "duration.text",
+              "10 min"
+            ]
+          ]
+        },
+        {
+          "value": "30 min",
+          "set": [
+            [
+              "header",
+              "duration.text",
+              "30 min"
+            ]
+          ]
+        },
+        {
+          "value": "1 hr",
+          "set": [
+            [
+              "header",
+              "duration.text",
+              "1 hr"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "label",
+      "label": "Label",
+      "type": "select",
+      "options": [
+        {
+          "value": "none",
+          "label": "None",
+          "set": [
+            [
+              "header",
+              "label2.show",
+              "off"
+            ],
+            [
+              "header",
+              "duration.show",
+              "on"
+            ]
+          ]
+        },
+        {
+          "value": "otr",
+          "label": "Off the record",
+          "set": [
+            [
+              "header",
+              "label2.show",
+              "on"
+            ],
+            [
+              "header",
+              "label2.icon",
+              "person-x"
+            ],
+            [
+              "header",
+              "label2.text",
+              "Off the Record"
+            ],
+            [
+              "header",
+              "duration.show",
+              "on"
+            ]
+          ]
+        },
+        {
+          "value": "saved",
+          "label": "Leave it with T",
+          "set": [
+            [
+              "header",
+              "label2.show",
+              "on"
+            ],
+            [
+              "header",
+              "label2.icon",
+              "bookmark"
+            ],
+            [
+              "header",
+              "label2.text",
+              "Leave it with T"
+            ],
+            [
+              "header",
+              "duration.show",
+              "off"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "back",
+      "label": "Header",
+      "type": "select",
+      "options": [
+        {
+          "value": "close",
+          "label": "Close",
+          "set": [
+            [
+              "header",
+              "header.variant",
+              "close"
+            ]
+          ]
+        },
+        {
+          "value": "history",
+          "label": "Back (from history)",
+          "set": [
+            [
+              "header",
+              "header.variant",
+              "sub-section"
+            ],
+            [
+              "header",
+              "header.title",
+              "History"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "follow",
+      "label": "Top of the summary",
+      "type": "select",
+      "options": [
+        {
+          "value": "summary",
+          "label": "Summary",
+          "set": [
+            [
+              "header",
+              "state",
+              "provider"
+            ]
+          ]
+        },
+        {
+          "value": "prompt",
+          "label": "T’s follow-up prompt",
+          "set": [
+            [
+              "header",
+              "state",
+              "prompt"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "id": "thoughts",
+      "label": "Your Thoughts",
+      "type": "select",
+      "options": [
+        {
+          "value": "off",
+          "label": "Off",
+          "set": [
+            [
+              "thoughts",
+              "show",
+              "off"
+            ]
+          ]
+        },
+        {
+          "value": "loading",
+          "label": "Loading",
+          "set": [
+            [
+              "thoughts",
+              "show",
+              "on"
+            ],
+            [
+              "thoughts",
+              "loading",
+              "yes"
+            ],
+            [
+              "thoughts",
+              "tag",
+              ""
+            ]
+          ]
+        },
+        {
+          "value": "added",
+          "label": "Added by you",
+          "set": [
+            [
+              "thoughts",
+              "show",
+              "on"
+            ],
+            [
+              "thoughts",
+              "loading",
+              "no"
+            ],
+            [
+              "thoughts",
+              "tag",
+              "Added by you"
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}
