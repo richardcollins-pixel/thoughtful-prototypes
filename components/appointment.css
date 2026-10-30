@@ -42,3 +42,12 @@
 .ap-call .ap-bottom{position:relative;z-index:3;display:flex;align-items:flex-end;justify-content:space-between;margin-top:-64px}
 .ap-call .ap-self{width:30%;margin-left:auto}
 .ap-call .ap-notes{padding-bottom:0}
+
+/* Call layout, from the design system's video screen (402 x 874), as percentages so it scales with the phone.
+   Therapist video: full width. Your video: overlaps its bottom right. Notes: bottom-aligned with your video.
+   The whole group is shifted up about 7% to sit centred. */
+.ap-call .ap-top{top:20px;left:20px;right:20px}
+.ap-call .ap-remote{position:absolute;top:12.8%;left:0;right:0;height:54.2%;width:auto;aspect-ratio:auto;margin:0}
+.ap-call .ap-bottom{display:contents}
+.ap-call .ap-self{position:absolute;top:68.2%;right:4%;width:31%;aspect-ratio:3/4;margin:0}
+.ap-call .ap-notes{position:absolute;left:8%;bottom:12.6%;padding:0}
