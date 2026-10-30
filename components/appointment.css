@@ -27,8 +27,12 @@
 .ap-remote-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .ap-self{position:absolute;right:20px;bottom:104px;width:30%;aspect-ratio:3/4;border-radius:16px;object-fit:cover;z-index:3;box-shadow:0 8px 24px rgba(0,0,0,.25)}
 .ap-notes{position:relative;flex:none;z-index:3;display:flex;align-items:center;gap:10px;padding-top:16px;font-size:16px}
+.ap-dot{position:relative;display:block;width:24px;height:24px;flex:none}
+.ap-dot .blob{position:absolute;left:0;top:0}
 
 /* Loader */
-.ap-loader{align-items:center;justify-content:center;gap:24px}
-.ap-loader .blob{flex:none}
-.ap-loader-text{margin:0;font-size:16px;color:rgba(255,255,255,.7)}
+.ap-loader{align-items:center;justify-content:center}
+.ap-loader-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;width:100%}
+.ap-loader-blob{position:relative;width:180px;height:180px;flex:none}
+.ap-loader-blob .blob{position:absolute;left:0;top:0}
+.ap-loader-text{margin:0;font-size:16px;color:rgba(255,255,255,.7);text-align:center}
