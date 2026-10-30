@@ -884,6 +884,11 @@ Components['home'] = {
       });
     };
 
+    // Starts the Appointment Thoughts chat from the summary.
+    window.launchPat = function () {
+      launchChat({ title: 'Appointment Thoughts', type: 'PAT' });
+    };
+
     window.onAppointmentEnded = function (p) {
       session.appointment = { provider: p, status: 'completed' };
       sections.appendChild(therapistSec);

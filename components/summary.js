@@ -173,93 +173,31 @@
 
     var html = renderComponent('screens/summary', summaryProps())
       .replace(/src="\.\.\/tds\/assets\/[^"]*"/g, 'src="' + photoUrl() + '"');
-    screen.innerHTML = html + (state.phase === 'prompt-chat' ? renderChat() : '');
+    screen.innerHTML = html;
 
     // The design system's header carries the close button; it ends the summary.
     screen.querySelectorAll('.header button').forEach(function (b) { b.addEventListener('click', finish); });
     var prompt = screen.querySelector('.chat-input');
     if (prompt && state.phase === 'prompt') prompt.addEventListener('click', openChat);
-    bindChat(screen);
   }
 
-  function renderChat() {
-    var thread = '';
-    state.messages.forEach(function (m, i) {
-      if (i === 0) return; // the seed is not shown
-      thread += '<div class="ap-bubble ' + (m.role === 'user' ? 'is-user' : 'is-t') + '">' + esc(m.content) + '</div>';
-    });
-    if (state.busy) thread += '<div class="ap-bubble is-t is-typing">...</div>';
-    return '<div class="ap-chat">' +
-      '<div class="ap-chat-thread">' + thread + '</div>' +
-      '<div class="ap-chat-bar"><input class="ap-chat-input" type="text" placeholder="Say anything..." value="' + esc(state.draft) + '">' +
-      '<button type="button" class="ap-chat-send" aria-label="Send"><i class="icon icon-arrow-up"></i></button></div>' +
-      '<button type="button" class="ap-chat-wrap">I’m ready to wrap up</button>' +
-      '</div>';
-  }
-
-  function bindChat(screen) {
-    var input = screen.querySelector('.ap-chat-input');
-    if (!input) return;
-    input.addEventListener('input', function () { state.draft = input.value; });
-    input.addEventListener('keydown', function (e) { if (e.key === 'Enter') send(); });
-    screen.querySelector('.ap-chat-send').addEventListener('click', send);
-    screen.querySelector('.ap-chat-wrap').addEventListener('click', function () { send('I’m ready to wrap up.'); });
-    input.focus();
-  }
-
-  /* ── PAT session ── */
-  function sessionPrompt() {
-    return fill(promptText(PROMPT_KEYS.session), {
-      preferred_name: session().name || 'there',
-      current_date: todayLong()
-    });
-  }
-
+  /* ── PAT: the real chat screen runs the session; the summary picks up when it finishes ── */
   function openChat() {
-    state.phase = 'prompt-chat';
-    state.messages = [{ role: 'user', content: SEED }];
-    state.busy = true;
-    render();
-    turn();
+    var sum = document.querySelector('.ap-summary');
+    if (sum) sum.style.display = 'none';
+    if (window.launchPat) window.launchPat();
   }
 
-  function send(text) {
-    var content = (text || state.draft || '').trim();
-    if (!content || state.busy) return;
-    state.draft = '';
-    state.messages.push({ role: 'user', content: content });
-    state.busy = true;
-    render();
-    turn();
-  }
-
-  function turn() {
-    callChat(sessionPrompt(), state.messages).then(function (data) {
-      state.messages.push({ role: 'assistant', content: data.message || '' });
-      state.busy = false;
-      if (data.status === 'EXIT') return endChat();
-      render();
-    }).catch(function () {
-      state.busy = false;
-      state.messages.push({ role: 'assistant', content: 'Something went wrong. Please try again.' });
-      render();
-    });
-  }
-
-  /* ── Your thoughts ── */
-  function transcript() {
-    return state.messages.filter(function (m, i) { return i > 0; }).map(function (m) {
-      return (m.role === 'user' ? 'User: ' : 'T: ') + m.content;
-    }).join('\n');
-  }
-
-  function endChat() {
+  window.onPatFinished = function (transcript) {
+    var sum = document.querySelector('.ap-summary');
+    if (sum) sum.style.display = '';
+    if (!state) return;
     state.phase = 'thoughts-loading';
     render();
     var prompt = fill(promptText(PROMPT_KEYS.thoughts), {
       preferredName: session().name || 'there',
       currentDate: todayLong(),
-      conversation: transcript()
+      conversation: transcript || ''
     });
     callChat(prompt, [{ role: 'user', content: 'Write the thoughts now.' }]).then(function (data) {
       state.yourThoughts = data.yourThoughts || null;
@@ -270,7 +208,7 @@
       state.phase = 'thoughts';
       render();
     });
-  }
+  };
 
   function recordRecentTopic() {
     var sess = session();
