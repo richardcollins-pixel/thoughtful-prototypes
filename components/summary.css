@@ -44,3 +44,6 @@
 /* The design-system blob takes its 24px in the line, with 8px to the text */
 .sum-lead .blob{width:24px;height:24px;flex:none;position:relative}
 .sum-lead .blob + span{margin-left:0}
+
+/* The design-system blob, in its 24px slot: its canvas sits in the flow and is drawn at the centre of the box */
+.sum-lead .blob > canvas{position:static !important;display:block;width:24px !important;height:24px !important;margin:0 !important;transform:none !important}
