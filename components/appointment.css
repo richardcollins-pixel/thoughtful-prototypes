@@ -1,0 +1,29 @@
+.ap-screen{position:absolute;inset:0;z-index:400;background:linear-gradient(180deg,#1F0E41 0%,#3F0786 100%);color:#fff;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden}
+.ap-icon-btn{width:52px;height:52px;border:0;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:0}
+.ap-icon-btn.is-off{background:rgba(255,255,255,.9);color:#1F0E41}
+.ap-icon-btn--light{background:rgba(255,255,255,.9);color:#1F0E41}
+.ap-close{position:absolute;top:56px;right:24px;width:48px;height:48px;background:rgba(255,255,255,.16)}
+
+/* Preview */
+.ap-preview-title{margin:120px 32px 0;font-size:34px;font-weight:400;line-height:1.2;letter-spacing:-.6px;text-align:center}
+.ap-here{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;font-size:17px;color:rgba(255,255,255,.8)}
+.ap-here-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover}
+.ap-tile{position:absolute;left:28px;right:28px;top:300px;height:440px;border-radius:24px;overflow:hidden;background:#2B1456}
+.ap-tile-video{width:100%;height:100%;object-fit:cover;display:block}
+.ap-tile-controls{position:absolute;left:0;right:0;bottom:20px;display:flex;justify-content:center;gap:14px}
+.ap-join{position:absolute;left:28px;right:28px;bottom:44px;height:64px;border:0;border-radius:999px;background:#fff;color:#1F0E41;font:600 18px/1 'Inter',-apple-system,sans-serif;cursor:pointer}
+
+/* Call */
+.ap-backdrop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(40px) saturate(1.2);opacity:.55;transform:scale(1.15);z-index:0}
+.ap-call-top{position:absolute;top:56px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;z-index:5}
+.ap-call-left{display:flex;gap:10px}
+.ap-leave{background:rgba(245,127,112,.9)}
+.ap-remote{position:absolute;left:0;right:0;top:118px;height:560px;width:100%;object-fit:cover;z-index:2}
+.ap-self{position:absolute;right:16px;top:657px;width:130px;height:173px;border-radius:16px;object-fit:cover;border:2px solid rgba(255,255,255,.2);z-index:3}
+.ap-notes{position:absolute;left:32px;top:797px;display:flex;align-items:center;gap:8px;font-size:16px;z-index:3}
+.ap-notes-dot{width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#F57F70,#2CC5E9)}
+
+/* Loader */
+.ap-loader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
+.ap-loader-blob{width:150px;height:150px;display:block}
+.ap-loader-text{margin:0;font-size:16px;color:rgba(255,255,255,.7)}
