@@ -146,10 +146,7 @@
     remote.appendChild(remoteVideo);
     s.appendChild(remote);
 
-    var self = el('video', 'ap-self');
-    setVideo(self, USER_VIDEO);
-    s.appendChild(self);
-
+    var bottom = el('div', 'ap-bottom');
     var notes = el('div', 'ap-notes');
     var dot = el('span', 'ap-dot');
     var dotBlob = el('div', 'blob');
@@ -157,7 +154,12 @@
     dot.appendChild(dotBlob);
     notes.appendChild(dot);
     notes.appendChild(el('span', null, 'T is taking notes'));
-    s.appendChild(notes);
+    bottom.appendChild(notes);
+
+    var self = el('video', 'ap-self');
+    setVideo(self, USER_VIDEO);
+    bottom.appendChild(self);
+    s.appendChild(bottom);
   }
 
   /* ── Loader: the design system's loading state (organisms/loading-state), which plays T's morph loader ── */
@@ -165,18 +167,10 @@
     closeAll();
     var token = loaderToken;
     var s = makeScreen('ap-loader');
-    s.innerHTML =
-      '<section class="loading-state" data-loader data-loader-shapes="blob,pencil,bubble" data-loader-themes="ember,bloom,bloom">' +
-        '<div class="glow loading-state__glow" data-for="loader-blob" data-placement="bottom" aria-hidden="true"><canvas></canvas></div>' +
-        '<div class="loading-state__content">' +
-          '<span class="blob loading-state__blob" id="loader-blob" data-theme="ember"><canvas aria-hidden="true"></canvas></span>' +
-          '<div class="loading-state__captions">' +
-            '<p class="loading-state__line">Wrapping up your appointment...</p>' +
-            '<p class="loading-state__line">Finishing up my notes...</p>' +
-            '<p class="loading-state__line">Packaging it up for you...</p>' +
-          '</div>' +
-        '</div>' +
-      '</section>';
+    var frame = el('iframe', 'ap-loader-frame');
+    frame.setAttribute('title', 'Loading');
+    frame.srcdoc = window.LOADER_SRCDOC || '';
+    s.appendChild(frame);
 
     setTimeout(function () {
       if (token !== loaderToken) return;
