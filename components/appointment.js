@@ -94,7 +94,7 @@
 
     var tile = el('div', 'ap-tile');
     var tileVideo = el('video', 'ap-tile-video');
-    setVideo(tileVideo, PROVIDER_VIDEO);
+    setVideo(tileVideo, USER_VIDEO);
     tile.appendChild(tileVideo);
     var controls = el('div', 'ap-tile-controls');
     controls.appendChild(iconButton('Microphone', MIC_SVG, null, 'ap-icon-btn--light'));
@@ -156,6 +156,7 @@
     setTimeout(function () {
       if (token !== loaderToken) return;
       closeAll();
+      if (window.onAppointmentEnded) window.onAppointmentEnded(p);
       if (window.showAppointmentSummary) {
         window.showAppointmentSummary(p);
       } else {

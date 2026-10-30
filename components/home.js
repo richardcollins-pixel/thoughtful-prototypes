@@ -327,7 +327,7 @@ Components['home'] = {
     var tCta = document.createElement('button'); tCta.className = 'hm-therapist-cta'; tCta.textContent = 'Find your match';
     therapistCard.appendChild(avatarsDiv); therapistCard.appendChild(tTitle); therapistCard.appendChild(tBody); therapistCard.appendChild(tCta);
     therapistSec.appendChild(therapistCard);
-    sections.insertBefore(therapistSec, sections.firstChild);
+    sections.appendChild(therapistSec);
 
     sections.style.opacity = '0'; sections.style.transition = 'opacity 0.5s ease';
     contentWrap.appendChild(sections);
@@ -401,7 +401,7 @@ Components['home'] = {
     function renderBookedCard(p){therapistCard.removeEventListener('click',openBookingFlow);therapistCard.innerHTML='';therapistCard.className='hm-booked-card';therapistCard.setAttribute('aria-live','polite');var row=document.createElement('div'),av=document.createElement('img'),col=document.createElement('div'),top=document.createElement('div'),ttl=document.createElement('p'),edit=document.createElement('img'),meta=document.createElement('div'),note=document.createElement('p');row.className='hm-booked-row';av.className='hm-booked-avatar';av.src=providerImage(p);av.alt='';col.className='hm-booked-col';top.className='hm-booked-top';ttl.className='hm-booked-title';ttl.textContent='Appointment with '+p.n.split(' ')[0];edit.className='hm-booked-edit';edit.src='https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=Edit.svg';edit.alt='';top.append(ttl,edit);meta.className='hm-booked-meta';[['https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=Calendar.svg',book.d+' at '+book.t],['https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=clock.svg','45 mins']].forEach(function(m){var l=document.createElement('div'),ic=document.createElement('img'),tx=document.createElement('span');l.className='hm-booked-label';ic.src=m[0];ic.alt='';tx.textContent=m[1];l.append(ic,tx);meta.appendChild(l);});var join=document.createElement('button');join.className='hm-booked-join';join.type='button';join.textContent='Join Appointment';join.addEventListener('click',function(e){e.stopPropagation();if(window.launchAppointment)window.launchAppointment(p);});col.append(top,meta,join);row.append(av,col);therapistCard.appendChild(row);}
     var toastTimer=null;
     function showToast(){toast.innerHTML='';var bar=document.createElement('div'),body=document.createElement('div'),icw=document.createElement('div'),ic=document.createElement('span'),txt=document.createElement('div'),t=document.createElement('strong'),m=document.createElement('span');bar.className='hm-toast-bar';body.className='hm-toast-body';icw.className='hm-toast-icon';ic.className='hm-toast-check';icw.appendChild(ic);txt.className='hm-toast-text';t.textContent='Appointment confirmed';m.textContent='Check your email to join, reschedule, or cancel your session';txt.append(t,m);body.append(icw,txt);toast.append(bar,body);toast.setAttribute('role','status');clearTimeout(toastTimer);toast.classList.remove('show');void toast.offsetWidth;toast.classList.add('show');toastTimer=setTimeout(function(){toast.classList.remove('show');},3500);}
-    function confirmBooking(){var p=book.p;renderBookedCard(p);tabEls.forEach(function(el,k){el.classList.toggle('active',k===0);});page.scrollTop=0;restoreHomeBlob();booking.classList.add('closing');setTimeout(function(){booking.classList.remove('open','closing');setTimeout(showToast,120);},400);}
+    function confirmBooking(){var p=book.p;renderBookedCard(p);session.appointment={provider:p,status:'booked',d:book.d,t:book.t};sections.insertBefore(therapistSec,sections.firstChild);tabEls.forEach(function(el,k){el.classList.toggle('active',k===0);});page.scrollTop=0;restoreHomeBlob();booking.classList.add('closing');setTimeout(function(){booking.classList.remove('open','closing');setTimeout(showToast,120);},400);}
 
     function openModal() { modalOverlay.classList.add('open'); }
     function closeModal() { modalOverlay.classList.remove('open'); }
@@ -842,6 +842,41 @@ Components['home'] = {
       });
     }
     card.addEventListener('click', launchChat);
+
+    /* ── Appointment state: booked = Join card at the top; completed = Book next session at the bottom ── */
+    function renderNextCard(p) {
+      therapistCard.innerHTML = '';
+      therapistCard.className = 'hm-next-card';
+      therapistCard.addEventListener('click', openBookingFlow);
+      var row = document.createElement('div'); row.className = 'hm-next-row';
+      var av = document.createElement('img'); av.className = 'hm-next-avatar'; av.src = providerImage(p); av.alt = '';
+      var col = document.createElement('div'); col.className = 'hm-next-col';
+      var nm = document.createElement('p'); nm.className = 'hm-next-name'; nm.textContent = p.n;
+      var sb = document.createElement('p'); sb.className = 'hm-next-sub'; sb.textContent = 'Ready to book your next session?';
+      col.appendChild(nm); col.appendChild(sb); row.appendChild(av); row.appendChild(col);
+      var cta = document.createElement('button'); cta.className = 'hm-next-cta'; cta.type = 'button'; cta.textContent = 'Book next session';
+      therapistCard.appendChild(row); therapistCard.appendChild(cta);
+    }
+
+    function restoreTherapistState() {
+      var appt = session.appointment;
+      if (!appt) return;
+      if (appt.status === 'booked') {
+        book.d = appt.d; book.t = appt.t;
+        renderBookedCard(appt.provider);
+        sections.insertBefore(therapistSec, sections.firstChild);
+      } else if (appt.status === 'completed') {
+        renderNextCard(appt.provider);
+      }
+    }
+
+    restoreTherapistState();
+
+    window.onAppointmentEnded = function (p) {
+      session.appointment = { provider: p, status: 'completed' };
+      sections.appendChild(therapistSec);
+      renderNextCard(p);
+    };
 
     container.appendChild(screen);
     blobPersist.style.transition = 'none';
