@@ -107,6 +107,8 @@
       tpl = st.template;
     }
 
+    if (!tpl) return '';
+
     return tpl
       .replace(/\{\{\?(\w+)\}\}([\s\S]*?)\{\{\/\1\}\}/g, function (_, k, inner) { return all[k] ? inner : ''; })
       .replace(/\{\{item:(\w+)\}\}/g, function (_, name) { return renderItem((meta.items || {})[name], props, name); })
