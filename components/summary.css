@@ -40,3 +40,7 @@
 /* Glow: the design system's glow, held inside the frame behind the content */
 .sum-glow-wrap{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;pointer-events:none;z-index:0}
 
+
+/* The design-system blob takes its 24px in the line, with 8px to the text */
+.sum-lead .blob{width:24px;height:24px;flex:none;position:relative}
+.sum-lead .blob + span{margin-left:0}
