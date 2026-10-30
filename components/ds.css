@@ -1,0 +1,2275 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@100..900&display=swap");
+/* Thoughtful Design System — entry point.
+   Layer order is the dependency order: a layer may only use layers before it. */
+@layer tokens, base, styles, layout, device, atoms, molecules, organisms, patterns, screens, modes;
+
+
+
+
+@font-face {
+  font-family: "PP Editorial New";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/fonts/PPEditorialNew-Regular.woff2") format("woff2"),
+       url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/fonts/PPEditorialNew-Regular.woff") format("woff");
+}
+
+@layer tokens {
+/* GENERATED from tokens.json by tools/build-tokens.js — edit in the editor, not here. */
+
+:root {
+  --purple-900: #1f0e41;
+  --purple-700: #390c81;
+  --purple-500: #8f5ac8;
+  --purple-300: #bfa4ff;
+  --slate: #352654;
+  --white: #ffffff;
+  --black: #000000;
+  --orange: #f57f70;
+  --red: #e55151;
+  --green: #44b677;
+  --blue: #62c2e5;
+}
+
+:root[data-fidelity="wireframe"] {
+  --purple-700: oklch(from #390c81 l 0 h);
+  --purple-500: oklch(from #8f5ac8 l 0 h);
+  --purple-300: oklch(from #bfa4ff l 0 h);
+  --slate: oklch(from #352654 l 0 h);
+  --white: oklch(from #ffffff l 0 h);
+  --black: oklch(from #000000 l 0 h);
+  --orange: oklch(from #f57f70 l 0 h);
+  --red: oklch(from #e55151 l 0 h);
+  --green: oklch(from #44b677 l 0 h);
+  --blue: oklch(from #62c2e5 l 0 h);
+}
+
+:root, [data-surface="normal"] {
+  --bg-base: var(--purple-900);
+  --bg-base-inverse: var(--white);
+  --bg-base-80: color-mix(in srgb, var(--purple-900) 80%, transparent);
+  --bg-base-80-inverse: color-mix(in srgb, var(--white) 80%, transparent);
+  --bg-slate: var(--slate);
+  --bg-slate-inverse: color-mix(in srgb, var(--purple-900) 10%, transparent);
+  --bg-accent: var(--purple-500);
+  --bg-accent-inverse: var(--purple-500);
+  --bg-elevation-5: color-mix(in srgb, var(--white) 5%, transparent);
+  --bg-elevation-5-inverse: color-mix(in srgb, var(--purple-900) 5%, transparent);
+  --bg-elevation-10: color-mix(in srgb, var(--white) 10%, transparent);
+  --bg-elevation-10-inverse: color-mix(in srgb, var(--purple-900) 10%, transparent);
+  --bg-elevation-20: color-mix(in srgb, var(--white) 20%, transparent);
+  --bg-elevation-20-inverse: color-mix(in srgb, var(--purple-900) 20%, transparent);
+  --bg-elevation-40: color-mix(in srgb, var(--white) 40%, transparent);
+  --bg-elevation-40-inverse: color-mix(in srgb, var(--purple-900) 40%, transparent);
+  --bg-elevation-70: color-mix(in srgb, var(--white) 70%, transparent);
+  --bg-elevation-70-inverse: color-mix(in srgb, var(--purple-900) 70%, transparent);
+  --bg-elevation-100: var(--white);
+  --bg-elevation-100-inverse: var(--purple-900);
+  --text-primary: var(--white);
+  --text-primary-inverse: var(--black);
+  --text-secondary: color-mix(in srgb, var(--white) 80%, transparent);
+  --text-secondary-inverse: color-mix(in srgb, var(--black) 50%, transparent);
+  --text-tertiary: color-mix(in srgb, var(--white) 40%, transparent);
+  --text-tertiary-inverse: color-mix(in srgb, var(--black) 40%, transparent);
+  --icon-primary: var(--white);
+  --icon-primary-inverse: var(--black);
+  --icon-secondary: color-mix(in srgb, var(--white) 80%, transparent);
+  --icon-secondary-inverse: color-mix(in srgb, var(--black) 50%, transparent);
+  --border-primary: var(--white);
+  --border-primary-inverse: var(--black);
+  --border-secondary: color-mix(in srgb, var(--white) 40%, transparent);
+  --border-secondary-inverse: color-mix(in srgb, var(--black) 40%, transparent);
+  --border-tertiary: color-mix(in srgb, var(--white) 10%, transparent);
+  --border-tertiary-inverse: color-mix(in srgb, var(--black) 10%, transparent);
+  --status-warning-primary: var(--orange);
+  --status-warning-primary-inverse: var(--orange);
+  --status-warning-secondary: color-mix(in srgb, var(--orange) 10%, transparent);
+  --status-warning-secondary-inverse: color-mix(in srgb, var(--orange) 10%, transparent);
+  --status-error-primary: var(--red);
+  --status-error-primary-inverse: var(--red);
+  --status-error-secondary: color-mix(in srgb, var(--red) 10%, transparent);
+  --status-error-secondary-inverse: color-mix(in srgb, var(--red) 10%, transparent);
+  --status-success-primary: var(--green);
+  --status-success-primary-inverse: var(--green);
+  --status-success-secondary: color-mix(in srgb, var(--green) 10%, transparent);
+  --status-success-secondary-inverse: color-mix(in srgb, var(--green) 10%, transparent);
+  --status-info-primary: var(--blue);
+  --status-info-primary-inverse: var(--blue);
+  --status-info-secondary: color-mix(in srgb, var(--blue) 10%, transparent);
+  --status-info-secondary-inverse: color-mix(in srgb, var(--blue) 10%, transparent);
+}
+
+[data-surface="inverse"] {
+  --bg-base: var(--white);
+  --bg-base-inverse: var(--purple-900);
+  --bg-base-80: color-mix(in srgb, var(--white) 80%, transparent);
+  --bg-base-80-inverse: color-mix(in srgb, var(--purple-900) 80%, transparent);
+  --bg-slate: color-mix(in srgb, var(--purple-900) 10%, transparent);
+  --bg-slate-inverse: var(--slate);
+  --bg-accent: var(--purple-500);
+  --bg-accent-inverse: var(--purple-500);
+  --bg-elevation-5: color-mix(in srgb, var(--purple-900) 5%, transparent);
+  --bg-elevation-5-inverse: color-mix(in srgb, var(--white) 5%, transparent);
+  --bg-elevation-10: color-mix(in srgb, var(--purple-900) 10%, transparent);
+  --bg-elevation-10-inverse: color-mix(in srgb, var(--white) 10%, transparent);
+  --bg-elevation-20: color-mix(in srgb, var(--purple-900) 20%, transparent);
+  --bg-elevation-20-inverse: color-mix(in srgb, var(--white) 20%, transparent);
+  --bg-elevation-40: color-mix(in srgb, var(--purple-900) 40%, transparent);
+  --bg-elevation-40-inverse: color-mix(in srgb, var(--white) 40%, transparent);
+  --bg-elevation-70: color-mix(in srgb, var(--purple-900) 70%, transparent);
+  --bg-elevation-70-inverse: color-mix(in srgb, var(--white) 70%, transparent);
+  --bg-elevation-100: var(--purple-900);
+  --bg-elevation-100-inverse: var(--white);
+  --text-primary: var(--black);
+  --text-primary-inverse: var(--white);
+  --text-secondary: color-mix(in srgb, var(--black) 50%, transparent);
+  --text-secondary-inverse: color-mix(in srgb, var(--white) 80%, transparent);
+  --text-tertiary: color-mix(in srgb, var(--black) 40%, transparent);
+  --text-tertiary-inverse: color-mix(in srgb, var(--white) 40%, transparent);
+  --icon-primary: var(--black);
+  --icon-primary-inverse: var(--white);
+  --icon-secondary: color-mix(in srgb, var(--black) 50%, transparent);
+  --icon-secondary-inverse: color-mix(in srgb, var(--white) 80%, transparent);
+  --border-primary: var(--black);
+  --border-primary-inverse: var(--white);
+  --border-secondary: color-mix(in srgb, var(--black) 40%, transparent);
+  --border-secondary-inverse: color-mix(in srgb, var(--white) 40%, transparent);
+  --border-tertiary: color-mix(in srgb, var(--black) 10%, transparent);
+  --border-tertiary-inverse: color-mix(in srgb, var(--white) 10%, transparent);
+  --status-warning-primary: var(--orange);
+  --status-warning-primary-inverse: var(--orange);
+  --status-warning-secondary: color-mix(in srgb, var(--orange) 10%, transparent);
+  --status-warning-secondary-inverse: color-mix(in srgb, var(--orange) 10%, transparent);
+  --status-error-primary: var(--red);
+  --status-error-primary-inverse: var(--red);
+  --status-error-secondary: color-mix(in srgb, var(--red) 10%, transparent);
+  --status-error-secondary-inverse: color-mix(in srgb, var(--red) 10%, transparent);
+  --status-success-primary: var(--green);
+  --status-success-primary-inverse: var(--green);
+  --status-success-secondary: color-mix(in srgb, var(--green) 10%, transparent);
+  --status-success-secondary-inverse: color-mix(in srgb, var(--green) 10%, transparent);
+  --status-info-primary: var(--blue);
+  --status-info-primary-inverse: var(--blue);
+  --status-info-secondary: color-mix(in srgb, var(--blue) 10%, transparent);
+  --status-info-secondary-inverse: color-mix(in srgb, var(--blue) 10%, transparent);
+}
+
+:root:not([data-fidelity="wireframe"]) [data-foreground="dark"] {
+  --text-primary: var(--black);
+  --text-secondary: color-mix(in srgb, var(--black) 50%, transparent);
+  --text-tertiary: color-mix(in srgb, var(--black) 40%, transparent);
+  --icon-primary: var(--black);
+  --icon-secondary: color-mix(in srgb, var(--black) 50%, transparent);
+  --border-primary: var(--black);
+  --border-secondary: color-mix(in srgb, var(--black) 40%, transparent);
+  --border-tertiary: color-mix(in srgb, var(--black) 10%, transparent);
+}
+
+:root { color-scheme: dark; }
+
+:root {
+  --gradient-purple-to-blue: radial-gradient(ellipse 68% 60% at 100% 0%, #3f0786, transparent), radial-gradient(ellipse 43% 40% at 0% 0%, #5a1f9b, transparent), radial-gradient(ellipse 94% 82% at 100% 100%, #62c2e5, transparent), #3f0786;
+  --gradient-purple-to-orange: radial-gradient(ellipse 68% 60% at 100% 0%, #683a94, transparent), radial-gradient(ellipse 43% 40% at 0% 0%, #743498, transparent), radial-gradient(ellipse 94% 82% at 100% 100%, #f57f70, transparent), #852a9c;
+  --gradient-dark-rose-to-orange: radial-gradient(ellipse 68% 60% at 100% 0%, #723983, transparent), radial-gradient(ellipse 43% 40% at 0% 0%, #82347a, transparent), radial-gradient(ellipse 94% 82% at 100% 100%, #f57f70, transparent), #9c2a6a;
+  --gradient-orange-to-light-rose: radial-gradient(ellipse 68% 60% at 100% 0%, #e15e9b, transparent), radial-gradient(ellipse 43% 40% at 0% 0%, #ff8e5e, transparent), radial-gradient(ellipse 94% 82% at 100% 100%, #ffa86b, transparent), #ff8e5d;
+}
+
+:root[data-fidelity="wireframe"] {
+  --gradient-purple-to-blue: linear-gradient(var(--bg-elevation-20), var(--bg-elevation-20));
+  --gradient-purple-to-orange: linear-gradient(var(--bg-elevation-20), var(--bg-elevation-20));
+  --gradient-dark-rose-to-orange: linear-gradient(var(--bg-elevation-20), var(--bg-elevation-20));
+  --gradient-orange-to-light-rose: linear-gradient(var(--bg-elevation-20), var(--bg-elevation-20));
+}
+
+:root {
+  --padding-xs: 4px;
+  --padding-sm: 8px;
+  --padding-md: 16px;
+  --padding-lg: 24px;
+  --padding-xl: 32px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 999px;
+}
+
+:root {
+  --font-family-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-family-display: "PP Editorial New", Georgia, "Times New Roman", serif;
+  --font-family-mono: "DM Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+  --font-weight-semibold: 600;
+  --font-weight-light: 300;
+  --font-weight-body: 420;
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-md: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.5rem;
+  --font-size-2xl: 1.75rem;
+  --font-size-3xl: 2.25rem;
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.4;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.6;
+  --letter-spacing-tight: -0.02em;
+  --letter-spacing-normal: 0em;
+  --letter-spacing-wide: 0.02em;
+  --letter-spacing-tighter: -0.04em;
+}
+
+:root {
+  --duration-instant: 80ms;
+  --duration-fast: 160ms;
+  --duration-base: 240ms;
+  --duration-slow: 400ms;
+  --duration-shimmer: 1600ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-emphasized: cubic-bezier(0.3, 0, 0, 1.2);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+}
+
+:root {
+  --blur-xs: 5px;
+  --blur-sm: 8px;
+  --blur-md: 22px;
+  --blur-lg: 40px;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 0.08);
+  --shadow-2: 0 4px 12px rgb(0 0 0 / 0.12);
+  --shadow-3: 0 12px 32px rgb(0 0 0 / 0.18);
+  --opacity-dim: 0.2;
+  --opacity-faint: 0.3;
+  --opacity-disabled: 0.4;
+  --opacity-muted: 0.5;
+  --opacity-soft: 0.6;
+  --opacity-scrim: 0.7;
+  --opacity-strong: 0.8;
+  --layer-behind: -1;
+  --layer-raised: 1;
+  --layer-sticky: 2;
+  --layer-scrim: 3;
+  --layer-overlay: 4;
+  --layer-toast: 5;
+  --layer-sheet: 6;
+}
+
+:root {
+  --elevation-0-fill: var(--bg-base);
+  --elevation-0-blur: 0px;
+  --elevation-0-radius: 0px;
+  --elevation-0-shadow: none;
+  --elevation-1-fill: var(--bg-elevation-5);
+  --elevation-1-blur: 0px;
+  --elevation-1-radius: var(--radius-sm);
+  --elevation-1-shadow: var(--shadow-1);
+  --elevation-2-fill: var(--bg-elevation-10);
+  --elevation-2-blur: 0px;
+  --elevation-2-radius: var(--radius-sm);
+  --elevation-2-shadow: var(--shadow-2);
+  --elevation-3-fill: var(--bg-elevation-20);
+  --elevation-3-blur: 0px;
+  --elevation-3-radius: var(--radius-md);
+  --elevation-3-shadow: var(--shadow-3);
+  --elevation-glass-fill: var(--bg-elevation-20);
+  --elevation-glass-blur: var(--blur-md);
+  --elevation-glass-radius: var(--radius-md);
+  --elevation-glass-shadow: none;
+}
+
+:root {
+  --motion-fade-in-duration: var(--duration-base);
+  --motion-fade-in-ease: var(--ease-standard);
+  --motion-fade-in-delay: 0ms;
+  --motion-enter-duration: var(--duration-base);
+  --motion-enter-ease: var(--ease-standard);
+  --motion-enter-delay: 0ms;
+  --motion-pop-duration: var(--duration-base);
+  --motion-pop-ease: var(--ease-emphasized);
+  --motion-pop-delay: 0ms;
+  --motion-scale-in-duration: var(--duration-base);
+  --motion-scale-in-ease: var(--ease-emphasized);
+  --motion-scale-in-delay: 0ms;
+  --motion-draw-duration: var(--duration-slow);
+  --motion-draw-ease: var(--ease-standard);
+  --motion-draw-delay: 0ms;
+  --motion-travel-duration: var(--duration-slow);
+  --motion-travel-ease: var(--ease-standard);
+  --motion-travel-delay: 0ms;
+}
+
+:root {
+  --glow-screen-size: 550px;
+  --glow-screen-blur: 90px;
+  --glow-screen-opacity: 0.6;
+  --glow-page-size: 560px;
+  --glow-page-blur: 80px;
+  --glow-page-opacity: 0.55;
+  --glow-strong-size: 600px;
+  --glow-strong-blur: 80px;
+  --glow-strong-opacity: 0.95;
+  --glow-header-size: 520px;
+  --glow-header-blur: 90px;
+  --glow-header-opacity: 0.4;
+  --glow-card-size: 150px;
+  --glow-card-blur: 36px;
+  --glow-card-opacity: 0.35;
+}
+
+:root {
+  --container-page-x: var(--space-4);
+  --container-page-y: var(--space-4);
+  --container-page-gap: var(--space-6);
+  --container-card-x: var(--padding-md);
+  --container-card-y: var(--padding-lg);
+  --container-card-gap: var(--space-4);
+  --container-inset-x: var(--padding-xl);
+  --container-inset-y: var(--space-12);
+  --container-inset-gap: var(--space-4);
+  --container-sheet-x: var(--space-6);
+  --container-sheet-y: var(--space-6);
+  --container-sheet-gap: var(--space-6);
+}
+
+:root {
+  --background-gradient-fill: var(--gradient-dark-rose-to-orange);
+  --background-gradient-glow-size: 0px;
+  --background-gradient-glow-blur: 0px;
+  --background-gradient-glow-opacity: 0;
+  --background-gradient-blur: 0px;
+  --background-gradient-alpha: 1;
+  --background-page-fill: var(--bg-base);
+  --background-page-glow-size: var(--glow-screen-size);
+  --background-page-glow-blur: var(--glow-screen-blur);
+  --background-page-glow-opacity: var(--glow-screen-opacity);
+  --background-page-blur: 0px;
+  --background-page-alpha: 1;
+  --background-chat-fill: var(--bg-base);
+  --background-chat-glow-size: var(--glow-screen-size);
+  --background-chat-glow-blur: var(--glow-screen-blur);
+  --background-chat-glow-opacity: var(--glow-screen-opacity);
+  --background-chat-blur: 0px;
+  --background-chat-alpha: 1;
+  --background-backdrop-fill: var(--bg-base);
+  --background-backdrop-glow-size: 0px;
+  --background-backdrop-glow-blur: 0px;
+  --background-backdrop-glow-opacity: 0;
+  --background-backdrop-blur: var(--blur-md);
+  --background-backdrop-alpha: var(--opacity-scrim);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-instant: 0.01ms; --duration-fast: 0.01ms; --duration-base: 0.01ms; --duration-slow: 0.01ms; --duration-shimmer: 0.01ms; }
+}
+
+}
+
+@layer base {
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+body {
+  font: var(--text-body-md);
+  letter-spacing: var(--text-body-md-ls);
+  color: var(--text-primary);
+  background: var(--bg-base);
+  -webkit-font-smoothing: antialiased;
+}
+[data-surface] { color: var(--text-primary); background: var(--bg-base); }
+:root:not([data-fidelity="wireframe"]) [data-foreground="dark"] { color: var(--text-primary); }   /* text on a light gradient: see the tokens */
+a { color: var(--text-primary); }
+img, svg { display: block; max-width: 100%; }
+button, input { font: inherit; color: inherit; }
+
+}
+
+@layer styles {
+/* Named mesh gradients are tokens (--gradient-*, see tokens.css). This is the one linear style from Figma. */
+:root {
+  --gradient-border: linear-gradient(118.74deg, var(--white) 0%, color-mix(in srgb, var(--white) 10%, transparent) 49.9%, var(--white) 99.9%);
+}
+
+/* text color helpers (type styles set the font; these set how strong the text is) */
+.text-secondary { color: var(--text-secondary); }
+.text-tertiary  { color: var(--text-tertiary); }
+
+}
+@layer styles {
+/* GENERATED from type.json by tools/build-type.js — edit in the editor (styles > type), not here. */
+
+:root {
+  --text-headline-1: var(--font-weight-light) var(--font-size-3xl)/var(--line-height-tight) var(--font-family-body);
+  --text-headline-1-ls: var(--letter-spacing-tight);
+  --text-headline-2: var(--font-weight-regular) var(--font-size-2xl)/var(--line-height-snug) var(--font-family-body);
+  --text-headline-2-ls: var(--letter-spacing-tighter);
+  --text-subhead: var(--font-weight-regular) var(--font-size-xl)/var(--line-height-tight) var(--font-family-display);
+  --text-subhead-ls: var(--letter-spacing-tight);
+  --text-body-lg: var(--font-weight-body) var(--font-size-lg)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-lg-ls: var(--letter-spacing-normal);
+  --text-body-lg-semibold: var(--font-weight-semibold) var(--font-size-lg)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-lg-semibold-ls: var(--letter-spacing-normal);
+  --text-body-md: var(--font-weight-body) var(--font-size-md)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-md-ls: var(--letter-spacing-normal);
+  --text-body-md-semibold: var(--font-weight-semibold) var(--font-size-md)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-md-semibold-ls: var(--letter-spacing-tight);
+  --text-body-md-italic: italic var(--font-weight-regular) var(--font-size-md)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-md-italic-ls: var(--letter-spacing-normal);
+  --text-body-sm: var(--font-weight-body) var(--font-size-sm)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-sm-ls: var(--letter-spacing-normal);
+  --text-body-sm-semibold: var(--font-weight-semibold) var(--font-size-sm)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-sm-semibold-ls: var(--letter-spacing-normal);
+  --text-body-xs: var(--font-weight-body) var(--font-size-xs)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-xs-ls: var(--letter-spacing-normal);
+  --text-body-xs-semibold: var(--font-weight-semibold) var(--font-size-xs)/var(--line-height-relaxed) var(--font-family-body);
+  --text-body-xs-semibold-ls: var(--letter-spacing-normal);
+}
+
+.text-headline-1 { font: var(--text-headline-1); letter-spacing: var(--text-headline-1-ls); }
+.text-headline-2 { font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); }
+.text-subhead { font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.text-body-lg { font: var(--text-body-lg); letter-spacing: var(--text-body-lg-ls); }
+.text-body-lg-semibold { font: var(--text-body-lg-semibold); letter-spacing: var(--text-body-lg-semibold-ls); }
+.text-body-md { font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.text-body-md-semibold { font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.text-body-md-italic { font: var(--text-body-md-italic); letter-spacing: var(--text-body-md-italic-ls); }
+.text-body-sm { font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.text-body-sm-semibold { font: var(--text-body-sm-semibold); letter-spacing: var(--text-body-sm-semibold-ls); }
+.text-body-xs { font: var(--text-body-xs); letter-spacing: var(--text-body-xs-ls); }
+.text-body-xs-semibold { font: var(--text-body-xs-semibold); letter-spacing: var(--text-body-xs-semibold-ls); }
+
+}
+@layer styles {
+/* Elevation styles. An elevation is a surface color, a background blur, a corner radius and a shadow used together; each one is defined as
+   tokens in styles > elevation (--elevation-N-fill, -blur, -radius, -shadow, and the blur and shadow tokens they point to). Apply with a class.
+   Wireframe mode swaps shadows for outlines (modes/). */
+.elevation-0 { background: var(--elevation-0-fill); backdrop-filter: blur(var(--elevation-0-blur)); border-radius: var(--elevation-0-radius); box-shadow: var(--elevation-0-shadow); }
+.elevation-1 { background: var(--elevation-1-fill); backdrop-filter: blur(var(--elevation-1-blur)); border-radius: var(--elevation-1-radius); box-shadow: var(--elevation-1-shadow); }
+.elevation-2 { background: var(--elevation-2-fill); backdrop-filter: blur(var(--elevation-2-blur)); border-radius: var(--elevation-2-radius); box-shadow: var(--elevation-2-shadow); }
+.elevation-3 { background: var(--elevation-3-fill); backdrop-filter: blur(var(--elevation-3-blur)); border-radius: var(--elevation-3-radius); box-shadow: var(--elevation-3-shadow); }
+.elevation-glass { background: var(--elevation-glass-fill); backdrop-filter: blur(var(--elevation-glass-blur)); border-radius: var(--elevation-glass-radius); box-shadow: var(--elevation-glass-shadow); }
+
+}
+@layer styles {
+/* Background styles (styles > background): a fill, a glow and, for a backdrop, a blur and an opacity, set up as tokens. Apply with a class.
+   A glow element (atoms/glow) inside takes the size, blur and opacity of its background's glow style. */
+.background-gradient { background: var(--background-gradient-fill); }
+.background-page, .background-chat { background: var(--background-page-fill); --glow-size: var(--background-page-glow-size); --glow-blur: var(--background-page-glow-blur); --glow-opacity: var(--background-page-glow-opacity); }
+.background-chat { background: var(--background-chat-fill); --glow-size: var(--background-chat-glow-size); --glow-blur: var(--background-chat-glow-blur); --glow-opacity: var(--background-chat-glow-opacity); }
+.background-backdrop { background: color-mix(in srgb, var(--background-backdrop-fill) calc(var(--background-backdrop-alpha) * 100%), transparent); backdrop-filter: blur(var(--background-backdrop-blur)); }
+
+}
+@layer styles {
+/* Named motion presets. Apply with data-motion="enter" etc.; components use the --motion-* custom properties for transitions.
+   Any preset can be held back with --motion-delay and re-timed with --motion-duration, so several can play one after another:
+     fade-in   opacity 0 to 1
+     enter     slide up 12px and fade in
+     pop       scale up from 94% and fade in (a small settle)
+     scale-in  grow from nothing with a little overshoot (an avatar or badge appearing)
+     draw      a line draws itself along its path (SVG path with pathLength="1": the stroke runs from the start to the end)
+     travel    move and resize from somewhere else to where it sits (--travel-x, --travel-y, --travel-scale)
+   Reduced motion: presets jump to their end state with no delay. */
+:root {
+  --distance-enter: 12px;
+  --motion-press: transform var(--duration-instant) var(--ease-standard);
+  --motion-state: background-color var(--duration-fast) var(--ease-standard),
+                  color var(--duration-fast) var(--ease-standard),
+                  box-shadow var(--duration-fast) var(--ease-standard),
+                  border-color var(--duration-fast) var(--ease-standard);
+}
+@keyframes tds-fade-in  { from { opacity: 0; } }
+@keyframes tds-slide-up { from { opacity: 0; transform: translateY(var(--distance-enter)); } }
+@keyframes tds-spin     { to { transform: rotate(1turn); } }
+@keyframes tds-pop      { from { opacity: 0; transform: scale(0.94); } }
+@keyframes tds-scale-in { from { opacity: 0; transform: scale(0); } }
+@keyframes tds-draw     { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes tds-travel   { from { transform: translate(var(--travel-x, 0), var(--travel-y, 0)) scale(var(--travel-scale, 1)); } }
+
+/* each preset reads its own timing from the motion styles (--motion-<name>-duration, -ease, -delay: styles > motion in the editor);
+   --motion-duration and --motion-delay on the element override them */
+[data-motion="fade-in"]  { animation: tds-fade-in  var(--motion-duration, var(--motion-fade-in-duration, var(--duration-base))) var(--motion-fade-in-ease, var(--ease-standard)) var(--motion-delay, var(--motion-fade-in-delay, 0ms)) both; }
+[data-motion="enter"]    { animation: tds-slide-up var(--motion-duration, var(--motion-enter-duration, var(--duration-base))) var(--motion-enter-ease, var(--ease-standard)) var(--motion-delay, var(--motion-enter-delay, 0ms)) both; }
+[data-motion="pop"]      { animation: tds-pop      var(--motion-duration, var(--motion-pop-duration, var(--duration-base))) var(--motion-pop-ease, var(--ease-emphasized)) var(--motion-delay, var(--motion-pop-delay, 0ms)) both; }
+[data-motion="scale-in"] { animation: tds-scale-in var(--motion-duration, var(--motion-scale-in-duration, var(--duration-base))) var(--motion-scale-in-ease, var(--ease-emphasized)) var(--motion-delay, var(--motion-scale-in-delay, 0ms)) both; }
+[data-motion="draw"]     { stroke-dasharray: 1; animation: tds-draw var(--motion-duration, var(--motion-draw-duration, var(--duration-slow))) var(--motion-draw-ease, var(--ease-standard)) var(--motion-delay, var(--motion-draw-delay, 0ms)) both; }
+[data-motion="travel"]   { animation: tds-travel   var(--motion-duration, var(--motion-travel-duration, var(--duration-slow))) var(--motion-travel-ease, var(--ease-standard)) var(--motion-delay, var(--motion-travel-delay, 0ms)) both; }
+@media (prefers-reduced-motion: reduce) { :root { --distance-enter: 0; } [data-motion] { animation-delay: 0ms !important; } }
+
+}
+@layer styles {
+/* Skeleton: the one shimmer every loading state in the system uses. The skeleton atom (a line, dot or pill) and any
+   component's own [data-state="loading"] rule reuse --skeleton-fill and --skeleton-animation, so a skeleton always
+   looks and moves the same. It is drawn from currentColor, so it follows the surface (base
+   or inverse), and Charcoal mode needs nothing. The sweep takes --duration-shimmer (tokens > duration). */
+:root {
+  --skeleton-fill: linear-gradient(90deg,
+    color-mix(in srgb, currentColor 10%, transparent) 30%,
+    color-mix(in srgb, currentColor 22%, transparent) 50%,
+    color-mix(in srgb, currentColor 10%, transparent) 70%);
+  --skeleton-animation: tds-shimmer var(--duration-shimmer) linear infinite;
+}
+@media (prefers-reduced-motion: reduce) { :root { --skeleton-animation: none; } }
+@keyframes tds-shimmer { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+
+}
+@layer styles {
+/* Carousel: a row that bleeds to the screen edges, scrolls sideways and locks onto one item at a time. The item in focus is
+   fully opaque and the others fade to --carousel-min-opacity, continuously as you scroll (behaviors/carousel.js sets each
+   item's --carousel-focus from 1 down to 0). Mark any row with data-carousel; its children are the items. */
+[data-carousel] {
+  --carousel-gap: var(--space-4);
+  --carousel-min-opacity: 0.5;
+  display: flex; gap: var(--carousel-gap);
+  margin-inline: calc(var(--page-gutter, var(--space-6)) * -1);          /* bleed: out to both edges of the screen… */
+  padding-inline: var(--page-gutter, var(--space-6));                     /* …but the first item still lines up with the content */
+  scroll-padding-inline: var(--page-gutter, var(--space-6));
+  overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none;
+  scroll-snap-type: x mandatory; scroll-behavior: smooth;
+}
+[data-carousel]::-webkit-scrollbar { display: none; }
+[data-carousel] > * {
+  flex: none; scroll-snap-align: start; scroll-snap-stop: always;         /* one item per swipe */
+  opacity: calc(var(--carousel-min-opacity) + (1 - var(--carousel-min-opacity)) * var(--carousel-focus, 1));
+}
+@media (prefers-reduced-motion: reduce) { [data-carousel] { scroll-behavior: auto; } }
+
+}
+
+@layer layout {
+.stack   { display: flex; flex-direction: column; gap: var(--stack-gap, var(--space-4)); }
+.cluster { display: flex; flex-wrap: wrap; align-items: center; gap: var(--cluster-gap, var(--space-3)); }
+.grid    { display: grid; gap: var(--grid-gap, var(--space-4)); grid-template-columns: repeat(var(--grid-cols, auto-fit), minmax(var(--grid-min, 12rem), 1fr)); }
+
+/* the side margin of a screen; full-bleed things (carousels) cancel it so they run to the edge */
+:root { --page-gutter: var(--container-page-x, var(--space-4)); }   /* the page container's side padding (styles > container); 16px in the Figma screens */
+
+}
+
+@layer atoms {
+/* Part: button. Matches Figma buttons/* — filled, outline, glass, flat; lg/md/sm; default,
+   disabled, confirmation, loading (+ outline on/off). Stateless — pure CSS.
+   Interaction states can be forced with data-state so the editor can design them.
+   On an inverse surface the same roles flip, so no inverse variant is needed. */
+.button {
+  --button-fill: var(--bg-elevation-100);
+  --button-fill-hover: var(--bg-elevation-70);
+  --button-fill-pressed: var(--bg-elevation-40);
+  --button-text: var(--text-primary-inverse);
+  --button-border: transparent;
+  --button-radius: var(--radius-full);
+  --button-height: var(--space-12);
+  --button-padding-x: var(--padding-lg);
+  --button-gap: var(--space-2);
+  --button-icon-size: var(--space-6);
+  --button-scale-pressed: 0.97;
+  --button-blur: 0px;
+
+  box-sizing: border-box;
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--button-gap);
+  height: var(--button-height); padding: 0 var(--button-padding-x);
+  font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls);
+  white-space: nowrap;
+  color: var(--button-text);
+  background: var(--button-fill);
+  border: 1px solid var(--button-border);
+  border-radius: var(--button-radius);
+  backdrop-filter: blur(var(--button-blur));
+  cursor: pointer;
+  transition: var(--motion-state), var(--motion-press);
+}
+
+/* ---- sizes (lg 64 / md 48 / sm 24) ---- */
+.button[data-size="lg"] { --button-height: var(--space-16); }
+.button[data-size="sm"] {
+  --button-height: var(--space-6); --button-padding-x: var(--padding-md); --button-icon-size: var(--space-4);
+  font: var(--text-body-sm-semibold); letter-spacing: var(--text-body-sm-semibold-ls);
+}
+.button[data-width="full"] { display: flex; width: 100%; }
+
+/* ---- variants ---- */
+.button[data-variant="outline"] {
+  --button-fill: transparent; --button-fill-hover: var(--bg-elevation-10); --button-fill-pressed: var(--bg-elevation-20);
+  --button-text: var(--text-primary); --button-border: var(--border-primary);
+}
+.button[data-variant="outline"][data-on="false"] { --button-text: var(--text-tertiary); --button-border: var(--border-secondary); }
+
+.button[data-variant="glass"] {
+  --button-fill: var(--bg-elevation-20); --button-fill-hover: var(--bg-elevation-40); --button-fill-pressed: var(--bg-elevation-40);
+  --button-text: var(--text-primary); --button-blur: 44px;
+  font: var(--text-body-md); letter-spacing: var(--text-body-md-ls);                              /* glass is regular weight: Body Medium, and Body Small when small */
+}
+.button[data-variant="glass"][data-size="sm"] { font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.button[data-variant="flat"] {
+  --button-fill: transparent; --button-fill-hover: var(--bg-elevation-10); --button-fill-pressed: var(--bg-elevation-20);
+  --button-text: var(--text-primary); --button-padding-x: var(--padding-sm);
+}
+
+/* ---- states ---- */
+.button:hover, .button[data-state="hover"]   { background: var(--button-fill-hover); }
+.button:active, .button[data-state="pressed"] { background: var(--button-fill-pressed); transform: scale(var(--button-scale-pressed)); }
+.button:focus-visible, .button[data-state="focus"] { outline: 2px solid var(--border-primary); outline-offset: 2px; }
+
+.button:disabled, .button[data-state="disabled"] {
+  --button-fill: var(--bg-elevation-20); --button-fill-hover: var(--bg-elevation-20);
+  cursor: not-allowed; pointer-events: none;
+}
+.button[data-variant="outline"]:disabled, .button[data-variant="outline"][data-state="disabled"] {
+  --button-fill: transparent; --button-fill-hover: transparent; --button-text: var(--text-tertiary); --button-border: var(--border-secondary);
+}
+.button[data-variant="glass"]:disabled, .button[data-variant="glass"][data-state="disabled"],
+.button[data-variant="flat"]:disabled,  .button[data-variant="flat"][data-state="disabled"] { opacity: var(--opacity-disabled, 0.4); }
+
+.button[data-state="loading"] { --button-fill: var(--bg-elevation-20); --button-fill-hover: var(--bg-elevation-20); --button-text: var(--text-primary); pointer-events: none; }
+.button[data-variant="outline"][data-state="loading"] { --button-fill: transparent; --button-fill-hover: transparent; }
+
+.button[data-state="confirmation"] {
+  --button-fill: transparent; --button-fill-hover: var(--bg-elevation-10);
+  --button-text: var(--text-primary); --button-border: var(--border-primary);
+}
+
+/* ---- loading spinner + confirmation check ---- */
+.button[data-state="loading"]::before, .button[data-state="confirmation"]::before {
+  content: ""; flex: none; width: var(--button-icon-size); height: var(--button-icon-size);
+}
+.button[data-state="loading"]::before {
+  box-sizing: border-box; border-radius: 50%;
+  border: 2px solid color-mix(in srgb, currentColor 30%, transparent); border-top-color: currentColor;
+  animation: tds-spin 900ms linear infinite;
+}
+.button[data-state="confirmation"]::before {
+  background: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5.5 5.5L20 6.5'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 12.5l5.5 5.5L20 6.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+/* an optional leading icon, sized with the button */
+.button > .icon { --icon-size: var(--button-icon-size); }
+
+/* loading: a small spinner before the label */
+.button[data-state="loading"]::before { content: ""; flex: none; width: 20px; height: 20px; margin-right: var(--space-2); border: 2px solid color-mix(in srgb, currentColor 30%, transparent); border-top-color: currentColor; border-radius: 50%; animation: tds-spin .9s linear infinite; }
+@keyframes tds-spin { to { rotate: 360deg; } }
+@media (prefers-reduced-motion: reduce) { .button[data-state="loading"]::before { animation: none; } }
+
+}
+@layer atoms {
+/* GENERATED by tools/build_assets.py — one class per glyph. Usage: <i class="icon icon-check"></i> */
+.icon-diamond { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/diamond.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/diamond.svg"); }
+.icon-anxiety { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Anxiety.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Anxiety.svg"); }
+.icon-arrow-left { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=arrow%20left.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=arrow%20left.svg"); }
+.icon-arrow-right { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=arrow%20right.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=arrow%20right.svg"); }
+.icon-arrow-up { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=arrow%20up.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=arrow%20up.svg"); }
+.icon-assessed { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Assessed.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Assessed.svg"); }
+.icon-binary-no { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Binary%20no.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Binary%20no.svg"); }
+.icon-binary-yes { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Binary%20yes.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Binary%20yes.svg"); }
+.icon-bookmark { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Bookmark.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Bookmark.svg"); }
+.icon-breakup { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Breakup.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Breakup.svg"); }
+.icon-calendar { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Calendar.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Calendar.svg"); }
+.icon-call { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Call.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Call.svg"); }
+.icon-check { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Check.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Check.svg"); }
+.icon-chevron-left { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=chevron%20left.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=chevron%20left.svg"); }
+.icon-chevron-right { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=chevron%20right.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=chevron%20right.svg"); }
+.icon-clipboard { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=clipboard.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=clipboard.svg"); }
+.icon-clock { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=clock.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=clock.svg"); }
+.icon-ear { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Ear.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Ear.svg"); }
+.icon-edit { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Edit.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Edit.svg"); }
+.icon-email { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Email.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Email.svg"); }
+.icon-flip { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Flip.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Flip.svg"); }
+.icon-hamburger { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Hamburger.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Hamburger.svg"); }
+.icon-help { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Help.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Help.svg"); }
+.icon-home { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=home.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=home.svg"); }
+.icon-image { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=image.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=image.svg"); }
+.icon-info-bubble { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=info%20bubble.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=info%20bubble.svg"); }
+.icon-keyboard { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=keyboard.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=keyboard.svg"); }
+.icon-library { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=library.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=library.svg"); }
+.icon-life-event-stroller { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Life%20event%20stroller.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Life%20event%20stroller.svg"); }
+.icon-log-out { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Log%20out.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Log%20out.svg"); }
+.icon-mic-off { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Mic%20off.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Mic%20off.svg"); }
+.icon-mic-on { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Mic%20on.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Mic%20on.svg"); }
+.icon-minus { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Minus.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Minus.svg"); }
+.icon-more { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=More.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=More.svg"); }
+.icon-person-check { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Person%20check.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Person%20check.svg"); }
+.icon-person-x { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Person%20x.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Person%20x.svg"); }
+.icon-person { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=person.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=person.svg"); }
+.icon-plus { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Plus.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Plus.svg"); }
+.icon-provider { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Provider.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Provider.svg"); }
+.icon-refresh { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=refresh.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=refresh.svg"); }
+.icon-send { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Send.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Send.svg"); }
+.icon-sentiment-1 { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Sentiment%201.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Sentiment%201.svg"); }
+.icon-settings { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Settings.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Settings.svg"); }
+.icon-sms { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=SMS.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=SMS.svg"); }
+.icon-sparkles { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Sparkles.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Sparkles.svg"); }
+.icon-stress { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Stress.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Stress.svg"); }
+.icon-therapy { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Therapy.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Therapy.svg"); }
+.icon-trash { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=trash.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=trash.svg"); }
+.icon-video-chat { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Video%20chat.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Video%20chat.svg"); }
+.icon-video-off { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=video%20off.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=video%20off.svg"); }
+.icon-video-on { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=video%20on.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=video%20on.svg"); }
+.icon-visibility-on { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Visibility%20on.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Visibility%20on.svg"); }
+.icon-volume-high { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Volume%20high.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Volume%20high.svg"); }
+.icon-volume-off { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Volume%20off.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=Volume%20off.svg"); }
+.icon-warning { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=warning.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=warning.svg"); }
+.icon-waveform { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=waveform.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=waveform.svg"); }
+.icon-wifi-off { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=wifi%20off.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=wifi%20off.svg"); }
+.icon-x { -webkit-mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=X.svg"); mask-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/atoms/icon/glyphs/Name=X.svg"); }
+
+}
+@layer atoms {
+/* Part: icon. The glyph comes from the icon library (libraries/icons.css, one .icon-<name> class each)
+   and is drawn as a mask, so it takes the current text color: roles, inverse surfaces and
+   wireframe all apply with no per-icon work. Usage: <i class="icon icon-check"></i> */
+.icon {
+  --icon-size: var(--space-6);
+  --icon-color: currentColor;
+  display: inline-block; flex: none; vertical-align: middle;
+  width: var(--icon-size); height: var(--icon-size);
+  background-color: var(--icon-color);
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  -webkit-mask-position: center;  mask-position: center;
+  -webkit-mask-size: contain;     mask-size: contain;
+}
+.icon[data-size="sm"] { --icon-size: var(--space-4); }
+.icon[data-size="lg"] { --icon-size: var(--space-8); }
+
+}
+@layer atoms {
+/* Atom: photo. A rectangular photo that fills its width and crops to a set height (a person's photo, top of a card).
+   Use the avatar for the round one. Loading shimmers like the avatar does (the shared shimmer). */
+.photo {
+  --photo-height: 252px;
+  --photo-fill: var(--bg-elevation-20);
+  display: block; box-sizing: border-box; width: 100%; height: var(--photo-height);
+  background: var(--photo-fill); object-fit: cover; object-position: 50% 25%;
+}
+.photo[data-state="loading"] { background-image: var(--skeleton-fill); background-size: 200% 100%; animation: var(--skeleton-animation); }
+
+}
+@layer atoms {
+/* Atom: face. A small face (one of ten feelings) on an orange tile. It is the picture on a bite-size tile. Each face sits where
+   it was drawn inside the 80px square, and scales with --face-size. Loading shimmers like the avatar. */
+.face { --face-size: 80px; position: relative; display: block; flex: none; box-sizing: border-box; width: var(--face-size); height: var(--face-size); border-radius: var(--radius-sm); overflow: clip; background: var(--gradient-orange-to-light-rose); }
+.face > i { position: absolute; display: block; background: center / 100% 100% no-repeat; }
+.face[data-state="loading"] { background: var(--skeleton-fill); background-size: 200% 100%; animation: var(--skeleton-animation); }
+.face[data-state="loading"] > * { visibility: hidden; }
+/* which face, and where it sits inside the 80px tile (the percentages follow the size; the pixel ones are tuned for 80) */
+.face[data-face="calm-down"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/calm-down.svg"); inset: 31.44% 18.28% 35.49% 18.75%; }
+.face[data-face="balance-the-thought"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/balance-the-thought.svg"); inset: 34.18% 24.25% 28.48% 23.75%; }
+.face[data-face="nourish-yourself"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/nourish-yourself.svg"); inset: 30.97% 18.74% 27.5% 17.5%; }
+.face[data-face="give-yourself-grace"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/give-yourself-grace.svg"); left: 26px; top: 35.28%; bottom: 38%; width: 28.423px; }
+.face[data-face="settle-for-sleep"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/settle-for-sleep.svg"); inset: 27.5% 20.04% 27.11% 20%; }
+.face[data-face="reflect-on-today"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/reflect-on-today.svg"); inset: 31.04% 29% 31.62% 26.53%; }
+.face[data-face="set-boundaries"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/set-boundaries.svg"); left: calc(50% + 0.5px); top: 32.09%; bottom: 32.06%; width: 45px; transform: translateX(-50%); }
+.face[data-face="get-motivated"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/get-motivated.svg"); left: calc(50% + 0.09px); top: 30.66%; bottom: 24.14%; width: 38.175px; transform: translateX(-50%); }
+.face[data-face="build-connections"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/build-connections.svg"); inset: 31.17% 29.25% 32% 28.75%; }
+.face[data-face="start-a-plan"] > i { background-image: url("https://richardcollins-pixel.github.io/thoughtful-prototypes/design-system/assets/images/faces/start-a-plan.svg"); inset: 35.78% 31.97% 32% 32.5%; }
+:root[data-fidelity="wireframe"] .face > i { filter: brightness(0); }   /* Charcoal: the drawn features are black, not purple */
+
+}
+@layer atoms {
+/* Atom: blob. The animated gradient shape: it bounces slowly, its outline morphs, and its colors travel round the edge while the theme
+   shifts every few seconds. behaviors/blob.js draws it. --blob-size is its mean diameter; the canvas is larger on purpose (1.74x),
+   because the morph overshoots and swells and a canvas sized to the resting shape would clip it. The extra is transparent and takes
+   no space in the layout. Sizes are the avatar sizes from Figma (24, 32, 48, 80, 124) and the large T (180). */
+.blob { --blob-size: 124px; --blob-canvas: calc(var(--blob-size) * 1.74); position: relative; display: inline-block; flex: none; width: var(--blob-size); height: var(--blob-size); }
+.blob[data-size="24"] { --blob-size: 24px; }
+.blob[data-size="32"] { --blob-size: 32px; }
+.blob[data-size="48"] { --blob-size: 48px; }
+.blob[data-size="80"] { --blob-size: 80px; }
+.blob[data-size="124"] { --blob-size: 124px; }
+.blob[data-size="180"] { --blob-size: 180px; }
+.blob > canvas { position: absolute; left: 50%; top: 50%; width: var(--blob-canvas); height: var(--blob-canvas); margin: calc(var(--blob-canvas) / -2) 0 0 calc(var(--blob-canvas) / -2); display: block; pointer-events: none; }
+/* Charcoal: the accent colors go, so the blob goes gray */
+:root[data-fidelity="wireframe"] .blob > canvas { filter: grayscale(1); }
+
+/* chat: T stays the blob and a glass speech bubble with three dots pops in at its upper right (behaviors/blob.js sets data-chat) */
+.blob { --bubble-line: color-mix(in srgb, var(--white) 55%, transparent); --bubble-fill: color-mix(in srgb, var(--white) 16%, var(--bg-base)); --bubble-dot: color-mix(in srgb, var(--white) 55%, transparent); }
+.blob::before, .blob::after { content: ""; position: absolute; pointer-events: none; opacity: 0; scale: .4; transform-origin: 20% 100%; transition: opacity var(--duration-base) var(--ease-standard), scale var(--duration-slow) var(--ease-emphasized); }
+.blob::after { z-index: 1; left: 68%; bottom: 76%; width: 112%; height: 62%; box-sizing: border-box; border: 1px solid var(--bubble-line); border-radius: calc(var(--blob-size) * .22); background:
+  radial-gradient(circle at 36% 50%, var(--bubble-dot) 0 5%, transparent 5.5%), radial-gradient(circle at 50% 50%, var(--bubble-dot) 0 5%, transparent 5.5%), radial-gradient(circle at 64% 50%, var(--bubble-dot) 0 5%, transparent 5.5%), var(--bubble-fill); }
+.blob::before { z-index: 0; left: calc(68% + 22%); bottom: calc(76% - 9px); width: 18px; height: 18px; box-sizing: border-box; rotate: 45deg; border: solid var(--bubble-line); border-width: 0 1px 1px 0; border-bottom-right-radius: 3px; background: var(--bubble-fill); }
+.blob[data-chat]::before, .blob[data-chat]::after { opacity: 1; scale: 1; }
+:root[data-fidelity="wireframe"] .blob::before, :root[data-fidelity="wireframe"] .blob::after { filter: grayscale(1); }
+@media (prefers-reduced-motion: reduce) { .blob::before, .blob::after { transition: none; } }
+
+}
+@layer atoms {
+/* Atom: glow. A blurred copy of the blob (behaviors/blob.js draws it). It is usually on its own near the bottom of a screen
+   (data-placement="bottom"), independent of any blob and on its own color cycle. Tied to a blob (data-for="<blob id>",
+   data-placement="behind") it is that blob's own blurred copy and follows its shape and colors. */
+.glow { --glow-size: 550px; --glow-blur: 80px; --glow-opacity: 0.85; position: relative; display: block; flex: none; width: var(--glow-size); height: var(--glow-size); pointer-events: none; }
+.glow > canvas { display: block; width: 100%; height: 100%; filter: blur(var(--glow-blur)); opacity: var(--glow-opacity); transform: translateY(var(--bounce, 0px)); animation: tds-glow-pulse 8s ease-in-out infinite alternate; }
+.glow[data-placement="bottom"] { position: absolute; left: 50%; bottom: calc(var(--glow-size) * -0.33); translate: -50% 0; scale: 2.2 1; z-index: 0; }
+/* a placed glow sits behind its container's content but above its background, so the container isolates itself */
+:has(> .glow[data-placement]) { isolation: isolate; }
+.glow[data-placement="behind"] { position: absolute; left: 50%; top: 50%; translate: -50% -50%; z-index: var(--layer-behind); }
+@keyframes tds-glow-pulse { from { opacity: var(--glow-opacity); scale: 1; } to { opacity: min(1, calc(var(--glow-opacity) + 0.15)); scale: 1.06; } }
+@media (prefers-reduced-motion: reduce) { .glow > canvas { animation: none; } }
+:root[data-fidelity="wireframe"] .glow > canvas { filter: blur(var(--glow-blur)) grayscale(1); }
+
+}
+@layer atoms {
+/* Atom: skeleton. A shimmering placeholder for something that is still loading: a line (text), a dot (icon) or a pill
+   (button). Always fully rounded. The shimmer itself is shared (styles > skeleton). */
+.skeleton {
+  display: block; flex: none; box-sizing: border-box;
+  border-radius: var(--radius-full);
+  background-image: var(--skeleton-fill); background-size: 200% 100%; animation: var(--skeleton-animation);
+}
+.skeleton[data-shape="line"] { width: 100%; height: 0.9em; }
+.skeleton[data-shape="square"] { width: var(--space-16); height: var(--space-16); border-radius: var(--radius-sm); }
+.skeleton[data-shape="dot"]  { display: inline-block; width: var(--space-4); height: var(--space-4); }
+.skeleton[data-shape="pill"] { width: 100%; height: var(--space-12); }
+.skeleton[data-shape="pill"][data-size="lg"] { height: var(--space-16); }
+.skeleton[data-shape="pill"][data-size="sm"] { height: var(--space-6); }
+
+}
+@layer device {
+/* Atom: status bar. The phone's status bar (time, signal, wifi, battery), drawn so a screen's top reads true on the canvas.
+   Device chrome, not product UI: it only ever sits at the very top of a screen. */
+.status-bar { display: flex; align-items: center; gap: 6px; height: 54px; box-sizing: border-box; padding: 4px 32px 0 52px; color: var(--text-primary);
+  font: var(--font-weight-semibold) 15px/1 var(--font-family-body); }
+.status-bar > span { margin-right: auto; }
+.status-bar > svg { flex: none; }
+
+}
+@layer atoms {
+/* Atom: dots. A row of six dots that shows progress through steps: the current one stretches into a pill. */
+.dots { --dots-size: var(--space-2); --dots-fill: var(--bg-elevation-20); --dots-current: var(--text-primary); display: inline-flex; align-items: center; gap: var(--space-2); }
+.dots > i { display: block; width: var(--dots-size); height: var(--dots-size); border-radius: var(--radius-full); background: var(--dots-fill); transition: width var(--duration-base) var(--ease-standard, ease), background var(--duration-base); }
+.dots[data-current="1"] > i:nth-child(1) { width: var(--space-6); background: var(--dots-current); }
+.dots[data-current="2"] > i:nth-child(2) { width: var(--space-6); background: var(--dots-current); }
+.dots[data-current="3"] > i:nth-child(3) { width: var(--space-6); background: var(--dots-current); }
+.dots[data-current="4"] > i:nth-child(4) { width: var(--space-6); background: var(--dots-current); }
+.dots[data-current="5"] > i:nth-child(5) { width: var(--space-6); background: var(--dots-current); }
+.dots[data-current="6"] > i:nth-child(6) { width: var(--space-6); background: var(--dots-current); }
+
+/* fewer than six steps: hide the extra dots */
+.dots[data-count="1"] > i:nth-child(n+2) { display: none; }
+.dots[data-count="2"] > i:nth-child(n+3) { display: none; }
+.dots[data-count="3"] > i:nth-child(n+4) { display: none; }
+.dots[data-count="4"] > i:nth-child(n+5) { display: none; }
+.dots[data-count="5"] > i:nth-child(n+6) { display: none; }
+
+}
+@layer atoms {
+/* Part: icon button. Matches Figma "Icon Button": circle, elevation 100/70/40/20/0, three sizes. */
+.icon-button {
+  --icon-button-fill: var(--bg-elevation-100);
+  --icon-button-fill-hover: var(--bg-elevation-70);
+  --icon-button-fill-pressed: var(--bg-elevation-40);
+  --icon-button-icon: var(--text-primary-inverse);
+  --icon-button-size: var(--space-12);
+  --icon-button-icon-size: var(--space-6);
+  --icon-button-radius: var(--radius-full);
+  --icon-button-scale-pressed: 0.94;
+
+  box-sizing: border-box; display: inline-grid; place-items: center; flex: none; padding: 0; border: 0;
+  width: var(--icon-button-size); height: var(--icon-button-size);
+  color: var(--icon-button-icon); background: var(--icon-button-fill);
+  border-radius: var(--icon-button-radius); cursor: pointer;
+  transition: var(--motion-state), var(--motion-press);
+}
+.icon-button > svg { width: var(--icon-button-icon-size); height: var(--icon-button-icon-size); }
+.icon-button > .icon { --icon-size: var(--icon-button-icon-size); }
+
+.icon-button[data-size="lg"] { --icon-button-size: var(--space-16); }
+.icon-button[data-size="sm"] { --icon-button-icon-size: var(--space-4); }
+.icon-button[data-size="xs"] { --icon-button-size: var(--space-6); --icon-button-icon-size: var(--space-4); }   /* 24px button, 16px icon, so it has room around it */
+
+.icon-button[data-elevation="70"] { --icon-button-fill: var(--bg-elevation-70); --icon-button-fill-hover: var(--bg-elevation-40); --icon-button-fill-pressed: var(--bg-elevation-20); }
+.icon-button[data-elevation="40"] { --icon-button-fill: var(--bg-elevation-40); --icon-button-fill-hover: var(--bg-elevation-70); --icon-button-fill-pressed: var(--bg-elevation-20); --icon-button-icon: var(--icon-primary-inverse); }
+.icon-button[data-elevation="20"] { --icon-button-fill: var(--bg-elevation-20); --icon-button-fill-hover: var(--bg-elevation-40); --icon-button-fill-pressed: var(--bg-elevation-70); --icon-button-icon: var(--icon-primary); }
+.icon-button[data-elevation="0"]  { --icon-button-fill: transparent; --icon-button-fill-hover: var(--bg-elevation-10); --icon-button-fill-pressed: var(--bg-elevation-20); --icon-button-icon: var(--icon-primary); }
+
+.icon-button:hover, .icon-button[data-state="hover"]    { background: var(--icon-button-fill-hover); }
+.icon-button:active, .icon-button[data-state="pressed"] { background: var(--icon-button-fill-pressed); transform: scale(var(--icon-button-scale-pressed)); }
+.icon-button:focus-visible, .icon-button[data-state="focus"] { outline: 2px solid var(--border-primary); outline-offset: 2px; }
+.icon-button:disabled, .icon-button[data-state="disabled"] {
+  --icon-button-fill: var(--bg-elevation-20); --icon-button-fill-hover: var(--bg-elevation-20); --icon-button-icon: var(--icon-secondary);
+  opacity: var(--opacity-soft, 0.6); cursor: not-allowed; pointer-events: none;
+}
+.icon-button[data-elevation="0"]:disabled, .icon-button[data-elevation="0"][data-state="disabled"] { --icon-button-fill: transparent; --icon-button-fill-hover: transparent; }
+
+/* loading: the shared shimmer, no icon, not clickable */
+.icon-button[data-state="loading"] { background: var(--skeleton-fill); background-size: 200% 100%; animation: var(--skeleton-animation); pointer-events: none; }
+.icon-button[data-state="loading"] > * { visibility: hidden; }
+
+/* error tone: the icon is red (a muted mic or camera that needs fixing) */
+.icon-button[data-tone="error"] { --icon-button-icon: var(--status-error-primary); }
+
+/* a see-through button blurs what is behind it */
+.icon-button { backdrop-filter: blur(var(--blur-md)); }
+
+}
+@layer atoms {
+/* Atom: avatar. A round photo (or initials). Sizes follow the spacing scale: 24 / 32 / 48 / 64. */
+.avatar {
+  --avatar-size: var(--space-12);
+  --avatar-fill: var(--bg-elevation-20);
+  --avatar-radius: var(--radius-full);
+
+  box-sizing: border-box; display: inline-grid; place-items: center; flex: none; overflow: hidden;
+  width: var(--avatar-size); height: var(--avatar-size);
+  border-radius: var(--avatar-radius); background: var(--avatar-fill); color: var(--text-primary);
+  font: var(--text-body-sm-semibold); letter-spacing: var(--text-body-sm-semibold-ls);
+}
+.avatar[data-size="xs"] { --avatar-size: var(--space-6); font: var(--text-body-xs-semibold); letter-spacing: var(--text-body-xs-semibold-ls); }
+.avatar[data-size="sm"] { --avatar-size: var(--space-8); font: var(--text-body-xs-semibold); letter-spacing: var(--text-body-xs-semibold-ls); }
+.avatar[data-size="lg"] { --avatar-size: var(--space-16); font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.avatar > img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; }
+
+/* loading: the shared shimmer, no photo or initials */
+.avatar[data-state="loading"] { background: var(--skeleton-fill); background-size: 200% 100%; animation: var(--skeleton-animation); font-size: 0; }
+.avatar[data-state="loading"] > * { visibility: hidden; }
+
+}
+@layer atoms {
+/* Atom: card — the bare surface every card type shares: fill, padding, radius, clipping.
+   Default fill is the purple-to-blue gradient; wireframe mode flattens it automatically. */
+.card {
+  --card-fill: var(--gradient-purple-to-blue);
+  --card-padding-x: var(--container-card-x, var(--padding-md));
+  --card-padding-y: var(--container-card-y, var(--padding-lg));
+  --card-radius: var(--radius-md);
+  --card-gap: var(--space-4);
+
+  box-sizing: border-box; display: flex; flex-direction: column; gap: var(--card-gap);
+  width: 100%; padding: var(--card-padding-y) var(--card-padding-x);
+  color: var(--text-primary); background: var(--card-fill);
+  border-radius: var(--card-radius); overflow: clip;
+}
+.card[data-fill="flat"] { --card-fill: var(--bg-elevation-20); }
+
+}
+@layer atoms {
+/* Atom: toggle. A 52 x 32 pill (the elevation 10 fill, purple when on) with a 24px white handle that slides to the right. */
+.toggle { appearance: none; border: 0; margin: 0; padding: 4px; box-sizing: border-box; flex: none; width: 52px; height: 32px; display: flex; align-items: center; justify-content: flex-start; border-radius: 16px; background: var(--bg-elevation-10); cursor: pointer; transition: background var(--duration-base, .2s); -webkit-tap-highlight-color: transparent; }
+.toggle > span { display: block; width: 24px; height: 24px; border-radius: 50%; background: var(--bg-elevation-100); transition: transform var(--duration-base, .2s) var(--ease-standard, ease); }
+.toggle[data-on="true"] { background: var(--bg-accent); }
+.toggle[data-on="true"] > span { transform: translateX(20px); }
+.toggle:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+
+}
+@layer atoms {
+/* Atom: check circle. 24px; an outline, or filled white with a dark check when picked. */
+.check-circle { box-sizing: border-box; flex: none; width: 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; border: 1px solid var(--white); }
+.check-circle > .icon { --icon-size: 16px; --icon-color: var(--purple-900); display: none; }
+.check-circle[data-on="true"] { background: var(--bg-elevation-100); }
+.check-circle[data-on="true"] > .icon { display: block; }
+
+}
+@layer atoms {
+/* Atom: text area. 224px tall, 80% white with a white border, 16px padding, 8px corners. Dark text; the prompt is half strength. */
+.textarea { box-sizing: border-box; width: 100%; height: 224px; display: flex; align-items: flex-start; padding: var(--padding-md); background: color-mix(in srgb, var(--white) 80%, transparent); border: 1px solid var(--white); border-radius: var(--radius-sm); color: var(--black); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); text-align: left; }
+.textarea__cursor { flex: none; width: 1.5px; height: 26px; margin-right: 2px; background: var(--black); animation: tds-caret 1s steps(1) infinite; }
+.textarea[data-filled="no"] .textarea__text { color: color-mix(in srgb, var(--black) 50%, transparent); }
+.textarea[data-filled="yes"] .textarea__cursor { order: 1; margin: 0 0 0 1px; }
+@keyframes tds-caret { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .textarea__cursor { animation: none; } }
+
+}
+@layer atoms {
+/* Atom: image placeholder. A full-width rounded box (the elevation 10 fill) with a picture icon, standing in for an image. 16:9, 4:3 or square. */
+.image-placeholder { box-sizing: border-box; width: 100%; display: grid; place-items: center; aspect-ratio: 16 / 9; border-radius: var(--radius-md); background: var(--bg-elevation-10); }
+.image-placeholder[data-ratio="4:3"] { aspect-ratio: 4 / 3; }
+.image-placeholder[data-ratio="1:1"] { aspect-ratio: 1 / 1; }
+.image-placeholder > .icon { --icon-size: 32px; --icon-color: var(--text-tertiary, color-mix(in srgb, var(--white) 40%, transparent)); }
+
+}
+@layer atoms {
+/* Atom: time chip. An 80px rounded square with a big number over "min", on a soft gradient (orange or rose), black text. In Charcoal it is a
+   flat elevation 20 square with the normal text color. */
+.time-chip { --time-chip-art: radial-gradient(circle at 100% 0, color-mix(in srgb, #e15e9b 90%, transparent), transparent 45%), radial-gradient(circle at 100% 100%, #ffa86b, transparent 55%), #ff8e5d;
+  flex: none; width: 80px; height: 80px; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: var(--radius-sm); background: var(--time-chip-art); color: var(--black); }
+.time-chip[data-tone="rose"] { --time-chip-art: radial-gradient(circle at 100% 100%, #f57f70, transparent 60%), #c94e93; }
+.time-chip > b { font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); margin-bottom: -8px; }
+.time-chip > span { font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+:root[data-fidelity="wireframe"] .time-chip { background: var(--bg-elevation-20); color: var(--text-primary); }
+
+}
+@layer atoms {
+/* Atom: wordmark. The "thoughtful" logotype as an SVG in the current text color (white). 34px tall by default, 24px at md. */
+.wordmark { display: inline-block; color: var(--white); line-height: 0; }
+.wordmark__svg { display: block; height: 34px; width: auto; }
+.wordmark[data-size="md"] .wordmark__svg { height: 24px; }
+
+}
+@layer atoms {
+/* Atom: text field. 48px tall, 80% white with a white border, 8px corners, 13px side padding. Dark text; the prompt is half strength.
+   An optional country selector (flag, code, chevron) turns it into a phone field. Focused shows the cursor; error turns the border red. */
+.text-field { box-sizing: border-box; width: 100%; height: var(--space-12, 48px); display: flex; align-items: center; gap: var(--space-2); padding-inline: 13px; background: color-mix(in srgb, var(--white) 80%, transparent); border: 1px solid var(--white); border-radius: var(--radius-sm); color: var(--black); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); text-align: left; }
+.text-field[data-error="yes"] { border-color: var(--status-error-primary, var(--red)); }
+.text-field__country { flex: none; display: flex; align-items: center; gap: var(--space-2); color: color-mix(in srgb, var(--black) 50%, transparent); }
+.text-field__flag { width: 16px; height: 16px; display: block; }
+.text-field__country .icon { --icon-size: 16px; --icon-color: currentColor; rotate: 90deg; }
+.text-field__cursor { flex: none; width: 1.5px; height: 26px; margin-right: 2px; background: var(--black); animation: tds-caret 1s steps(1) infinite; }
+.text-field[data-focused="no"] .text-field__cursor { display: none; }
+.text-field[data-filled="no"] .text-field__text { color: color-mix(in srgb, var(--black) 50%, transparent); }
+.text-field[data-filled="yes"] .text-field__cursor { order: 1; margin: 0 0 0 -7px; }
+@keyframes tds-caret { 50% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .text-field__cursor { animation: none; } }
+
+}
+@layer atoms {
+/* Atom: checkbox. 24px square, 4px corners, 40% white fill and a faint border; checked turns solid white with a dark check. */
+.checkbox { flex: none; box-sizing: border-box; width: var(--space-6); height: var(--space-6); display: grid; place-items: center; border: 1px solid color-mix(in srgb, var(--white) 14%, transparent); border-radius: var(--radius-xs, 4px); background: var(--bg-elevation-40); }
+.checkbox .icon { --icon-size: 16px; --icon-color: var(--black); display: none; }
+.checkbox[data-checked="yes"] { background: var(--white); border-color: var(--white); }
+.checkbox[data-checked="yes"] .icon { display: block; }
+
+}
+
+@layer molecules {
+/* Molecule: icon + text on one line. Built from the icon atom. */
+.icon-label {
+  --icon-label-text: var(--text-secondary);
+  --icon-label-icon: var(--icon-secondary);
+  --icon-label-gap: var(--space-2);
+
+  display: flex; align-items: center; gap: var(--icon-label-gap);
+  color: var(--icon-label-text);
+  font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls);
+}
+.icon-label > .icon { --icon-color: var(--icon-label-icon); }
+.icon-label[data-emphasis="primary"] { --icon-label-text: var(--text-primary); --icon-label-icon: var(--icon-primary); }
+.icon-label[data-size="md"] { font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+}
+@layer molecules {
+/* Molecule: avatar group — avatars overlap, and each one cuts a transparent ring out of the avatar beneath it, so the
+   background shows through the gap instead of a colored stroke. */
+.avatar-group {
+  --avatar-group-size: 60px;
+  --avatar-group-overlap: var(--space-1);
+  --avatar-group-ring: var(--space-1);
+  display: inline-flex; align-items: center;
+}
+.avatar-group > .avatar { --avatar-size: var(--avatar-group-size); margin-inline-start: calc(var(--avatar-group-overlap) * -1); }
+.avatar-group > .avatar:first-child { margin-inline-start: 0; }
+/* the next avatar sits one size minus the overlap to the right; cut a circle of its radius + ring from this one */
+.avatar-group > .avatar:not(:last-child) {
+  --cut: radial-gradient(circle at calc(var(--avatar-group-size) * 1.5 - var(--avatar-group-overlap)) 50%,
+    transparent calc(var(--avatar-group-size) / 2 + var(--avatar-group-ring)),
+    #000 calc(var(--avatar-group-size) / 2 + var(--avatar-group-ring) + 0.5px));
+  -webkit-mask-image: var(--cut); mask-image: var(--cut);
+}
+/* sizes match the avatar: 24 / 32 / 48 / 64 (the group's own size sets every avatar in it) */
+.avatar-group[data-size="xs"] { --avatar-group-size: var(--space-6); }
+.avatar-group[data-size="sm"] { --avatar-group-size: var(--space-8); }
+.avatar-group[data-size="md"] { --avatar-group-size: var(--space-12); }
+.avatar-group[data-size="lg"] { --avatar-group-size: var(--space-16); }
+
+}
+@layer molecules {
+/* Molecule: T avatar. A row of up to two round things at one size (--t-size): T (the blob); T with the provider's photo overlapping it by
+   half; or a gradient circle with an icon. The photo has a ring (--t-avatar-ring) in the surface color, so it reads as sitting in front of T. */
+.t-avatar { --t-size: 32px; --t-gap: 3px; display: inline-flex; flex: none; align-items: center; height: var(--t-size); color: var(--text-primary); }
+.t-avatar[data-size="24"] { --t-size: 24px; } .t-avatar[data-size="28"] { --t-size: 28px; } .t-avatar[data-size="48"] { --t-size: 48px; }
+.t-avatar > * { display: none; }
+.t-avatar__t { position: relative; width: var(--t-size); height: var(--t-size); flex: none; }
+.t-avatar .blob { --blob-size: var(--t-size); }
+.t-avatar[data-type="t"] .t-avatar__t, .t-avatar[data-type="t-provider"] .t-avatar__t, .t-avatar[data-type="t-provider"] .t-avatar__provider { display: block; }
+.t-avatar[data-type="t-provider"] .t-avatar__provider { --avatar-size: var(--t-size); margin-left: calc(var(--t-size) / -2); position: relative; z-index: var(--layer-raised); box-shadow: 0 0 0 var(--t-gap) var(--t-avatar-ring, var(--bg-base)); }
+.t-avatar[data-type="icon"] .t-avatar__icon { display: grid; place-items: center; width: var(--t-size); height: var(--t-size); border-radius: 50%; color: var(--white); background: var(--gradient-dark-rose-to-orange); }
+.t-avatar__icon > .icon { --icon-size: calc(var(--t-size) / 2); --icon-color: currentColor; }
+
+/* the provider alone: just the photo */
+.t-avatar[data-type="provider"] .t-avatar__provider { display: block; --avatar-size: var(--t-size); }
+
+}
+@layer molecules {
+/* Molecule: avatar with text. A T avatar, a title (in a preferred type style: small, medium, large semibold or the serif subhead), an
+   optional line under it and an optional close button. The text takes the surface's color (it follows the container). */
+.avatar-text { display: flex; align-items: center; gap: var(--space-4); width: 100%; color: inherit; }
+.avatar-text > .t-avatar[data-type="none"] { display: none; }
+.avatar-text__titles { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.avatar-text__title { font: var(--text-body-lg-semibold); letter-spacing: var(--text-body-lg-semibold-ls); }
+.avatar-text[data-style="small"] .avatar-text__title { font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.avatar-text[data-style="medium"] .avatar-text__title { font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.avatar-text[data-style="chat"] .avatar-text__title { font: var(--text-body-lg); letter-spacing: var(--text-body-lg-ls); }
+.avatar-text[data-style="subhead"] .avatar-text__title { font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.avatar-text__subline { font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); opacity: var(--opacity-muted, .5); }
+.avatar-text__close { display: none; appearance: none; border: 0; background: none; padding: 0; margin: 0; width: 16px; height: 16px; align-self: flex-start; color: inherit; cursor: pointer; }
+.avatar-text__close > .icon { --icon-size: 16px; --icon-color: currentColor; }
+.avatar-text[data-close="on"] .avatar-text__close { display: block; }
+.avatar-text:has(.avatar-text__subline) { align-items: flex-start; }
+
+}
+@layer molecules {
+/* Molecule: skeleton text. A multi-line placeholder made of skeleton lines. Each line takes the height of a line of the
+   text it stands for (so it inherits the surrounding type), the bar is centered in it, widths are a little ragged and
+   the last line is shorter. Alignment follows --skeleton-align (start by default; centered layouts set it to center). */
+.skeleton-text { display: grid; grid-auto-rows: 1lh; align-items: center; justify-items: var(--skeleton-align, start); width: 100%; }
+.skeleton-text > .skeleton:nth-child(1) { width: 96%; }
+.skeleton-text > .skeleton:nth-child(2) { width: 100%; }
+.skeleton-text > .skeleton:nth-child(3) { width: 92%; }
+.skeleton-text > .skeleton:nth-child(4) { width: 96%; }
+.skeleton-text[data-lines="1"] > .skeleton:nth-child(1) { width: var(--skeleton-first-width, 90%); }
+.skeleton-text[data-lines="2"] > .skeleton:nth-child(2), .skeleton-text[data-lines="3"] > .skeleton:nth-child(3), .skeleton-text[data-lines="4"] > .skeleton:nth-child(4) { width: 80%; }
+.skeleton-text[data-lines="1"] > .skeleton:nth-child(n+2), .skeleton-text[data-lines="2"] > .skeleton:nth-child(n+3), .skeleton-text[data-lines="3"] > .skeleton:nth-child(4) { display: none; }
+
+}
+@layer molecules {
+/* Molecule: chat input. The pill at the bottom of a session card: a prompt on the left and an arrow to send on the right.
+   Glass over the card (a white fill and border), dark text. Built from the icon atom. */
+.chat-input {
+  /* Always a light glass with dark text, whatever is behind it. These use the primitives, not the roles, so they do not flip when
+     the card's text color does (a light gradient) or on an inverse surface. */
+  --chat-input-fill: color-mix(in srgb, var(--white) 70%, transparent);
+  --chat-input-border: color-mix(in srgb, var(--white) 40%, transparent);
+  --chat-input-text: var(--black);
+  --chat-input-height: var(--space-12);
+  --chat-input-padding-x: var(--padding-md);
+
+  box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: var(--space-2);
+  width: 100%; height: var(--chat-input-height); padding: 0 var(--chat-input-padding-x);
+  color: var(--chat-input-text); background: var(--chat-input-fill);
+  border: 1px solid var(--chat-input-border); border-radius: var(--radius-full);
+  font: var(--text-body-md); letter-spacing: var(--text-body-md-ls);
+}
+.chat-input > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chat-input > .icon { --icon-color: var(--chat-input-text); flex: none; }
+
+/* Large: the box on the home screen. Taller, the prompt starts at the top and the arrow sits at the bottom right. */
+.chat-input[data-variant="large"] {
+  --chat-input-height: 110px;
+  height: auto; min-height: var(--chat-input-height); align-items: stretch; padding: var(--padding-md);
+  border-radius: var(--radius-md); backdrop-filter: blur(30px);
+  box-shadow: 0 4.5px 54px color-mix(in srgb, var(--black) 9%, transparent);
+}
+.chat-input[data-variant="large"] > span { white-space: normal; }
+.chat-input[data-variant="large"] > .icon { align-self: flex-end; }
+/* Empty: the pill before anything is typed, its prompt at half strength */
+.chat-input[data-variant="empty"] > span { color: color-mix(in srgb, var(--chat-input-text) 50%, transparent); }
+
+}
+@layer molecules {
+/* Molecule: bottom nav. Three tabs (home, sessions, profile) over a blurred base, then the phone's home indicator (a device part). The current tab is
+   full strength, the others half. Stuck to the bottom of a screen by the screen, not here. */
+.bottom-nav { box-sizing: border-box; width: 100%; display: flex; flex-direction: column; background: var(--bg-base-80); backdrop-filter: blur(var(--blur-md)); color: var(--text-primary); }
+.bottom-nav__tabs { height: 75px; display: flex; align-items: center; justify-content: center; gap: var(--space-6); }
+.bottom-nav__tab { appearance: none; border: 0; background: none; padding: 0; margin: 0; width: 64px; height: 64px; display: grid; place-items: center; border-radius: var(--radius-full); color: inherit; opacity: var(--opacity-muted, .5); cursor: pointer; -webkit-tap-highlight-color: transparent; transition: opacity .2s; }
+.bottom-nav__tab > .icon { --icon-color: currentColor; }
+.bottom-nav[data-current="home"] [data-tab="home"], .bottom-nav[data-current="sessions"] [data-tab="sessions"], .bottom-nav[data-current="profile"] [data-tab="profile"] { opacity: 1; }
+.bottom-nav__tab:hover { opacity: var(--opacity-strong, .8); }
+.bottom-nav__tab:focus-visible { outline: 2px solid var(--text-primary); outline-offset: -4px; }
+.bottom-nav__safe { height: 24px; display: flex; justify-content: center; align-items: flex-end; padding-bottom: 8px; box-sizing: border-box; }
+.bottom-nav[data-tabs="2"] [data-tab="home"] { display: none; }
+
+}
+@layer molecules {
+/* Molecule: address suggestions. A frosted panel of rows (66px each, hairline between) under a text field; capped at 243px so the last row is cut off. */
+.address-suggestions { box-sizing: border-box; width: 100%; max-height: 243px; margin: 0; padding: 0; list-style: none; overflow: hidden; border-radius: 0 0 var(--radius-sm) var(--radius-sm); background: linear-gradient(var(--bg-elevation-10), var(--bg-elevation-10)); backdrop-filter: blur(var(--blur-md)); color: var(--text-primary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.address-suggestions li { display: flex; align-items: center; height: 66px; padding-inline: 20px; border-bottom: 1px solid var(--bg-elevation-10); }
+.address-suggestions li:last-child { border-bottom: 0; }
+
+}
+@layer molecules {
+/* Molecule: choice row. A 64px outlined pill: check circle and a semibold label. Dim fades it to half. */
+.choice-row { box-sizing: border-box; width: 100%; height: var(--space-16); display: flex; align-items: center; gap: var(--space-2); padding: 0 20px; border: 1px solid var(--border-primary, var(--white)); border-radius: 40px; background: none; color: var(--text-primary); font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); text-align: left; cursor: pointer; }
+.choice-row__label { flex: 1; min-width: 0; }
+.choice-row[data-dim="true"] { opacity: var(--opacity-muted, .5); }
+
+}
+@layer molecules {
+/* Molecule: option tile. 58px tall, frosted (20% white), 8px corners, centered 16px label; selected adds a white outline. */
+.option-tile { box-sizing: border-box; width: 100%; height: 58px; display: grid; place-items: center; padding-inline: var(--space-4); border: 1px solid transparent; border-radius: var(--radius-sm); background: var(--bg-elevation-20); backdrop-filter: blur(var(--blur-md)); color: var(--text-primary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); text-align: center; cursor: pointer; }
+.option-tile[data-selected="yes"] { border-color: var(--white); }
+
+}
+@layer molecules {
+/* Molecule: day chip. 68 by 64, frosted, 8px corners: weekday (14px) over date (16px semibold). Selected is white with dark text. */
+.day-chip { box-sizing: border-box; flex: 1; min-width: 0; height: 64px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 0; border-radius: var(--radius-sm); background: var(--bg-elevation-20); backdrop-filter: blur(var(--blur-md)); color: var(--text-primary); cursor: pointer; }
+.day-chip span { color: var(--text-secondary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.day-chip b { font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.day-chip[data-selected="yes"] { background: var(--bg-elevation-100); color: var(--bg-elevation-100-inverse); }
+.day-chip[data-selected="yes"] span { color: var(--bg-elevation-100-inverse); opacity: var(--opacity-soft, .6); }
+
+}
+@layer molecules {
+/* Molecule: cycle art. T (an 80px blob) and an 84px person circle with arrows above and below. Three states: find (an icon, the lower arrow faded),
+   booked (the photo and a check badge), paused (an icon and a pause badge). It plays on its own (Animate on), in this order, using the motion styles:
+   the blob starts large in the middle and travels left, shrinking; the top arrow draws left to right; the person circle pops in, then what is in it, then
+   the badge; the lower arrow draws right to left, back to T. Animate off shows the end picture. */
+.cycle-art { --art-blob: 80px; --art-person: 84px; --art-gap: 48px; display: grid; justify-items: center; gap: var(--space-2); color: var(--white); }
+.cycle-art__pair { display: flex; align-items: center; gap: var(--art-gap); }
+.cycle-art .blob { --blob-size: var(--art-blob); }
+.cycle-art__partner { position: relative; width: var(--art-person); height: var(--art-person); }
+.cycle-art__person { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; background: var(--bg-elevation-20); }
+.cycle-art__inner { display: grid; place-items: center; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; }
+.cycle-art__icon { --icon-size: 24px; --icon-color: var(--white); }
+.cycle-art__photo { --avatar-size: var(--art-person); display: none; }
+.cycle-art[data-state="booked"] .cycle-art__icon { display: none; }
+.cycle-art[data-state="booked"] .cycle-art__photo { display: block; }
+.cycle-art[data-state="booked"] .cycle-art__person { background: none; }
+.cycle-art__badge { position: absolute; right: -8px; top: -6px; display: none; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--white); color: var(--black); }
+.cycle-art[data-state="booked"] .cycle-art__badge, .cycle-art[data-state="paused"] .cycle-art__badge { display: grid; }
+.cycle-art__badge .icon { --icon-size: 14px; --icon-color: var(--black); display: none; }
+.cycle-art[data-state="booked"] .cycle-art__badge .icon { display: block; }
+.cycle-art__pause { display: none; width: 8px; height: 10px; border-inline: 3px solid var(--black); box-sizing: border-box; }
+.cycle-art[data-state="paused"] .cycle-art__pause { display: block; }
+.cycle-art__arrow { width: 124px; height: 36px; }
+.cycle-art[data-state="find"] .cycle-art__arrow[data-end="bottom"] { opacity: var(--opacity-faint, .3); }
+
+/* the sequence */
+.cycle-art[data-animate="on"] .cycle-art__t { --travel-x: calc((var(--art-blob) + var(--art-gap) + var(--art-person)) / 2 - var(--art-blob) / 2); --travel-scale: 1.6;
+  animation: tds-travel 800ms var(--ease-standard) 300ms both; }
+.cycle-art[data-animate="on"] [data-end="top"] .cycle-art__line { stroke-dasharray: 1; animation: tds-draw 600ms var(--ease-standard) 1100ms both; }
+.cycle-art[data-animate="on"] [data-end="top"] .cycle-art__head { animation: tds-fade-in 150ms linear 1550ms both; }
+.cycle-art[data-animate="on"] .cycle-art__person { animation: tds-scale-in 350ms var(--ease-emphasized) 1700ms both; }
+.cycle-art[data-animate="on"] .cycle-art__inner { animation: tds-scale-in 300ms var(--ease-emphasized) 2000ms both; }
+.cycle-art[data-animate="on"] .cycle-art__badge { animation: tds-scale-in 300ms var(--ease-emphasized) 2250ms both; }
+.cycle-art[data-animate="on"] [data-end="bottom"] .cycle-art__line { stroke-dasharray: 1; animation: tds-draw 600ms var(--ease-standard) 2450ms both; }
+.cycle-art[data-animate="on"] [data-end="bottom"] .cycle-art__head { animation: tds-fade-in 150ms linear 2900ms both; }
+.cycle-art[data-animate="on"][data-state="find"] [data-end="bottom"] { animation: none; }
+@media (prefers-reduced-motion: reduce) { .cycle-art[data-animate="on"] * { animation: none !important; } }
+
+}
+@layer molecules {
+/* Molecule: video tile (a muted looping video). A frame for someone's video, in three sizes (preview 268x357, remote 402x536, self 126x168) and four kinds: video (the picture,
+   cropped to fill), paused (a tint, T with a no-signal badge, a bold line and a note), waiting (a tint, the therapist's photo and one line), empty
+   (a tint). Controls (mute, camera) can be laid over the bottom of the frame: they go in the [data-slot="controls"] it carries. */
+.video-tile { position: relative; box-sizing: border-box; overflow: hidden; display: grid; place-items: center; background: var(--bg-elevation-20); color: var(--text-primary); text-align: center; border-radius: var(--radius-md); }
+.video-tile[data-size="preview"] { width: 268px; height: 357px; }
+.video-tile[data-size="remote"] { width: 100%; aspect-ratio: 3 / 4; border-radius: 0; }
+.video-tile[data-size="remote"] .video-tile__video { object-position: 50% 50%; }   /* the full height of the clip; the sides are cropped to 3:4 */
+.video-tile[data-size="backdrop"] { position: absolute; inset: 0; width: 100%; height: 100%; border-radius: 0; background: none; z-index: var(--layer-behind); pointer-events: none; }
+.video-tile[data-size="backdrop"] .video-tile__video { filter: blur(48px) saturate(1.2); scale: 1.5; opacity: var(--opacity-faint); }
+.video-tile[data-size="self"] { width: 126px; height: 168px; box-shadow: var(--shadow-3); background: var(--purple-700); }
+.video-tile__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; display: none; }
+.video-tile[data-kind="video"] .video-tile__video { display: block; }
+.video-tile__status { display: none; position: relative; flex-direction: column; align-items: center; gap: var(--space-2); padding-inline: var(--space-6); }
+.video-tile[data-kind="paused"] .video-tile__status, .video-tile[data-kind="waiting"] .video-tile__status { display: flex; }
+.video-tile__t { display: none; position: relative; width: 84px; height: 48px; margin-bottom: var(--space-3); }
+.video-tile[data-kind="paused"] .video-tile__t { display: block; }
+.video-tile__t .blob { --blob-size: 48px; position: absolute; left: 0; top: 0; }
+.video-tile__badge { position: absolute; right: 0; top: 0; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: var(--bg-base); }
+.video-tile__badge .icon { --icon-size: 24px; --icon-color: var(--white); }
+.video-tile__avatar { display: none; --avatar-size: 48px; }
+.video-tile[data-kind="waiting"] .video-tile__avatar { display: block; }
+.video-tile__title { display: none; font: var(--text-body-sm-semibold); letter-spacing: var(--text-body-sm-semibold-ls); }
+.video-tile[data-kind="paused"] .video-tile__title { display: block; }
+.video-tile__body { display: block; white-space: pre-line; color: var(--text-secondary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); max-width: 220px; }
+.video-tile[data-kind="waiting"] .video-tile__body { color: var(--text-primary); font: var(--text-body-sm); }
+.video-tile[data-kind="video"] .video-tile__body, .video-tile[data-kind="empty"] .video-tile__body { display: none; }
+.video-tile__controls { position: absolute; left: 0; right: 0; bottom: var(--space-4); display: flex; justify-content: center; gap: var(--space-4); }
+.video-tile[data-size="self"][data-kind="empty"], .video-tile[data-size="self"][data-kind="paused"] { background: var(--bg-elevation-20); }
+
+}
+@layer molecules {
+/* Molecule: tooltip. A frosted light bubble (70% white), dark 16px text, 16px corners and a small arrow. */
+.tooltip { --tooltip-arrow-x: 50%; position: relative; box-sizing: border-box; display: inline-block; max-width: 100%; overflow-wrap: anywhere; padding: var(--space-4) var(--space-4); border-radius: var(--radius-md); background: var(--bg-elevation-70); backdrop-filter: blur(var(--blur-md)); color: var(--text-primary-inverse); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.tooltip[data-arrow="start"] { --tooltip-arrow-x: 24px; }
+.tooltip[data-arrow="end"] { --tooltip-arrow-x: calc(100% - 24px); }
+.tooltip__arrow { position: absolute; left: var(--tooltip-arrow-x); width: 16px; height: 8px; translate: -50% 0; background: inherit; clip-path: polygon(50% 100%, 0 0, 100% 0); backdrop-filter: inherit; }
+.tooltip[data-direction="down"] .tooltip__arrow { top: 100%; }
+.tooltip[data-direction="up"] .tooltip__arrow { bottom: 100%; rotate: 180deg; }
+
+}
+@layer molecules {
+/* Molecule: action row. 64px tall: a 14px semibold label and, on the right, a 16px chevron or a toggle. The group around it draws the dividers. */
+.action-row { box-sizing: border-box; display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); width: 100%; min-height: 64px; padding-right: var(--space-1); color: var(--text-primary); }
+.action-row__text { flex: 1; min-width: 0; font: var(--text-body-sm-semibold); letter-spacing: var(--text-body-sm-semibold-ls); }
+.action-row > .icon { --icon-size: 16px; --icon-color: currentColor; flex: none; }
+.action-row > .toggle { display: none; }
+.action-row[data-trailing="chevron"] > .icon, .action-row[data-trailing="icon"] > .icon { display: block; }
+.action-row:not([data-trailing="chevron"]):not([data-trailing="icon"]) > .icon { display: none; }
+.action-row[data-dim="yes"] { opacity: var(--opacity-muted, .5); }
+.action-row[data-trailing="toggle"] > .toggle { display: flex; }
+
+}
+@layer molecules {
+/* Molecule: text section. A serif subhead and plain text under it (Today's Topic, The Reframe, The Plan). Line breaks in the text are kept.
+   Loading swaps the text for three shimmering lines; a tag (Added by you) sits at the end of the subhead. */
+.text-section { display: flex; flex-direction: column; gap: var(--space-2); width: 100%; }
+.text-section__head { display: flex; align-items: center; gap: var(--space-2); }
+.text-section__title { margin: 0; font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.text-section__tag { padding: 2px var(--space-2); border-radius: var(--radius-full); background: var(--bg-elevation-20); color: var(--text-primary); font: var(--text-body-xs); letter-spacing: var(--text-body-xs-ls); }
+.text-section__body { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); white-space: pre-line; }
+.text-section__skeleton { display: none; grid-auto-rows: 1lh; align-items: center; font: var(--text-body-md); }
+.text-section__skeleton > .skeleton:nth-child(1) { width: 82%; }
+.text-section__skeleton > .skeleton:nth-child(2) { width: 100%; }
+.text-section__skeleton > .skeleton:nth-child(3) { width: 70%; }
+.text-section[data-loading="yes"] .text-section__body { display: none; }
+.text-section[data-loading="yes"] .text-section__skeleton { display: grid; }
+
+}
+@layer molecules {
+/* Molecule: coachmark arrow. A white pointer (40 x 28, rounded tip). Inside a coachmark it is fixed to the top or the bottom edge of
+   the bubble, at the start, middle or end. */
+.coachmark-arrow { display: block; width: 40px; height: 28px; background: var(--white); clip-path: path('M0 28 L15 7 Q20 0 25 7 L40 28 Z'); }
+.coachmark-arrow[data-direction="down"] { scale: 1 -1; }
+.coachmark .coachmark-arrow { position: absolute; left: 50%; translate: -50% 0; }
+.coachmark .coachmark-arrow[data-position="start"] { left: 20%; }
+.coachmark .coachmark-arrow[data-position="end"] { left: 80%; }
+.coachmark .coachmark-arrow[data-direction="up"] { top: -18px; }
+.coachmark .coachmark-arrow[data-direction="down"] { bottom: -18px; }
+
+}
+@layer molecules {
+/* Molecule: coachmark bar. Progress dots on the left and a Next button on the right, or one button across the width. */
+.coachmark-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); width: 100%; }
+.coachmark-bar[data-variant="button"] > .dots { display: none; }
+.coachmark-bar[data-variant="button"] > .button { width: 100%; }
+/* on the coachmark's white surface the dots are the base purple */
+.coachmark-bar > .dots { --dots-current: var(--purple-900); --dots-fill: color-mix(in srgb, var(--purple-900) 20%, transparent); }
+
+}
+@layer molecules {
+/* Molecule: thoughtstarter. A soft pink full-width button (the warning color at 10%) with 14px dark text, at least 48px tall with room above and below so a second line fits, text centered vertically, left-aligned. */
+.thoughtstarter { appearance: none; border: 0; margin: 0; font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); box-sizing: border-box; display: flex; align-items: center; width: 100%; min-height: 48px; padding: var(--space-3) var(--padding-md); text-align: left; color: var(--black); background: var(--status-warning-secondary); backdrop-filter: blur(var(--blur-md)); border-radius: var(--radius-sm); cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.thoughtstarter:hover { background: color-mix(in srgb, var(--orange) 18%, transparent); }
+.thoughtstarter:focus-visible { outline: 2px solid var(--purple-900); outline-offset: 2px; }
+
+}
+@layer molecules {
+/* Molecule: chat header. The status bar, then a row: T and the session name on the left; on the right an progress bar under the name when the timer is on, an optional
+   "your therapist can see a recap" icon and a check to finish (always shown, always at full strength). Built from the status bar, blob and icon button. */
+.chat-header { display: flex; flex-direction: column; box-sizing: border-box; width: 100%; padding: 0 var(--padding-md) var(--padding-md); color: var(--text-primary); }
+.chat-header__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); height: 48px; }
+.chat-header__left { flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--space-2); }
+.chat-header__stack { display: flex; flex-direction: column; justify-content: center; gap: var(--space-2); min-width: 0; width: 200px; max-width: 240px; }
+.chat-header__title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.chat-header__progress { display: none; height: 4px; border-radius: 10px; background: var(--bg-elevation-10); overflow: hidden; }
+.chat-header__progress > i { display: block; height: 100%; width: var(--progress, 10%); border-radius: 10px; background: var(--bg-elevation-100); }
+.chat-header[data-timer="on"] .chat-header__progress { display: block; }
+.chat-header__right { display: flex; align-items: center; gap: var(--space-2); }
+.chat-header[data-bar="off"] .chat-header__bar { display: none; }
+/* the record icon: a check when the therapist sees a recap, an x when you are off the record */
+.chat-header__recap > .icon-person-x, .chat-header__done > .icon-x { display: none; }
+.chat-header[data-recap="otr"] .chat-header__recap > .icon-person-check, .chat-header[data-recap="otr"] .chat-header__done > .icon-check { display: none; }
+.chat-header[data-recap="otr"] .chat-header__recap > .icon-person-x, .chat-header[data-recap="otr"] .chat-header__done > .icon-x { display: block; }
+
+}
+@layer molecules {
+/* Molecule: chat message. T (bot) is plain text across the width; the person (user) is a bubble on the right, at most 310px. */
+.chat-message { display: flex; width: 100%; color: var(--text-primary); }
+.chat-message > p { margin: 0; font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.chat-message[data-from="user"] { justify-content: flex-end; }
+.chat-message[data-from="user"] > p { max-width: 310px; box-sizing: border-box; padding: var(--padding-md) var(--space-6); background: var(--bg-elevation-10); border-radius: var(--radius-sm); }
+
+}
+@layer molecules {
+/* Molecule: fork option card. A choice in a chat: the time chip (a colored square with the minutes), a title and a reason. One button. */
+.fork-option {
+  appearance: none; border: 0; margin: 0; font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box; display: flex; align-items: center; gap: var(--space-4); width: 100%; padding: var(--padding-md);
+  color: var(--text-primary); background: var(--bg-elevation-10); backdrop-filter: blur(var(--blur-md)); border-radius: var(--radius-sm); overflow: clip;
+}
+.fork-option__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.fork-option__title { display: flex; align-items: center; min-height: 32px; font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.fork-option__description { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.fork-option:hover { background: var(--bg-elevation-20); }
+.fork-option:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 2px; }
+
+}
+@layer device {
+/* Molecule: keyboard. The dark phone keyboard (letters, shift and delete, 123, space, return). A picture only. */
+.keyboard { position: relative; box-sizing: border-box; width: 100%; display: flex; flex-direction: column; gap: 10px; padding: 16px 4px 80px; border-radius: 27px 27px 0 0; background: rgba(28, 28, 28, .86); backdrop-filter: blur(var(--blur-xs)); box-shadow: inset 0 0 1px rgba(0, 0, 0, .1), inset 0 0 1px rgba(255, 255, 255, .5); }
+.keyboard__row { display: flex; gap: 6.5px; justify-content: center; align-items: stretch; height: 45px; }
+.keyboard__row[data-inset] { padding: 0 16px; }
+.keyboard__letters { flex: 1; display: flex; gap: 6.5px; }
+.keyboard__row:nth-child(3) { gap: 14px; }
+.keyboard i { flex: 1; min-width: 0; display: grid; place-items: center; border-radius: 8.5px; background: rgba(255, 255, 255, .27); color: #fff; font: normal 400 25px/1 system-ui, -apple-system, sans-serif; text-transform: lowercase; }
+.keyboard i[data-wide] { flex: 0 0 42px; font-size: 20px; }
+.keyboard__bottom { gap: 6px; margin-top: 0; }
+.keyboard__bottom i[data-wide] { flex: 0 0 91px; }
+.keyboard__bottom i[data-label] { font: 500 16px/1 system-ui, -apple-system, sans-serif; text-transform: none; letter-spacing: -.32px; }
+.keyboard i[data-dim] { opacity: var(--opacity-muted, .5); }
+
+}
+@layer device {
+/* Device: numeric keyboard. The dark number pad (3 by 4 keys, letters under the digits, delete), with an optional “From Messages” strip. A picture only. */
+.numpad { position: relative; box-sizing: border-box; width: 100%; padding: 8px 7px 74px; border-radius: 27px 27px 0 0; background: rgba(28, 28, 28, .86); backdrop-filter: blur(var(--blur-xs)); box-shadow: inset 0 0 1px rgba(0, 0, 0, .1), inset 0 0 1px rgba(255, 255, 255, .5); color: #fff; font-family: system-ui, -apple-system, sans-serif; }
+.numpad__strip { display: flex; flex-direction: column; align-items: center; padding-bottom: 2px; font-size: 13px; line-height: 1.2; }
+.numpad__strip span { font-size: 12px; }
+.numpad__strip b { font-weight: 400; letter-spacing: .5px; }
+.numpad__keys { display: grid; grid-template-columns: repeat(3, 1fr); grid-auto-rows: 50px; gap: 6px; padding-top: 10px; }
+.numpad__keys i { position: relative; display: grid; place-items: center; border-radius: 8.5px; background: rgba(255, 255, 255, .27); font-style: normal; }
+.numpad__keys i b { font: normal 400 25px/1 system-ui, -apple-system, sans-serif; margin-top: -8px; }
+.numpad__keys i:not(:has(small)) b { margin-top: 0; }
+.numpad__keys i small { position: absolute; left: 0; right: 0; bottom: 6px; font: 700 10px/1 system-ui, -apple-system, sans-serif; letter-spacing: 2px; text-indent: 2px; text-align: center; }
+.numpad__keys i[data-blank], .numpad__keys i[data-wide] { background: none; }
+.numpad__keys i[data-wide] { font-size: 22px; }
+
+}
+@layer device {
+/* Device: alert. The iPhone's own alert: a 300px dark glass card (34px corners), the app's icon with a small badge, a 17px bold title and a
+   17px message in the system font, and two pill buttons. Drawn to look right on a screen; it is the phone's, so Device UI off hides it. */
+.device-alert { --alert-font: -apple-system, "SF Pro Text", "SF Pro", system-ui, sans-serif; position: relative; box-sizing: border-box; width: 300px; display: flex; flex-direction: column; gap: 10px; padding: 14px; border-radius: 34px; color: #fff; font-family: var(--alert-font); letter-spacing: -.43px; background: color-mix(in srgb, #000 55%, transparent); backdrop-filter: blur(var(--blur-lg)) saturate(1.3); box-shadow: 0 0 0 .5px color-mix(in srgb, #fff 18%, transparent) inset, 0 20px 50px color-mix(in srgb, #000 22%, transparent); }
+.device-alert__icon { position: relative; width: 63px; height: 62px; }
+.device-alert__app, .device-alert__badge { position: absolute; overflow: hidden; display: block; }
+.device-alert__app { left: 0; top: 0; width: 62.667px; height: 61.667px; border-radius: 15.3px; }
+.device-alert__app img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.device-alert__badge { left: 39.67px; top: 39.67px; width: 27.333px; height: 27.667px; border-radius: 5.7px; }
+.device-alert__badge img { position: absolute; max-width: none; height: 3050.6%; width: 1426.83%; left: -370.73%; top: -1078.31%; }
+.device-alert__text { display: flex; flex-direction: column; gap: 10px; padding: 8px 8px 24px; font-size: 17px; line-height: 22px; }
+.device-alert__title { margin: 0; font-weight: 590; }
+.device-alert__message { margin: 0; font-weight: 400; }
+.device-alert__buttons { display: flex; flex-direction: column; gap: 10px; }
+.device-alert__button { appearance: none; border: 0; margin: 0; width: 100%; padding: 13px 16px; border-radius: 100px; background: rgb(120 120 128 / .32); color: #fff; font: 510 17px/22px var(--alert-font); letter-spacing: -.43px; cursor: pointer; }
+
+/* variants: microphone and camera permission prompts, and a plain notice */
+.device-alert__tile { display: none; position: absolute; left: 0; top: 0; width: 62.667px; height: 61.667px; border-radius: 15.3px; background: linear-gradient(180deg, #ffb25b, #f2882b); place-items: center; }
+.device-alert__tile .icon { --icon-size: 0px; --icon-color: #fff; }   /* the icon atom sets display, so hide by size */
+.device-alert[data-icon="mic"] .device-alert__tile, .device-alert[data-icon="camera"] .device-alert__tile { display: grid; }
+.device-alert[data-icon="mic"] .device-alert__tile .icon-mic-on, .device-alert[data-icon="camera"] .device-alert__tile .icon-video-on { --icon-size: 36px; }
+.device-alert[data-icon="mic"] .device-alert__app, .device-alert[data-icon="camera"] .device-alert__app { display: none; }
+.device-alert[data-icon="none"] .device-alert__icon { display: none; }
+.device-alert[data-buttons="row"] .device-alert__buttons { flex-direction: row; }
+.device-alert[data-buttons="row"] .device-alert__button { flex: 1; }
+
+}
+@layer device {
+/* Device: home indicator. A 134 x 5 bar, white at 20%, fully rounded, centered. It is the phone's, so Device UI off hides it. */
+.home-indicator { display: block; width: 134px; height: 5px; margin-inline: auto; border-radius: 100px; background: var(--white); opacity: var(--opacity-dim, .2); }
+
+}
+@layer molecules {
+/* Molecule: header. The top of a screen: the status bar, then a row with a back or close button, a title or step dots, and an
+   optional action. Seven variants decide which of those show. Built from the status bar, icon button, dots and button atoms. */
+.header { --header-padding-x: var(--padding-md); display: flex; flex-direction: column; box-sizing: border-box; width: 100%; color: var(--text-primary); }
+.header__bar { display: flex; align-items: center; gap: var(--space-2); box-sizing: border-box; height: 72px; padding: var(--space-2) var(--header-padding-x) var(--padding-md); }
+.header__title { font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.header__action { margin-left: auto; }
+.header__close { margin-left: auto; }
+
+/* which parts each variant shows */
+.header > .header__bar > * { display: none; }
+.header[data-variant="close"] .header__close,
+.header[data-variant="steps-close"] .header__close,
+.header[data-variant="steps-close"] .dots,
+.header[data-variant="sub-section"] .header__back, .header[data-variant="sub-section"] .header__title,
+.header[data-variant="back-button"] .header__back, .header[data-variant="back-button"] .header__title, .header[data-variant="back-button"] .header__action,
+.header[data-variant="back-progress"] .header__back, .header[data-variant="back-progress"] .dots, .header[data-variant="back-progress"] .header__action,
+.header[data-variant="section-root"] .header__title,
+.header[data-variant="home"] .header__action { display: revert-layer; }   /* back to the atom's own display */
+.header[data-variant="section-root"] .header__bar { justify-content: center; }
+.header[data-variant="steps-close"] .dots { margin-right: auto; }
+.header[data-variant="back-progress"] .dots { margin-left: var(--space-2); }
+
+}
+@layer molecules {
+/* Molecule: tile. A bite-size piece of support: a face, a title, how long it takes, and a round arrow. The whole row is one button
+   (the arrow is only a picture of one), so it is easy to tap anywhere. Built from the face, icon and icon-button atoms. */
+.tile { display: flex; align-items: center; gap: var(--space-4); width: 100%; min-height: 80px; color: var(--text-primary); }
+button.tile { appearance: none; background: none; border: 0; padding: 0; margin: 0; font: inherit; text-align: left; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.tile__content { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--space-1); justify-content: center; }
+.tile__title { font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.tile__label { display: flex; align-items: center; gap: var(--space-2); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.tile__label > .icon { --icon-color: currentColor; flex: none; }
+/* the arrow lights up with the row */
+button.tile:hover .icon-button { background: var(--icon-button-fill-hover); }
+button.tile:active .icon-button { background: var(--icon-button-fill-pressed); transform: scale(var(--icon-button-scale-pressed)); }
+button.tile:focus-visible { outline: 2px solid var(--text-primary); outline-offset: 4px; border-radius: var(--radius-sm); }
+
+}
+@layer molecules {
+/* Molecule: toggle row. Title and a line of subtext on the left, the toggle on the right. */
+.toggle-row { display: flex; align-items: center; gap: var(--space-4); width: 100%; padding-block: var(--space-1); color: var(--text-primary); }
+.toggle-row__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.toggle-row__title { font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.toggle-row__sub { color: var(--text-secondary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+
+}
+@layer molecules {
+/* Molecule: rating option. A face tile (tilted 5.76 degrees left or right, or straight) over its label and a check circle. Dimmed to half
+   strength when another option is picked. The tile slides and fades in when the sheet around it asks for the animation. */
+.rating-option { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--text-primary); transition: opacity var(--duration-base, .2s); }
+.rating-option__tile { display: grid; place-items: center; width: 88px; height: 88px; margin-bottom: 8px; }
+.rating-option__tile > .face { border-radius: var(--radius-sm); box-shadow: 0 4px 14px rgb(0 0 0 / .25); }
+.rating-option[data-tilt="left"] .rating-option__tile > .face { rotate: -5.76deg; }
+.rating-option[data-tilt="right"] .rating-option__tile > .face { rotate: 5.76deg; }
+.rating-option__label { font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); text-align: center; }
+.rating-option[data-selected="dim"] { opacity: var(--opacity-muted, .5); }
+.rating-option[data-selected="yes"] .check-circle { background: var(--bg-elevation-100); }
+.rating-option[data-selected="yes"] .check-circle > .icon { display: block; }
+/* the animation: the faces come up one after the other, and the last one gives a little wobble */
+@keyframes tds-rate-in { from { opacity: 0; translate: 0 24px; scale: .6; } 60% { opacity: 1; scale: 1.08; } to { opacity: 1; translate: 0 0; scale: 1; } }
+@keyframes tds-rate-wobble { 0%, 100% { rotate: 5.76deg; } 30% { rotate: 14deg; } 60% { rotate: -3deg; } }
+[data-animate="on"] .rating-option__tile { animation: tds-rate-in .55s var(--ease-standard, cubic-bezier(.2, .8, .3, 1)) both; animation-delay: calc(.3s + var(--i) * .22s); }
+[data-animate="on"] .rating-option[data-tilt="right"] .rating-option__tile > .face { animation: tds-rate-wobble .9s ease-in-out 1.4s 1; }
+[data-animate="on"] .rating-option__label, [data-animate="on"] .rating-option .check-circle { animation: tds-rate-in .4s ease both; animation-delay: calc(.45s + var(--i) * .22s); }
+@media (prefers-reduced-motion: reduce) { [data-animate="on"] .rating-option * { animation: none !important; } }
+
+}
+@layer molecules {
+/* Molecule: toast. A message on the base purple (tinted by its status) with a 4px color bar on top, an icon, a bold line and a line under. */
+.toast { --toast-color: var(--status-success-primary); --toast-tint: var(--status-success-secondary); box-sizing: border-box; width: 100%; display: flex; flex-direction: column; overflow: clip; border-radius: var(--radius-sm); backdrop-filter: blur(var(--blur-md)); color: var(--text-primary); background: linear-gradient(var(--toast-tint), var(--toast-tint)), var(--purple-900); }
+.toast[data-status="warning"] { --toast-color: var(--status-warning-primary); --toast-tint: var(--status-warning-secondary); }
+.toast[data-status="error"] { --toast-color: var(--status-error-primary, var(--red)); --toast-tint: var(--status-error-secondary, color-mix(in srgb, var(--red) 10%, transparent)); }
+.toast__bar { height: 4px; background: var(--toast-color); }
+.toast__row { display: flex; gap: var(--space-2); padding: var(--padding-md); }
+.toast__icon { flex: none; width: 24px; height: 24px; display: grid; place-items: center; }
+.toast__icon > .icon { --icon-size: 16px; --icon-color: var(--toast-color); display: none; }
+.toast[data-status="success"] .icon-check, .toast[data-status="warning"] .icon-warning, .toast[data-status="error"] .icon-x { display: block; }
+.toast__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.toast__title { font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.toast__body { color: var(--text-secondary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+
+}
+
+@layer organisms {
+/* Organism: appointment card — the home-screen card in its states (booked, no appointment, provider CTA).
+   One surface (the card atom) with two layouts, row and centered. Every slot is a real element
+   ([data-slot]: header, content, cta), so a slot can be selected, spaced and aligned on its own. */
+.appointment-card { --card-gap: var(--space-6); --appointment-content-gap: var(--space-4); gap: 0; }
+
+/* slots: header → content (indented under the text in the row layout) → CTA */
+.appointment-card__header { min-width: 0; }
+.appointment-card__content { display: flex; flex-direction: column; gap: var(--space-4); margin-top: var(--appointment-content-gap); min-width: 0; }
+.appointment-card__cta { margin-top: var(--card-gap); }
+.appointment-card--tight { --appointment-content-gap: calc(-1 * (48px - 1.6 * 18px)); }   /* the copy tucks up under the name, beside the 48px avatar */
+
+/* inside the header slot */
+.appointment-card__titles { display: flex; flex-direction: column; gap: var(--space-2); min-width: 0; }
+.appointment-card__title-row { display: flex; align-items: center; gap: var(--space-2); }
+.appointment-card__headline {
+  flex: 1; min-width: 0;
+  font: var(--text-body-lg-semibold); letter-spacing: var(--text-body-lg-semibold-ls);
+}
+.appointment-card__details { display: flex; flex-direction: column; }
+
+/* inside the content slot */
+.appointment-card__body {
+  color: var(--text-secondary);
+  font: var(--text-body-md); letter-spacing: var(--text-body-md-ls);
+}
+.appointment-card__footnote {
+  color: var(--text-primary);
+  font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls);
+}
+
+/* row layout: a grid of [avatar | text]. The header slot spans both columns (a sub-grid), the content slot sits in the
+   text column, the CTA slot spans the full width. */
+.appointment-card[data-layout="row"] { display: grid; grid-template-columns: auto 1fr; column-gap: var(--space-4); align-content: start; }
+.appointment-card[data-layout="row"] .appointment-card__header { display: grid; grid-template-columns: subgrid; grid-column: 1 / -1; align-items: start; }
+.appointment-card[data-layout="row"] .appointment-card__content { grid-column: 2; }
+.appointment-card[data-layout="row"] .appointment-card__cta { grid-column: 1 / -1; }
+
+/* centered layout: avatar group and serif headline, body, button */
+.appointment-card[data-layout="centered"] { --card-padding-y: var(--padding-xl); align-items: center; text-align: center; }
+.appointment-card[data-layout="centered"] .appointment-card__header { display: flex; flex-direction: column; align-items: center; gap: var(--space-6); }
+.appointment-card[data-layout="centered"] .appointment-card__content { align-items: center; }
+.appointment-card[data-layout="centered"] .appointment-card__cta { align-self: stretch; }
+.appointment-card[data-layout="centered"] .appointment-card__headline {
+  flex: none; font: var(--text-subhead); letter-spacing: var(--text-subhead-ls);
+}
+
+.appointment-card__details:empty { display: none; }
+
+/* loading: the card says [data-loading]. Skeleton content is centered on the avatar, headlines are one size in every layout,
+   and the CTA stays at the bottom, so the card holds the loaded card's height (the canvas sets its min-height). */
+.appointment-card[data-layout="centered"] { --skeleton-align: center; }
+.appointment-card[data-loading] .appointment-card__header { align-items: center; }
+.appointment-card[data-loading] .appointment-card__headline { font: var(--text-body-lg-semibold); letter-spacing: var(--text-body-lg-semibold-ls); }
+.appointment-card[data-loading] .appointment-card__cta { margin-top: auto; }
+.appointment-card[data-loading][data-layout="row"]:has([data-slot="cta"]) { grid-template-rows: auto 1fr auto; }
+
+/* error: the card that stands in when it couldn't load. Flat (it takes the fill directly, so a background picked for the other
+   states doesn't leak in), centered, with a plain sans headline and a Retry button. */
+.appointment-card[data-layout="error"] { background: var(--bg-elevation-20); --card-padding-y: var(--padding-xl); align-items: center; text-align: center; }
+.appointment-card[data-layout="error"] .appointment-card__content { margin-top: 0; align-items: center; }
+.appointment-card[data-layout="error"] .appointment-card__headline { font: var(--text-body-lg-semibold); letter-spacing: var(--text-body-lg-semibold-ls); }
+
+}
+@layer organisms {
+/* Organism: bite size columns. Two columns of five tiles in the shared carousel (styles > carousel: bleed, snapping, fade), so the
+   column in view is fully opaque and the next one fades in. A column is a little narrower than the row so a sliver of the next one
+   shows at the screen edge (--bite-size-peek). Slots are real elements ([data-slot]): column-1, column-2. */
+.bite-size-columns { --carousel-gap: var(--space-8); --bite-size-peek: 18px; }
+.bite-size-columns__column { display: flex; flex-direction: column; gap: var(--space-6); width: calc(100% + var(--page-gutter, var(--space-6)) - var(--carousel-gap) - var(--bite-size-peek)); }
+
+}
+@layer organisms {
+/* Organism: provider bio card. A photo over a block of text, on the card atom's flat fill. Focused and Unfocused (dimmed) are for a
+   carousel. Slots are real elements ([data-slot]): image, content. */
+.provider-bio-card { --card-padding-x: 0; --card-padding-y: 0; --card-gap: 0; --card-radius: var(--radius-sm); }
+.provider-bio-card[data-focus="unfocused"] { opacity: var(--opacity-muted, 0.5); }
+
+.provider-bio-card__image { display: block; }
+.provider-bio-card__content { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--padding-md); }
+.provider-bio-card__titles { display: flex; flex-direction: column; }
+
+.provider-bio-card__name  { font: var(--text-body-lg-semibold); letter-spacing: var(--text-body-lg-semibold-ls); }
+.provider-bio-card__quote { color: var(--text-secondary); font: var(--text-body-md-italic); letter-spacing: var(--text-body-md-italic-ls); }
+.provider-bio-card__bio   { font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+}
+@layer organisms {
+/* Organism: session card. Content on top, the input pill at the bottom, on the card atom's surface.
+   Medium (carousel) and Large (tall, content centered) are left-aligned; New topic is centered. Slots are real elements
+   ([data-slot]): content, input. */
+.session-card {
+  --card-fill: var(--gradient-dark-rose-to-orange);
+  --session-pad-top: var(--padding-xl); --session-pad-bottom: var(--padding-md);   /* roomy above, snug under the input */
+  padding-block: var(--session-pad-top) var(--session-pad-bottom); min-height: var(--session-card-min-height, 0);
+}
+.session-card[data-size="md"] { --session-card-min-height: 350px; }
+.session-card[data-size="lg"] { --session-card-min-height: 474px; --card-fill: var(--gradient-purple-to-blue); }
+.session-card[data-size="topic"] { --session-pad-top: var(--space-12); --card-gap: var(--space-8); text-align: center; }
+
+.session-card__content { flex: 1; display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.session-card[data-size="lg"] .session-card__content { justify-content: center; }
+.session-card[data-size="topic"] .session-card__content { flex: none; align-items: center; }
+
+.session-card__headline {
+  font: var(--text-subhead); letter-spacing: var(--text-subhead-ls);
+}
+.session-card__body { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.session-card[data-size="topic"] .session-card__content { --skeleton-align: center; }
+
+}
+@layer organisms {
+/* Organism: header card. Opens a screen: runs to the screen edges (cancelling the page gutter) with rounded bottom corners,
+   content centered and sitting at the bottom. Default is gradient and light-weight; Provider is flat, with a photo on top.
+   The slot is a real element ([data-slot]): content. */
+.header-card {
+  --header-radius: calc(var(--radius-lg) * 2);
+  --header-safe-top: 90px;                              /* room for the status bar */
+  --card-fill: var(--gradient-dark-rose-to-orange);
+  --card-radius: 0 0 var(--header-radius) var(--header-radius);
+  --card-padding-x: var(--padding-xl);
+  --skeleton-align: center;
+
+  margin: calc(var(--page-gutter, var(--space-6)) * -1) calc(var(--page-gutter, var(--space-6)) * -1) 0; width: auto;
+  padding: var(--header-safe-top) var(--card-padding-x) var(--space-16);
+  min-height: 403px; justify-content: flex-end; text-align: center;
+}
+/* flat by design: it takes the fill directly, so a background picked for Default doesn't leak into it */
+.header-card[data-variant="provider"], .header-card[data-variant="prompt"] { background: var(--bg-elevation-20); }
+
+.header-card__content { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); width: 100%; }
+.header-card__titles { display: flex; flex-direction: column; align-items: center; width: 100%; }
+.header-card .avatar { --avatar-size: 72px; }
+
+.header-card__overline { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.header-card__headline { font: var(--text-headline-1); letter-spacing: var(--text-headline-1-ls); }
+.header-card[data-variant="provider"] .header-card__headline, .header-card[data-variant="prompt"] .header-card__headline { font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); }
+.header-card__body { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+/* the header sits on top of the card, over its padding (the card's own top padding leaves room for it) */
+.header-card { position: relative; }
+.header-card__top { position: absolute; inset: 0 0 auto 0; }
+.header-card__labels { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-6); }
+
+/* follow-up prompt: T says it is here, and the chat box holds the suggested thing to follow up on */
+.header-card__chat { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); width: 100%; margin-top: var(--space-4); text-align: left; }
+.header-card__chat .avatar-text { width: auto; }
+.header-card[data-variant="prompt"] { min-height: 0; }
+.header-card[data-variant="prompt"] { padding-bottom: var(--card-padding-x); }   /* the same room under the chat box as at its sides */
+.header-card__light { position: absolute; inset: 0; z-index: -1; border-radius: inherit; overflow: clip; pointer-events: none; }
+.header-card[data-variant="prompt"] { isolation: isolate; }
+.header-card .glow { --glow-size: var(--glow-card-size); --glow-blur: var(--glow-card-blur); --glow-opacity: var(--glow-card-opacity); }
+/* hero: the back header and one big headline (the pages under Profile); warm is the default gradient, cool is purple to blue */
+.header-card[data-variant="hero"], .header-card[data-variant="hero-cool"] { --header-radius: 48px; min-height: 0; padding: 152px var(--space-4) var(--space-16); }
+.header-card[data-variant="hero-cool"] { --card-fill: var(--gradient-purple-to-blue); }
+.header-card[data-variant="hero"] .header-card__headline, .header-card[data-variant="hero-cool"] .header-card__headline { font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); }
+
+}
+@layer organisms {
+/* Organism: header inset card. A serif headline and copy on the card atom's gradient, roomy padding. Slot: content. */
+.header-inset-card { --card-fill: var(--gradient-purple-to-blue); --card-padding-x: var(--container-inset-x, var(--padding-xl)); --card-padding-y: var(--container-inset-y, var(--space-12)); }
+.header-inset-card__content { display: flex; flex-direction: column; gap: var(--space-4); min-width: 0; }
+.header-inset-card__headline { font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.header-inset-card__body { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.header-inset-card__body { white-space: pre-line; }
+
+}
+@layer organisms {
+/* Organism: session history card. The text block sits centered in the card and the arrow button at the bottom right. Slots are
+   real elements ([data-slot]): content, action. */
+.session-history-card { --card-fill: var(--gradient-purple-to-blue); --card-gap: 0; padding-block: var(--padding-xl) var(--padding-md); min-height: 390px; }
+.session-history-card__content { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: var(--space-4); min-width: 0; }
+.session-history-card__titles { display: flex; flex-direction: column; gap: var(--space-1); }
+.session-history-card__title-row { display: flex; align-items: center; gap: var(--space-3); }
+.session-history-card__action { display: flex; justify-content: flex-end; }
+
+.session-history-card__overline { color: var(--text-tertiary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.session-history-card__headline { font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.session-history-card__body { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.session-history-card__labels { display: flex; flex-wrap: wrap; gap: var(--space-6); }
+
+}
+@layer organisms {
+/* Organism: CTA card. Centered headline and copy, then a full-width button. Slots: content, action. */
+.cta-card { --card-fill: var(--gradient-purple-to-blue); --card-gap: var(--space-6); --skeleton-align: center; padding-block: var(--padding-xl); text-align: center; }
+.cta-card__content { display: flex; flex-direction: column; gap: var(--space-4); }
+.cta-card__headline { font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.cta-card__body { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+}
+@layer organisms {
+/* Organism: home header. The top of the home screen: header (status bar and an action), T with a soft glow behind it, a headline and
+   a line of copy, then the large chat input. It runs to the screen edges (cancelling the page gutter) and the glow fades into the
+   screen below. Slots are real elements ([data-slot]): top, content, input. */
+.home-header {
+  --home-header-padding-x: var(--padding-xl);
+  --skeleton-align: center;
+  position: relative; isolation: isolate; overflow-x: clip;   /* the glow is wider than the screen; sideways is cut, downward it fades out */
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  margin: calc(var(--page-gutter, var(--space-6)) * -1) calc(var(--page-gutter, var(--space-6)) * -1) 0; width: auto;
+  padding-bottom: var(--space-16);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--purple-500) 22%, transparent), transparent 560px);
+}
+/* T is drawn smaller here than its token sizes (the Figma hero is a large T at about 100px) */
+.home-header .blob { --blob-size: 100px; }
+/* the light behind T: rose, centered on it, not part of the layout */
+.home-header__glow { --glow-size: var(--glow-header-size); --glow-blur: var(--glow-header-blur); --glow-opacity: var(--glow-header-opacity); position: absolute; left: 50%; top: 40px; translate: -50% 0; z-index: var(--layer-behind); }
+.home-header__top { width: 100%; }
+.home-header__content { display: flex; flex-direction: column; align-items: center; gap: var(--space-6); width: 100%; box-sizing: border-box; padding: 0 var(--home-header-padding-x); }
+.home-header__titles { display: flex; flex-direction: column; align-items: center; gap: var(--space-4); width: 100%; }
+.home-header__headline { font: var(--text-headline-1); letter-spacing: var(--text-headline-1-ls); }
+.home-header__body { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.home-header__input { width: 100%; box-sizing: border-box; padding: var(--space-6) var(--home-header-padding-x) 0; }
+
+}
+@layer organisms {
+/* Organism: chat thread. The conversation: T in plain text, you in a bubble, newest last. It scrolls and opens on the newest message
+   (column-reverse), and a short chat sits at the bottom. Recommendations adds two options, OR and Save for later. Slots: messages,
+   rationale, options, action. */
+.chat-thread { --chat-gap: var(--space-6); flex: 1; min-height: 0; height: 100%; display: flex; flex-direction: column-reverse; overflow-x: clip; overflow-y: auto; padding: var(--padding-md) var(--padding-md) var(--space-6); box-sizing: border-box; scrollbar-width: none; }
+.chat-thread::-webkit-scrollbar { display: none; }
+.chat-thread__flow { display: flex; flex-direction: column; gap: var(--chat-gap); }
+.chat-thread__messages { display: flex; flex-direction: column; gap: var(--chat-gap); }
+.chat-thread__recs { display: flex; flex-direction: column; gap: var(--space-4); }
+.chat-thread__cards { display: flex; flex-direction: column; gap: var(--space-4); }
+.chat-thread__or { display: flex; align-items: center; gap: var(--space-4); padding-block: var(--space-4) 0; margin-bottom: var(--space-2); }
+.chat-thread__or::before, .chat-thread__or::after { content: ""; flex: 1; height: 1px; background: var(--border-secondary); }
+.chat-thread__or-label { font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+}
+@layer organisms {
+/* Organism: coachmark. A white speech bubble (the inverse surface) with an arrow pointing up or down at what it explains: a header, copy,
+   then progress dots and a button, or a list of thoughtstarters. The arrow is its own part (up or down; start, middle or end).
+   Slots are real elements ([data-slot]): content, bar, options. */
+.coachmark { position: relative; box-sizing: border-box; width: 100%; max-width: 370px; display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-6); color: var(--purple-900); background: var(--white); border-radius: var(--radius-md); filter: drop-shadow(0 4px 27px color-mix(in srgb, var(--purple-900) 70%, transparent)); }
+/* a soft light behind T, drawn from the blob's own colors (the blob makes it inside this layer, which keeps it inside the bubble) */
+.coachmark { isolation: isolate; }
+.coachmark__light { position: absolute; inset: 0; z-index: var(--layer-behind); border-radius: inherit; overflow: clip; pointer-events: none; }
+.coachmark .glow { --glow-size: var(--glow-card-size); --glow-blur: var(--glow-card-blur); --glow-opacity: var(--glow-card-opacity); }
+.coachmark__arrow-slot { display: contents; }
+.coachmark .avatar-text { color: var(--purple-900); gap: var(--space-2); }
+.coachmark .avatar-text__subline { color: var(--black); }
+.coachmark__content { display: flex; flex-direction: column; gap: var(--space-2); }
+.coachmark__body { margin: 0; font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.coachmark__options { display: flex; flex-direction: column; gap: var(--space-4); }
+.coachmark { --t-avatar-ring: var(--white); }
+
+}
+@layer organisms {
+/* Organism: action group. A 14px title at 70% white (indented 16px) over a rounded 10px elevation 10 box of action rows, a faint line between
+   them. Slots: header, rows. */
+.action-group { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+.action-group__header { padding-inline: var(--space-4); }
+.action-group__title { margin: 0; color: color-mix(in srgb, var(--white) 70%, transparent); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.action-group__rows { box-sizing: border-box; display: flex; flex-direction: column; padding-inline: var(--space-4); background: var(--bg-elevation-10); backdrop-filter: blur(var(--blur-md)); border-radius: 10px; overflow: clip; }
+.action-group__rows > .action-row:not(:last-child) { border-bottom: 1px solid var(--border-tertiary); }
+
+}
+@layer organisms {
+/* Organism: bottom sheet. The shell all bottom sheets share: slate fill, 24px top corners, a 76 x 4 pull handle, then three slots in a fixed
+   order: header, content, action (and a keyboard under them when typing). It runs to the screen edges (cancelling the page gutter) and sits
+   on the bottom. Patterns fill the slots and style what is inside them. .bottom-sheet-backdrop is the dimmed layer behind it. */
+.bottom-sheet { box-sizing: border-box; display: flex; flex-direction: column; gap: var(--space-8); margin-inline: calc(var(--page-gutter, var(--space-4)) * -1); padding: var(--space-2) var(--space-8) 60px; color: var(--text-primary); background: var(--bg-slate); border-radius: var(--radius-lg) var(--radius-lg) 0 0; }
+.bottom-sheet[data-compact] { padding-bottom: var(--space-8); }
+.bottom-sheet__handle { align-self: center; width: 76px; height: 4px; border-radius: 2px; background: color-mix(in srgb, var(--white) 20%, transparent); }
+.bottom-sheet__header { display: flex; flex-direction: column; gap: var(--space-4); }
+.bottom-sheet__content { display: flex; flex-direction: column; gap: var(--space-6); }
+.bottom-sheet__action { display: flex; flex-direction: column; gap: var(--space-4); }
+.bottom-sheet__keyboard { margin: calc(var(--space-8) * -1) calc(var(--space-8) * -1) calc(var(--space-8) * -1); }
+.bottom-sheet__keyboard .keyboard { border-radius: 0; }
+.bottom-sheet__title { margin: 0; font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.bottom-sheet__intro, .bottom-sheet__body { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.bottom-sheet-backdrop { position: absolute; inset: 0; z-index: var(--layer-toast); background: color-mix(in srgb, var(--black) 45%, transparent); }
+.bottom-sheet { --t-avatar-ring: var(--bg-slate); }
+
+}
+@layer organisms {
+/* Organism: chat composer. The input pill, and with the keyboard up the keyboard under it. Slots: input, keyboard. */
+.chat-composer { display: flex; flex-direction: column; }
+.chat-composer__input { padding: 0 var(--padding-md) var(--padding-md); }
+
+}
+@layer organisms {
+/* Organism: booking intro. The cycle art over a light headline and a line of copy, all centered. Slots: art, text. */
+.booking-intro { display: flex; flex-direction: column; align-items: center; gap: var(--space-8); width: 100%; max-width: 352px; margin-inline: auto; text-align: center; color: var(--text-primary); }
+.booking-intro__art { display: grid; place-items: center; height: 224px; }
+.booking-intro__text { display: flex; flex-direction: column; gap: var(--space-4); }
+.booking-intro__title { margin: 0; font: var(--text-headline-1); letter-spacing: var(--text-headline-1-ls); text-wrap: balance; }
+.booking-intro__body { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+}
+@layer organisms {
+/* Organism: loading state. T (a 120px blob) with a caption under it, centered a little above the middle of the screen, and T's blurred copy
+   glowing at the bottom. behaviors/loader.js plays it: morphs T and swaps the lines (data-loader-shapes / data-loader-themes list one shape and
+   theme per line). Without the script (or with reduced motion) the first line shows. Slot: captions. */
+.loading-state { --loader-lift: 130px; --loader-gap: 56px; --loader-travel: 16px; position: relative; isolation: isolate; display: grid; place-items: center; box-sizing: border-box; width: 100%; min-height: 100dvh; padding-bottom: calc(var(--loader-lift) * 2); }
+.loading-state__glow { --glow-size: 550px; --glow-blur: 84px; --glow-opacity: .95; z-index: var(--layer-behind); position: absolute; left: 50%; bottom: -326px; translate: -50% 0; scale: 1.06 1; }
+.loading-state__content { display: flex; flex-direction: column; align-items: center; }
+.loading-state .blob { --blob-size: 120px; }
+.loading-state__captions { position: relative; width: 320px; height: 26px; margin-top: calc(var(--loader-gap) - 20px); text-align: center; }
+.loading-state__line { position: absolute; inset: 0; margin: 0; white-space: nowrap; color: var(--text-primary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); opacity: 0; transition: opacity 500ms cubic-bezier(.16, 1, .3, 1), transform 500ms cubic-bezier(.16, 1, .3, 1); }
+.loading-state__line:first-child { opacity: 1; }
+.loading-state[data-playing] .loading-state__line { opacity: 0; transform: translateY(var(--loader-travel)); }
+.loading-state .loading-state__line[data-state="in"] { opacity: 0; transform: translateY(var(--loader-travel)); }
+.loading-state .loading-state__line[data-state="live"] { opacity: 1; transform: translateY(0); }
+.loading-state .loading-state__line[data-state="out"] { opacity: 0; transform: translateY(calc(var(--loader-travel) * -1)); }
+
+}
+@layer organisms {
+/* Organism: dialog. A frosted glass card with a gradient hairline border: title and close button on a row, paragraphs, one full-width button. Slots: head, body, actions. */
+.dialog { position: relative; box-sizing: border-box; width: 100%; display: flex; flex-direction: column; gap: var(--container-sheet-gap, var(--space-6)); padding: var(--container-sheet-y, var(--space-6)) var(--container-sheet-x, var(--space-6)); border: 1px solid transparent; border-radius: 32px; background: linear-gradient(color-mix(in srgb, var(--purple-900) 60%, transparent), color-mix(in srgb, var(--purple-900) 60%, transparent)) padding-box, var(--gradient-border) border-box; backdrop-filter: blur(var(--blur-md)); box-shadow: 0 4px 54px rgba(0, 0, 0, .3); color: var(--text-primary); }
+.dialog__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-4); }
+.dialog__title { margin: 0; font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.dialog__body { display: flex; flex-direction: column; gap: var(--space-4); }
+.dialog__text { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+}
+@layer organisms {
+/* Organism: end of session card. Centered overline and headline, then the main button and a quiet flat one. Slots: content, actions. */
+.end-of-session-card { --card-fill: var(--gradient-dark-rose-to-orange); --card-padding-x: var(--padding-xl); --card-gap: calc(var(--space-8) + var(--space-2));   /* 40 */ --skeleton-align: center; padding-block: var(--space-12) var(--padding-xl); align-items: stretch; text-align: center; }
+.end-of-session-card__content { display: flex; flex-direction: column; align-items: center; }
+.end-of-session-card__actions { display: flex; flex-direction: column; align-items: center; gap: calc(var(--space-4) + var(--space-1)); }   /* 20 */
+.end-of-session-card__overline { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.end-of-session-card__headline { font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); }
+
+}
+@layer organisms {
+/* Organism: resource card. A faint fill, small padding, text on top and two equal outline buttons. Slots: content, actions. */
+.resource-card { --card-fill: var(--bg-elevation-10); --card-padding-y: var(--padding-md); --card-gap: var(--space-4); }
+.resource-card__content { display: flex; flex-direction: column; gap: var(--space-4); }
+.resource-card__actions { display: flex; gap: var(--space-2); }
+.resource-card__actions > * { flex: 1 1 0; min-width: 0; }
+.resource-card__headline { font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.resource-card__link { color: var(--text-secondary); text-decoration: underline; font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.resource-card__body { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+}
+
+@layer patterns {
+/* Pattern: topics section. A subhead and a line of copy, then cards (and an action under them). One card fills the width;
+   several form a carousel. Slots are real elements ([data-slot]): header, cards, actions. */
+.topics-section { --topics-section-gap: var(--space-4); display: flex; flex-direction: column; gap: var(--topics-section-gap); width: 100%; }
+
+.topics-section__header { display: flex; flex-direction: column; }
+.topics-section__title { font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.topics-section__copy  { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+.topics-section__cards { display: flex; gap: var(--topics-section-gap); --carousel-gap: var(--topics-section-gap); }
+.topics-section__cards > .session-card { flex: 1 1 0; min-width: 0; }
+/* several cards: the shared carousel (styles > carousel) does the bleed, the snapping and the fade; here only each card's width */
+.topics-section[data-layout="carousel"] .topics-section__cards > .session-card { flex: 0 0 320px; }
+
+}
+@layer patterns {
+/* Pattern: bite size support section. A subhead and a line of copy, then the bite-size columns. Slots are real elements
+   ([data-slot]): header, content. */
+.bite-size-support-section { --section-gap: var(--space-4); display: flex; flex-direction: column; gap: var(--section-gap); width: 100%; }
+.bite-size-support-section__header { display: flex; flex-direction: column; }
+.bite-size-support-section__title { font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.bite-size-support-section__copy { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+
+}
+@layer patterns {
+/* Pattern: provider carousel. Provider bio cards in the shared carousel (styles > carousel does the bleed, the snapping and the
+   fade), with progress dots underneath that follow the card in focus. Slots: cards, dots. */
+.provider-carousel { display: flex; flex-direction: column; gap: var(--space-6); width: 100%; }
+.provider-carousel__cards > .provider-bio-card { flex: 0 0 336px; width: 336px; }
+.provider-carousel__dots { display: flex; justify-content: center; }
+
+}
+@layer patterns {
+/* Pattern: therapist section. A subhead and a line of copy, then one card about your care. Slots: header, card. */
+.therapist-section { display: flex; flex-direction: column; gap: var(--space-4); width: 100%; }
+.therapist-section__header { display: flex; flex-direction: column; }
+.therapist-section__title { font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.therapist-section__copy { color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.therapist-section__copy:empty { display: none; }
+
+}
+@layer patterns {
+.suggestions-section { display: flex; flex-direction: column; gap: var(--space-4); width: 100%; }
+.suggestions-section__header { display: flex; flex-direction: column; }
+.suggestions-section__title { margin: 0; font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.suggestions-section__copy { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.suggestions-section__options { display: flex; flex-direction: column; gap: var(--space-4); }
+
+}
+@layer patterns {
+.resources-section { display: flex; flex-direction: column; gap: var(--space-4); width: 100%; }
+.resources-section__header { display: flex; flex-direction: column; }
+.resources-section__title { margin: 0; font: var(--text-subhead); letter-spacing: var(--text-subhead-ls); }
+.resources-section__copy { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.resources-section__cards { display: flex; flex-direction: column; gap: var(--space-4); }
+
+}
+@layer patterns {
+/* Pattern: session sharing sheet. The bottom sheet organism with T and your provider, a headline, copy and bullets in the header slot, the
+   off-the-record toggle and a safety note in the content slot, and Done in the action slot. */
+.session-sharing__header { gap: var(--space-4); padding-block: var(--space-6); }
+.session-sharing { gap: var(--space-6); }
+.session-sharing__body { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.session-sharing__list { margin: 0; padding-left: var(--space-6); color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.session-sharing__group { gap: var(--space-4); padding: 20px; background: var(--bg-elevation-10); border-radius: var(--radius-md); }
+.session-sharing__rule { width: 100%; height: 1px; margin: 0; border: 0; background: var(--bg-elevation-10); }
+.session-sharing__safety { display: flex; align-items: center; gap: var(--space-6); }
+.session-sharing__safety > .icon { --icon-size: 24px; --icon-color: var(--text-primary); flex: none; }
+.session-sharing__safety-text { flex: 1; margin: 0; color: var(--text-secondary); font: 400 13px/1.4 var(--font-family-body); }
+.chat__sheet .session-sharing { margin: 0; }
+
+}
+@layer patterns {
+/* Pattern: feedback sheet. The bottom sheet organism in the in-app feedback steps. Header: a serif headline and a line (or the question).
+   Content: three rating options in a row (which rise in when data-animate="on"), or the text area. Action: Continue (dimmed until a rating is
+   picked) or Submit. */
+.feedback-sheet { position: relative; }
+.feedback-sheet__head { text-align: center; }
+.feedback-sheet__head .bottom-sheet__intro { font: var(--text-body-lg); letter-spacing: var(--text-body-lg-ls); }
+.feedback-sheet__question { margin: 0; color: var(--text-secondary); font: var(--text-body-lg); letter-spacing: var(--text-body-lg-ls); text-align: left; }
+.feedback-sheet__ratings { display: flex; align-items: flex-start; }
+/* the faces tilt and rise above their row, so give the content slot the room instead of pulling it up */
+.feedback-sheet .bottom-sheet__content { padding-top: var(--space-2); }
+.feedback-sheet[data-selected="no"] .bottom-sheet__action .button { opacity: var(--opacity-disabled, .4); pointer-events: none; }
+
+}
+@layer screens {
+/* Screen: chat. A whole chat screen on a dark purple page with a rose glow rising from the bottom: the header, the thread (it scrolls and
+   takes the space left), then the composer or the end of session card. It runs to the screen edges. Slots are real elements
+   ([data-slot]): top, thread, composer, end. */
+.chat {
+  position: relative; isolation: isolate; overflow: clip; box-sizing: border-box;
+  display: flex; flex-direction: column; height: 100dvh; min-height: 640px;
+  margin: calc(var(--page-gutter, var(--space-6)) * -1); width: auto;
+  background: var(--bg-base);
+}
+.chat__glow { --glow-size: var(--glow-screen-size); --glow-blur: var(--glow-screen-blur); --glow-opacity: var(--glow-screen-opacity); z-index: var(--layer-behind); }
+.chat__top { flex: none; }
+.chat__thread { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.chat__composer, .chat__end { flex: none; }
+.chat__end { padding: 0 var(--padding-md) 64px; }
+/* with the keyboard up the light rises above it, to about the input, so it can be seen */
+.chat:has(.chat-composer[data-keyboard]) .chat__glow { bottom: calc(340px - var(--glow-size) / 2); }
+/* a sheet opened over the chat: a dimmed backdrop over everything, the sheet stuck to the bottom */
+.chat__sheet { position: absolute; left: 0; right: 0; bottom: 0; z-index: var(--layer-sheet); }
+.chat__sheet .session-sharing { margin: 0; }
+
+
+}
+@layer screens {
+/* Screen: home. The home header runs to the top and the screen edges; under it the sections follow one after another and the bottom nav
+   sticks to the bottom of the screen as it scrolls. Slots are real elements ([data-slot]): header, sections, nav. */
+.home { --home-gap: var(--space-12); display: flex; flex-direction: column; width: 100%; }
+.home__sections { display: flex; flex-direction: column; gap: var(--home-gap); padding-top: var(--home-gap); padding-bottom: var(--space-12); }
+/* the sections come right after the header, so the header's own bottom room is not needed */
+.home .home-header { padding-bottom: var(--space-2); }
+.home__nav { position: sticky; bottom: 0; z-index: var(--layer-sticky); margin: 0 calc(var(--page-gutter, var(--space-6)) * -1) calc(var(--page-gutter, var(--space-6)) * -1); }
+
+
+/* the confirmed toast drops from the top */
+.home__toast { position: fixed; z-index: var(--layer-toast); left: var(--space-4); right: var(--space-4); top: 62px; }
+.home__toast:not(:has(.toast)) { display: none; }
+
+}
+@layer screens {
+/* Screen: summary. The header card (it runs to the top and the screen edges) and the sections under it, one after another. The provider
+   version has a soft glow rising from the bottom. Slots are real elements ([data-slot]): header, sections. */
+.summary { --summary-gap: var(--space-12); position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; }
+.summary__sections { display: flex; flex-direction: column; gap: var(--summary-gap); padding-block: var(--summary-gap) var(--space-16); }
+.summary__glow { --glow-size: var(--glow-strong-size); --glow-blur: var(--glow-strong-blur); --glow-opacity: var(--glow-strong-opacity); z-index: var(--layer-behind); position: fixed; }
+/* the T summary header leaves 160px above its text (room for the status bar and the close button); the provider one keeps the default */
+.summary .header-card:not([data-variant="provider"]) { --header-safe-top: 160px; }
+
+/* loading: T and its caption fill the phone */
+.summary-loading { position: relative; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); background: linear-gradient(180deg, #1b0b3b 0%, #200e44 46%, #2a1252 100%); overflow: hidden; }
+
+}
+@layer screens {
+/* Screen: profile. A blurred title bar stuck to the top, the card and the groups scrolling under it (24px apart), and the bottom nav stuck to the
+   bottom, over the dark purple page with a soft rose glow at the bottom. Slots: top, sections, nav. */
+.profile { --profile-gap: var(--space-6); position: relative; isolation: isolate; display: flex; flex-direction: column; width: 100%; }
+.profile__glow { --glow-size: var(--glow-page-size); --glow-blur: var(--glow-page-blur); --glow-opacity: var(--glow-page-opacity); z-index: var(--layer-behind); position: fixed; }
+.profile__top { position: sticky; top: calc(var(--page-gutter, var(--space-4)) * -1); z-index: var(--layer-sticky); margin: calc(var(--page-gutter, var(--space-4)) * -1) calc(var(--page-gutter, var(--space-4)) * -1) 0; background: var(--bg-base-80); backdrop-filter: blur(var(--blur-md)); }
+.profile__sections { display: flex; flex-direction: column; gap: var(--profile-gap); padding-block: var(--space-4) var(--space-12); }
+.profile__nav { position: sticky; bottom: 0; z-index: var(--layer-sticky); margin: 0 calc(var(--page-gutter, var(--space-4)) * -1) calc(var(--page-gutter, var(--space-4)) * -1); }
+
+/* Screen: profile-pages. The pages one level under Profile. Hero pages (About, Support): the gradient hero runs to the screen edges and the groups follow
+   (24px apart). Feedback: a tall text area, the checkbox row, the button above the keyboard. Read page: the header, a card, then sections. Slots: hero, top,
+   sections, form, bottom. */
+.profile-pages { position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); }
+.profile-pages__glow { --glow-size: var(--glow-page-size); --glow-blur: var(--glow-page-blur); --glow-opacity: var(--glow-page-opacity); z-index: var(--layer-behind); position: fixed; }
+.profile-pages__sections { display: flex; flex-direction: column; gap: var(--space-6); padding: var(--space-6) var(--space-4) var(--space-12); }
+.profile-pages[data-kind="what-is"] .profile-pages__sections { gap: var(--space-12); padding-top: var(--space-4); }
+.profile-pages__form { display: flex; flex-direction: column; gap: var(--space-4); padding: var(--space-3, 12px) var(--space-4) 0; }
+.profile-pages__form .textarea { height: 313px; }
+.profile-pages__terms { display: flex; align-items: center; gap: var(--space-2); color: var(--text-primary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.profile-pages__bottom { margin-top: auto; }
+.profile-pages__bottom > .button, .profile-pages__bottom > [data-item="submit"] { margin-inline: var(--space-4); width: calc(100% - var(--space-8)); margin-bottom: 23px; }
+.profile-pages[data-kind="what-is"] .header-inset-card { --card-fill: var(--gradient-purple-to-orange); }
+
+.profile-pages__hero .header-card { margin: 0; width: 100%; }   /* the screen already runs to the edges */
+
+}
+@layer screens {
+/* Screen: history. A blurred title bar stuck to the top, the session history cards in a list (16px apart) scrolling under it, and the bottom nav
+   stuck to the bottom edge of the phone (even when the list is short). A soft glow rises from the bottom. Slots: top, list, nav. */
+.history { --g: var(--page-gutter, var(--space-4)); position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--g) * -1); padding-inline: var(--g); }
+.history__glow { --glow-size: var(--glow-page-size); --glow-blur: var(--glow-page-blur); --glow-opacity: var(--glow-page-opacity); z-index: var(--layer-behind); position: fixed; }
+.history__top { position: sticky; top: 0; z-index: var(--layer-sticky); margin-inline: calc(var(--g) * -1); background: var(--bg-base-80); backdrop-filter: blur(var(--blur-md)); }
+.history__list { flex: 1; display: flex; flex-direction: column; gap: var(--space-4); padding-block: var(--space-4) var(--space-12); }
+.history__nav { position: sticky; bottom: 0; z-index: var(--layer-sticky); margin-inline: calc(var(--g) * -1); }
+.history .cta-card { --card-fill: var(--gradient-purple-to-orange); }
+
+}
+@layer screens {
+/* Screen: message. T, a headline, a few lines and a button or two, centered in the upper part of the screen; a note, or a button, pinned to the
+   bottom; a rose glow rising from the bottom. Slots: top, main, bottom, nav. */
+/* full bleed: the screen cancels the page gutter and fills the phone, so a bottom nav can sit on the bottom edge */
+.message { position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); padding-inline: var(--page-gutter, var(--space-4)); }
+.message__glow { --glow-size: var(--glow-screen-size); --glow-blur: var(--glow-screen-blur); --glow-opacity: var(--glow-screen-opacity); z-index: var(--layer-behind); position: fixed; }
+.message__top { margin-inline: calc(var(--page-gutter, var(--space-4)) * -1); }
+.message__main { display: flex; flex-direction: column; align-items: center; gap: var(--space-6); width: 100%; max-width: 320px; margin-inline: auto; padding-block: var(--space-16) 0; text-align: center; }
+.message__blob { height: 180px; display: grid; place-items: center; }
+.message__blob .blob { --blob-size: 100px; }
+.message__text { display: flex; flex-direction: column; gap: var(--space-4); width: 100%; }
+.message__title { margin: 0; font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); }
+.message__body { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.message__contact { margin: 0; color: var(--text-secondary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.message__bottom { margin-top: auto; display: flex; flex-direction: column; align-items: center; gap: var(--space-4); padding-block: var(--space-10, 40px) var(--space-8); text-align: center; }
+.message__note { max-width: 305px; margin: 0; color: var(--text-secondary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.message__note-email { color: var(--text-primary); font-weight: 600; }
+.message__nav { margin: 0 calc(var(--page-gutter, var(--space-4)) * -1); }
+
+}
+@layer screens {
+/* Screen: splash. The whole screen is the dark rose to orange gradient; the wordmark sits in the middle (a little above center); the phone's
+   tracking alert, when shown, is centered over it. Slots: top, logo, alert. */
+.splash { position: relative; display: grid; place-items: center; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); background: var(--gradient-dark-rose-to-orange); }
+.splash__top { position: absolute; inset: 0 0 auto 0; }
+.splash__logo { position: absolute; left: 50%; top: 43%; translate: -50% -50%; }
+.splash__alert { position: absolute; left: 50%; top: 50%; translate: -50% -50%; }
+
+}
+@layer screens {
+/* Screen: value-prop. One onboarding slide: a picture, a headline and a few lines centered in the upper part, the disclaimer above the
+   bottom row, and a bottom row with progress dots and a round next button (or one full-width button). The AI only set has a lighter,
+   larger headline. Slots: top, main, note, bottom. */
+.value-prop { position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); padding-inline: var(--page-gutter, var(--space-4)); }
+.value-prop__glow { --glow-size: var(--glow-screen-size); --glow-blur: var(--glow-screen-blur); --glow-opacity: var(--glow-screen-opacity); z-index: var(--layer-behind); position: fixed; }
+.value-prop__top { margin-inline: calc(var(--page-gutter, var(--space-4)) * -1); }
+.value-prop__main { display: flex; flex-direction: column; align-items: center; gap: var(--space-8); width: 100%; max-width: 320px; margin-inline: auto; padding-block: var(--space-16) 0; text-align: center; }
+.value-prop__art { position: relative; display: grid; place-items: center; width: 100%; height: 224px; }
+.value-prop__art .blob { --blob-size: 100px; }
+.value-prop__text { display: flex; flex-direction: column; gap: var(--space-6); width: 100%; }
+.value-prop__title { margin: 0; text-wrap: balance; font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); }
+.value-prop[data-set="ai"] .value-prop__title { font: var(--text-headline-1); letter-spacing: var(--text-headline-1-ls); }
+.value-prop__body { margin: 0 auto; max-width: 300px; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.value-prop__strong { color: var(--text-primary); font-weight: 600; }
+.value-prop__notes { margin-top: auto; padding-top: var(--space-8); }
+.value-prop__note { max-width: 300px; margin: 0 auto; color: var(--text-secondary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); text-align: center; }
+.value-prop__bottom { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding: var(--space-8); margin-inline: calc(var(--page-gutter, var(--space-4)) * -1); }
+.value-prop__notes + .value-prop__bottom { margin-top: 0; }
+.value-prop .dots { --dots-fill: var(--bg-elevation-40); --dots-current: var(--white); }
+
+/* pictures */
+.value-prop__people { position: relative; width: 254px; height: 180px; }
+.value-prop__person { position: absolute; display: block; overflow: hidden; border-radius: var(--radius-full); box-shadow: 0 4px 34px rgba(0, 0, 0, .25); }
+.value-prop__person img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.value-prop__person[data-n="1"] { left: 0; top: 73px; width: 35px; height: 35px; }
+.value-prop__person[data-n="2"] { left: 20px; top: 54px; width: 71px; height: 71px; }
+.value-prop__person[data-n="3"] { left: 68px; top: 31px; width: 118px; height: 118px; z-index: var(--layer-raised); box-shadow: 0 4px 54px rgba(0, 0, 0, .3); }
+.value-prop__person[data-n="4"] { left: 163px; top: 54px; width: 71px; height: 71px; }
+.value-prop__person[data-n="5"] { left: 219px; top: 73px; width: 35px; height: 35px; }
+.value-prop__bubble { position: absolute; left: calc(50% + 36px); top: 28px; display: flex; align-items: center; justify-content: center; gap: var(--space-2); width: 118px; height: 54px; box-sizing: border-box; border: 1px solid var(--bg-elevation-70); border-radius: var(--radius-lg, 16px); background: var(--bg-elevation-20); }
+.value-prop__bubble::after { content: ""; position: absolute; left: 24px; bottom: -8px; width: 14px; height: 14px; box-sizing: border-box; border: 1px solid var(--bg-elevation-70); border-width: 0 1px 1px 0; background: color-mix(in srgb, var(--bg-base) 80%, var(--white) 20%); transform: skewY(-20deg) rotate(45deg) scale(.8); clip-path: polygon(100% 0, 100% 100%, 0 100%); }
+.value-prop__bubble i { width: 8px; height: 8px; border-radius: var(--radius-full); background: var(--bg-elevation-70); }
+.value-prop__cycle { position: relative; display: grid; justify-items: center; gap: var(--space-2); color: var(--white); }
+.value-prop__pair { display: flex; align-items: center; gap: var(--space-12, 48px); }
+.value-prop__pair .blob { --blob-size: 80px; }
+.value-prop__person--lg { position: relative; width: 84px; height: 84px; }
+.value-prop__arrow { width: 124px; height: 36px; }
+
+}
+@layer screens {
+/* Screen: sign-up. A back button and Support on top, T, a serif question, one field, a hint or the terms; the button sits just above the keyboard
+   (which fills the bottom of the phone). A rose glow rises from the bottom. Slots: top, toast, main, submit, keyboard, dialog. */
+.sign-up { position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); }
+.sign-up__glow { --glow-size: var(--glow-screen-size); --glow-blur: var(--glow-screen-blur); --glow-opacity: var(--glow-screen-opacity); z-index: var(--layer-behind); position: fixed; }
+.sign-up__top .header__title { display: none; }
+.sign-up__toast { position: absolute; z-index: var(--layer-sticky); left: var(--space-4); right: var(--space-4); top: 62px; }
+.sign-up__main { display: flex; flex-direction: column; align-items: center; gap: var(--space-5, 20px); padding: var(--space-5, 20px); }
+.sign-up__blob .blob { --blob-size: 64px; }
+.sign-up__title { margin: 0; font-family: var(--font-family-display); font-weight: 400; font-size: var(--font-size-xl, 24px); line-height: 1.2; letter-spacing: -0.48px; text-align: center; }
+.sign-up__suggestions { width: 100%; margin-top: calc(var(--space-5, 20px) * -1); }
+.sign-up__terms { display: flex; align-items: flex-start; gap: 10px; width: 100%; color: var(--text-secondary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.sign-up__link { color: inherit; text-decoration: underline; }
+.sign-up__hint { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); text-align: center; }
+.sign-up__hint--sm { color: var(--text-primary); font: var(--text-body-sm); letter-spacing: var(--text-body-sm-ls); }
+.sign-up__lines { display: flex; flex-direction: column; align-items: center; margin-bottom: var(--space-2); }
+.sign-up__bottom { margin-top: auto; }
+.sign-up__submit { padding: 0 var(--space-5, 20px) 23px; }
+.sign-up__scrim { position: absolute; inset: 0; z-index: var(--layer-scrim); background: color-mix(in srgb, var(--background-backdrop-fill) calc(var(--background-backdrop-alpha) * 100%), transparent); backdrop-filter: blur(var(--background-backdrop-blur)); }
+.sign-up__dialog { position: absolute; z-index: var(--layer-overlay); left: var(--space-4); right: var(--space-4); top: 258px; }
+
+}
+@layer screens {
+/* Screen: screener. Intro: T, a light headline, a line, and Continue at the bottom. Questions: the question at the top, the Yes and No rows and
+   Continue pinned to the bottom. A back button, progress dots and Support sit on top. Slots: top, main, question, bottom. */
+.screener { position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); }
+.screener__glow { --glow-size: var(--glow-screen-size); --glow-blur: var(--glow-screen-blur); --glow-opacity: var(--glow-screen-opacity); z-index: var(--layer-behind); position: fixed; }
+.screener__top .header__title { display: none; }
+.screener__main { display: flex; flex-direction: column; align-items: center; gap: var(--space-8); width: 100%; max-width: 352px; margin-inline: auto; padding: var(--space-16) var(--space-4) 0; text-align: center; }
+.screener__blob { display: grid; place-items: center; height: 180px; }
+.screener__blob .blob { --blob-size: 100px; }
+.screener__text { display: flex; flex-direction: column; gap: var(--space-4); }
+.screener__title { margin: 0; font: var(--text-headline-1); letter-spacing: var(--text-headline-1-ls); text-wrap: balance; }
+.screener__body { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.screener__question { padding: var(--space-6) var(--space-8); }
+.screener__q { margin: 0; font: var(--text-body-lg); letter-spacing: var(--text-body-lg-ls); }
+.screener__bottom { display: flex; flex-direction: column; gap: var(--space-10, 40px); margin-top: auto; padding: var(--space-6) var(--space-8) var(--space-10, 40px); }
+.screener__choices { display: flex; flex-direction: column; gap: var(--space-4); }
+
+}
+@layer screens {
+/* Screen: booking. Header on top, content in the middle, the main button pinned to the bottom. Interstitial has the cycle art and a Skip link;
+   questions stack option tiles; matches is the provider carousel; book is a day row and a time grid. Slots: top, main, options, days, slots, bottom. */
+.booking { position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); }
+.booking__glow { --glow-size: var(--glow-screen-size); --glow-blur: var(--glow-screen-blur); --glow-opacity: var(--glow-screen-opacity); z-index: var(--layer-behind); position: fixed; }
+.booking__top .header__title { display: none; }
+.booking[data-kind="matches"] .booking__top .header__title, .booking[data-kind="book"] .booking__top .header__title { display: revert-layer; }
+.booking__main { display: flex; flex-direction: column; align-items: center; gap: var(--space-8); width: 100%; max-width: 402px; margin-inline: auto; padding: var(--space-8) var(--space-5, 20px) 0; text-align: center; }
+.booking[data-kind="interstitial"] .booking__main { max-width: 402px; padding-top: var(--space-16); }
+.booking__art { display: grid; place-items: center; height: 224px; }
+.booking__text { display: flex; flex-direction: column; gap: var(--space-4); }
+.booking__blob .blob { --blob-size: 80px; }
+.booking__title { margin: 0; font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); }
+.booking[data-kind="interstitial"] .booking__title { font: var(--text-headline-1); letter-spacing: var(--text-headline-1-ls); }
+.booking__body { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.booking__options { display: flex; flex-direction: column; gap: var(--space-4); width: 100%; margin-top: var(--space-4); }
+.booking__main--wide { max-width: none; padding-inline: 0; gap: var(--space-6); }
+.booking__main--wide .provider-carousel { text-align: left; }
+.booking__main--wide .provider-carousel__cards { padding-inline: 33px; scroll-padding-inline: 33px; }
+.booking__bottom { display: flex; flex-direction: column; gap: var(--space-4); margin-top: auto; padding: var(--space-6) var(--space-8) var(--space-10, 40px); }
+.booking__bottom--tight { padding-bottom: var(--space-6); }
+.booking__main--left { align-items: stretch; max-width: none; gap: var(--space-4); padding-inline: var(--space-4); text-align: left; }
+.booking__who { display: flex; align-items: center; gap: var(--space-6); margin-bottom: var(--space-4); }
+.booking__who .avatar { --avatar-size: 80px; }
+.booking__who-name { margin: 0; font: var(--text-body-lg-semibold); letter-spacing: var(--text-body-lg-semibold-ls); }
+.booking__row { display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-2); }
+.booking__arrows { display: flex; gap: var(--space-4); }
+.booking__subhead { margin: 0; font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.booking__days { display: flex; gap: var(--space-2); }
+.booking__times-head { margin-top: var(--space-4); }
+.booking__note { margin: 0; color: var(--text-secondary); font: var(--text-body-md); letter-spacing: var(--text-body-md-ls); }
+.booking__slots { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+
+}
+@layer screens {
+/* Screen: tour. A screen from home or chat with a coachmark over it that points at one thing: the thing keeps full opacity and everything
+   else drops to 20% (the bottom nav and status bar stay clear). Home states scroll the page so the target sits near the top. Slots: header,
+   sections, nav, top, thread, composer, coach. */
+.tour { --g: var(--page-gutter, var(--space-4)); --tour-scroll: 0px; --tour-dim: var(--opacity-dim, .2); position: relative; isolation: isolate; overflow: clip; box-sizing: border-box; height: 100dvh; min-height: 640px; margin: calc(var(--g) * -1); }
+.tour__glow { --glow-size: var(--glow-page-size); --glow-blur: var(--glow-page-blur); --glow-opacity: var(--glow-page-opacity); z-index: var(--layer-behind); position: absolute; }
+.tour__page { box-sizing: border-box; padding: var(--g); transform: translateY(var(--tour-scroll)); }
+.tour__sections { display: flex; flex-direction: column; gap: var(--space-12); padding-top: var(--space-12); padding-bottom: 200px; }
+.tour .home-header { padding-bottom: var(--space-2); }
+.tour__nav { position: absolute; z-index: var(--layer-sticky); left: 0; right: 0; bottom: 0; }
+.tour__coach { position: absolute; z-index: var(--layer-sheet); left: var(--space-4); right: var(--space-4); bottom: 89px; }
+.tour__coach .coachmark { width: auto; max-width: none; }
+.tour[data-base="chat"] { display: flex; flex-direction: column; }
+.tour[data-base="chat"] .tour__coach { bottom: auto; top: 128px; }
+.tour__thread { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+.tour__composer { flex: none; }
+
+/* the dimming: all but the target */
+.tour [data-item], .tour .home-header__content, .tour .header__action, .tour .chat-header__left, .tour .chat-header__done { transition: opacity var(--duration-base); }
+.tour[data-spot="composer"] [data-item="bite"], .tour[data-spot="composer"] [data-item="topics"], .tour[data-spot="composer"] [data-item="deep"], .tour[data-spot="composer"] [data-item="therapist"],
+.tour[data-spot="composer"] .home-header__content, .tour[data-spot="composer"] .header__action { opacity: var(--tour-dim); }
+.tour[data-spot="bite"] [data-item="header"], .tour[data-spot="bite"] [data-item="topics"], .tour[data-spot="bite"] [data-item="deep"], .tour[data-spot="bite"] [data-item="therapist"],
+.tour[data-spot="topics"] [data-item="header"], .tour[data-spot="topics"] [data-item="bite"], .tour[data-spot="topics"] [data-item="deep"], .tour[data-spot="topics"] [data-item="therapist"] { opacity: var(--tour-dim); }
+.tour[data-spot="record"] .chat-header__left, .tour[data-spot="record"] .chat-header__done, .tour[data-spot="record"] .tour__thread, .tour[data-spot="record"] .tour__composer { opacity: var(--tour-dim); }
+
+.tour[data-spot="header"] [data-item="bite"], .tour[data-spot="header"] [data-item="topics"], .tour[data-spot="header"] [data-item="deep"], .tour[data-spot="header"] [data-item="therapist"], .tour[data-spot="header"] .header__action { opacity: var(--tour-dim); }
+
+/* scrolled so the target sits near the top, as in the Figma frames */
+.tour[data-spot="bite"] { --tour-scroll: -465px; }
+.tour[data-spot="topics"] { --tour-scroll: -1000px; }
+
+}
+@layer screens {
+/* Screen: appointment preview. Get Ready: close on top, a title, who is here, the video preview (268x357) with mute and camera buttons over its bottom edge and an optional
+   tooltip above them, then Join Appointment pinned to the bottom (with an optional note above it). The phone's own permission or access alert, when shown, sits
+   in the middle over a dimmed backdrop. In the call: mute and camera top left, leave top right, the therapist's video full width (4:3), your video in the corner,
+   and T taking notes at the bottom. Slots: top, main, controls, tooltip, bottom, alert, remote, self, notes. */
+.appt-preview { position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); overflow: clip; background: var(--bg-base); }
+.appt-preview__glow { --glow-size: var(--glow-screen-size); --glow-blur: var(--glow-screen-blur); --glow-opacity: var(--glow-screen-opacity); z-index: var(--layer-behind); position: absolute; }
+.appt-preview__main { display: flex; flex-direction: column; align-items: center; padding: var(--space-4) var(--space-8) 0; }
+.appt-preview__title { margin: 0; max-width: 290px; font: var(--text-headline-2); letter-spacing: var(--text-headline-2-ls); text-align: center; }
+.appt-preview__who { margin-top: var(--space-6); color: var(--text-secondary); }
+.appt-preview__who .avatar-text { width: auto; gap: var(--space-2); }
+.appt-preview__preview { position: relative; margin-top: var(--space-10, 40px); }
+.appt-preview__controls { position: absolute; left: 0; right: 0; bottom: var(--space-4); display: flex; justify-content: center; gap: var(--space-4); }
+.appt-preview__tooltip { position: absolute; left: 50%; bottom: calc(var(--space-4) + 48px + var(--space-3)); width: max-content; max-width: 320px; translate: calc(-50% - 32px) 0; }
+.appt-preview__preview[data-focus="camera"] .appt-preview__tooltip { translate: calc(-50% + 32px) 0; }
+.appt-preview__tooltip .tooltip { display: block; }
+.appt-preview__bottom { margin-top: auto; display: flex; flex-direction: column; gap: var(--space-4); padding: 0 var(--space-8) 50px; }
+.appt-preview__note { margin: 0; text-align: center; font: var(--text-body-md-semibold); letter-spacing: var(--text-body-md-semibold-ls); }
+.appt-preview__scrim { display: none; position: absolute; inset: 0; z-index: var(--layer-scrim); background: color-mix(in srgb, var(--background-backdrop-fill) calc(var(--background-backdrop-alpha) * 100%), transparent); backdrop-filter: blur(var(--background-backdrop-blur)); }
+.appt-preview__alert { position: absolute; inset: 0; z-index: var(--layer-overlay); display: grid; place-items: center; pointer-events: none; }
+.appt-preview__alert:not(:has(.device-alert)), .appt-preview:not(:has(.appt-preview__alert .device-alert)) .appt-preview__scrim { display: none; }
+.appt-preview:has(.appt-preview__alert .device-alert) .appt-preview__scrim { display: block; }
+
+}
+@layer screens {
+/* Screen: video. In the call: the therapist's video as a square across the screen, with a blurred, see-through copy of it filling the background; mute and camera top left,
+   leave top right; your video small in the corner; T taking notes at the bottom. Slots: backdrop, top, controls, remote, self, notes. */
+.video { position: relative; isolation: isolate; display: flex; flex-direction: column; box-sizing: border-box; min-height: 100dvh; margin: calc(var(--page-gutter, var(--space-4)) * -1); overflow: clip; background: var(--bg-base); }
+.video__backdrop { position: absolute; inset: 0; z-index: var(--layer-behind); }
+.video__top { position: relative; }
+.video__bar { position: absolute; left: var(--space-4); right: var(--space-4); top: 62px; display: flex; align-items: center; justify-content: space-between; }
+.video__bar-left { display: flex; gap: var(--space-2); }
+.video__remote { margin-top: 118px; }
+.video__self { position: absolute; right: var(--space-4); top: 657px;   /* its bottom edge lines up with the bottom of T is taking notes */ z-index: var(--layer-raised); }
+.video__notes { position: absolute; left: var(--space-8); top: 797px; }
+.video__notes .avatar-text { width: auto; gap: var(--space-2); }
+
+}
+
+/* GENERATED from each component's "defaults" in its meta.json by tools/build-defaults.js — edit in the editor. */
+
+
+@layer modes {
+/* Wireframe = accent color and imagery out of the picture. Nothing structural changes:
+   type, radius, spacing, shadows and motion all stay as designed.
+   The base surfaces stay; accent primitives go gray and gradients flatten (both generated into
+   tokens/tokens.css). This file handles imagery. (The blob and glow are the exception: they are drawn, not pictures, so they just go gray, see atoms/blob.) */
+:root[data-fidelity="wireframe"] :is(img, video, picture, canvas:not(.blob > canvas, .glow > canvas), [data-imagery]) {
+  filter: grayscale(1) contrast(0) brightness(1.15);
+  outline: 1px solid var(--border-primary);
+  outline-offset: -1px;
+}
+
+/* The base surface is black in wireframe mode (purple-900 is the base, so everything built on it follows). */
+:root[data-fidelity="wireframe"] { --purple-900: var(--black); }
+
+}
+@layer modes {
+/* Mode: device UI off. The phone's own chrome (the status bar, the keyboard picture) is hidden, for prototypes you open on a real
+   phone in the browser. <html data-device-ui="off">. Components that leave room for the status bar give it back. */
+:root[data-device-ui="off"] :is(.status-bar, .header__status, .chat-header__status, .keyboard) { display: none; }
+:root[data-device-ui="off"] .header-card { --header-safe-top: var(--space-8); }
+:root[data-device-ui="off"] .chat-composer__keyboard { display: none; }
+:root[data-device-ui="off"] :is(.chat-header, .header) { padding-top: var(--space-4); }
+:root[data-device-ui="off"] .bottom-nav__safe { display: none; }
+:root[data-device-ui="off"] .summary .header-card:not([data-variant="provider"]) { --header-safe-top: 98px; }   /* the status bar is gone: its 62px too */
+:root[data-device-ui="off"] .device-alert { display: none; }
+:root[data-device-ui="off"] .home-indicator { display: none; }
+
+}

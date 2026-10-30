@@ -1,30 +1,34 @@
-.ap-screen{position:absolute;inset:0;z-index:400;background:linear-gradient(180deg,#1F0E41 0%,#3F0786 100%);color:#fff;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden}
-.ap-icon-btn{width:52px;height:52px;border:0;border-radius:50%;background:rgba(255,255,255,.18);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:0}
-.ap-icon-btn.is-off{background:rgba(255,255,255,.9);color:#1F0E41}
-.ap-icon-btn--light{background:rgba(255,255,255,.9);color:#1F0E41}
-.ap-close{position:absolute;top:56px;right:24px;width:48px;height:48px;background:rgba(255,255,255,.16)}
+/* Responsive: fills the phone frame, no fixed pixel positions. Colors and blobs come from the design system (ds.css, ds.js). */
+.ap-screen{position:absolute;inset:0;z-index:400;display:flex;flex-direction:column;box-sizing:border-box;padding:max(16px,env(safe-area-inset-top)) 20px max(24px,env(safe-area-inset-bottom));background:var(--bg-base,#1F0E41);color:#fff;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden}
+
+.ap-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex:none;position:relative;z-index:5}
+.ap-top-left{display:flex;gap:10px}
+.ap-spacer{flex:1}
+.ap-icon-btn{width:48px;height:48px;flex:none;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.ap-icon-btn .ap-glyph{width:22px;height:22px;display:block;filter:brightness(0) invert(1)}
+.ap-icon-btn.is-off{background:#fff}
+.ap-icon-btn.is-off .ap-glyph{filter:brightness(0)}
+.ap-icon-btn--light{background:#fff}
+.ap-icon-btn--light .ap-glyph{filter:brightness(0)}
 
 /* Preview */
-.ap-preview-title{margin:120px 32px 0;font-size:34px;font-weight:400;line-height:1.2;letter-spacing:-.6px;text-align:center}
-.ap-here{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;font-size:17px;color:rgba(255,255,255,.8)}
+.ap-preview-title{margin:clamp(16px,6vh,56px) 0 0;font-size:clamp(28px,8vw,34px);font-weight:400;line-height:1.2;letter-spacing:-.6px;text-align:center}
+.ap-here{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:16px;font-size:17px;color:rgba(255,255,255,.8)}
 .ap-here-avatar{width:28px;height:28px;border-radius:50%;object-fit:cover}
-.ap-tile{position:absolute;left:28px;right:28px;top:300px;height:440px;border-radius:24px;overflow:hidden;background:#2B1456}
-.ap-tile-video{width:100%;height:100%;object-fit:cover;display:block}
-.ap-tile-controls{position:absolute;left:0;right:0;bottom:20px;display:flex;justify-content:center;gap:14px}
-.ap-join{position:absolute;left:28px;right:28px;bottom:44px;height:64px;border:0;border-radius:999px;background:#fff;color:#1F0E41;font:600 18px/1 'Inter',-apple-system,sans-serif;cursor:pointer}
+.ap-tile{position:relative;flex:1;min-height:0;margin:24px 0;border-radius:24px;overflow:hidden;background:#2B1456}
+.ap-tile-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.ap-tile-controls{position:absolute;left:0;right:0;bottom:16px;display:flex;justify-content:center;gap:14px}
+.ap-join{flex:none;height:64px;border:0;border-radius:999px;background:#fff;color:#1F0E41;font:600 18px/1 'Inter',-apple-system,sans-serif;cursor:pointer}
 
 /* Call */
-.ap-call{background:linear-gradient(180deg,#3B1A66 0%,#6E3F93 55%,#8A5AA8 100%)}
-.ap-backdrop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(28px) saturate(1.1);opacity:.45;transform:scale(1.15);z-index:0}
-.ap-call-top{position:absolute;top:60px;left:20px;right:20px;display:flex;align-items:center;justify-content:space-between;z-index:5}
-.ap-call-left{display:flex;gap:10px}
-.ap-leave{background:rgba(255,255,255,.18)}
-.ap-remote{position:absolute;left:0;right:0;top:173px;height:474px;width:100%;object-fit:cover;z-index:2}
-.ap-self{position:absolute;right:16px;top:657px;width:126px;height:168px;border-radius:16px;object-fit:cover;z-index:3}
-.ap-notes{position:absolute;left:32px;top:800px;display:flex;align-items:center;gap:10px;font-size:16px;z-index:3}
-.ap-notes-dot{width:24px;height:24px;border-radius:58% 42% 55% 45%/50% 60% 40% 50%;background:linear-gradient(135deg,#8E3BD6 0%,#F57F70 55%,#2CC5E9 100%)}
+.ap-call{background:linear-gradient(180deg,rgba(31,14,65,.92) 0%,rgba(63,7,134,.72) 100%),var(--bg-base,#1F0E41)}
+.ap-backdrop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(40px) saturate(1.15);opacity:.6;transform:scale(1.15);z-index:0}
+.ap-remote{position:relative;flex:1;min-height:0;margin:12px -20px 0;z-index:2}
+.ap-remote-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ap-self{position:absolute;right:20px;bottom:104px;width:30%;aspect-ratio:3/4;border-radius:16px;object-fit:cover;z-index:3;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.ap-notes{position:relative;flex:none;z-index:3;display:flex;align-items:center;gap:10px;padding-top:16px;font-size:16px}
 
 /* Loader */
-.ap-loader{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px}
-.ap-loader-blob{width:150px;height:150px;display:block}
+.ap-loader{align-items:center;justify-content:center;gap:24px}
+.ap-loader .blob{flex:none}
 .ap-loader-text{margin:0;font-size:16px;color:rgba(255,255,255,.7)}
