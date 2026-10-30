@@ -172,10 +172,10 @@
 
     var html = renderComponent('screens/summary', summaryProps())
       .replace(/src="\.\.\/tds\/assets\/[^"]*"/g, 'src="' + photoUrl() + '"');
-    screen.innerHTML = '<button type="button" class="ap-sum-close" aria-label="Close"><i class="icon icon-x"></i></button>' +
-      html + (state.phase === 'prompt-chat' ? renderChat() : '');
+    screen.innerHTML = html + (state.phase === 'prompt-chat' ? renderChat() : '');
 
-    screen.querySelector('.ap-sum-close').addEventListener('click', finish);
+    // The design system's header carries the close button; it ends the summary.
+    screen.querySelectorAll('.header button').forEach(function (b) { b.addEventListener('click', finish); });
     var prompt = screen.querySelector('.chat-input');
     if (prompt && state.phase === 'prompt') prompt.addEventListener('click', openChat);
     bindChat(screen);
