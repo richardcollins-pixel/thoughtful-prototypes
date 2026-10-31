@@ -233,6 +233,24 @@
         return;
       }
 
+      // Components arrive as URLs and load in parallel, outside the config response.
+      // (Older configs send the code inline in config.components, which still works.)
+      if (config.componentUrls) {
+        try {
+          const loaded = await Promise.all(Object.entries(config.componentUrls).map(async ([name, urls]) => {
+            const [css, js] = await Promise.all([
+              urls.css ? fetch(urls.css).then(r => (r.ok ? r.text() : '')) : Promise.resolve(''),
+              fetch(urls.js).then(r => (r.ok ? r.text() : ''))
+            ]);
+            return [name, { css, js }];
+          }));
+          config.components = Object.fromEntries(loaded);
+        } catch (e) {
+          showError('Could not load components: ' + e.message);
+          return;
+        }
+      }
+
       for (const [k, v] of Object.entries(config.tokens || {})) {
         if (v) document.documentElement.style.setProperty(`--${k}`, v);
       }
