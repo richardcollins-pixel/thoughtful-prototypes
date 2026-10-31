@@ -144,6 +144,7 @@
     render();
     var prompt = fill(promptText(PROMPT_KEYS.thoughts), {
       preferredName: session().name || 'there',
+      provider_name: state.first,
       currentDate: todayLong(),
       conversation: transcript || ''
     });
@@ -196,6 +197,7 @@
     render();
     callChat(fill(promptText(PROMPT_KEYS.engagement), {
       preferredName: session().name || 'there',
+      provider_name: state.first,
       currentDate: todayLong()
     }), [{ role: 'user', content: 'Write the statement now.' }]).then(function (data) {
       if (data.question && state.phase === 'prompt') {

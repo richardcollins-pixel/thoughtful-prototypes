@@ -128,6 +128,12 @@ Components['chat'] = {
         'Remaining: ' + formatTiming(remainingSeconds);
     }
 
+    // The therapist the member booked, for {{provider_name}} in prompts.
+    function providerFirstName() {
+      var appt = session.appointment;
+      return appt && appt.provider && appt.provider.n ? appt.provider.n.split(' ')[0] : 'your therapist';
+    }
+
     function buildPrompt(promptKey, transcript) {
       var name = session.name || 'there';
       var now  = new Date();
@@ -140,6 +146,7 @@ Components['chat'] = {
         .replace(/\{\{preferred_name\}\}/g, name)
         .replace(/\{\{preferredName\}\}/g, name)
         .replace(/\{\{current_date\}\}/g, dateStr)
+        .replace(/\{\{provider_name\}\}/g, providerFirstName())
         .replace(/\{\{currentDate\}\}/g, dateStr)
         .replace(/\{\{conversation\}\}/g, transcript || '')
         .replace(/\{\{userTimelineLast21DaysReverse\}\}/g, 'None available.')
