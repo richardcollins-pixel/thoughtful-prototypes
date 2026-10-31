@@ -398,7 +398,7 @@ Components['home'] = {
     function openBookingFlow(){book.step=0;book.a=[];book.p=null;book.wk=0;book.day=null;book.t=null;renderQuestion();booking.classList.remove('closing');booking.classList.add('open');}
     function restoreHomeBlob(){if(window.TAvatar){try{window.TAvatar.mount(blobCanvas);}catch(e){}}}
     function closeBooking(){booking.classList.remove('open');restoreHomeBlob();}
-    function renderBookedCard(p){therapistCard.removeEventListener('click',openBookingFlow);therapistCard.innerHTML='';therapistCard.className='hm-booked-card';therapistCard.setAttribute('aria-live','polite');var row=document.createElement('div'),av=document.createElement('img'),col=document.createElement('div'),top=document.createElement('div'),ttl=document.createElement('p'),edit=document.createElement('img'),meta=document.createElement('div'),note=document.createElement('p');row.className='hm-booked-row';av.className='hm-booked-avatar';av.src=providerImage(p);av.alt='';col.className='hm-booked-col';top.className='hm-booked-top';ttl.className='hm-booked-title';ttl.textContent='Appointment with '+p.n.split(' ')[0];edit.className='hm-booked-edit';edit.src='https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=Edit.svg';edit.alt='';top.append(ttl,edit);meta.className='hm-booked-meta';[['https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=Calendar.svg',book.d+' at '+book.t],['https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=clock.svg','45 mins']].forEach(function(m){var l=document.createElement('div'),ic=document.createElement('img'),tx=document.createElement('span');l.className='hm-booked-label';ic.src=m[0];ic.alt='';tx.textContent=m[1];l.append(ic,tx);meta.appendChild(l);});var join=document.createElement('button');join.className='hm-booked-join';join.type='button';join.textContent='Join Appointment';join.addEventListener('click',function(e){e.stopPropagation();if(window.launchAppointment)window.launchAppointment(p);});col.append(top,meta,join);row.append(av,col);therapistCard.appendChild(row);}
+    function renderBookedCard(p){therapistCard.removeEventListener('click',openBookingFlow);therapistCard.innerHTML='';therapistCard.className='hm-booked-card';therapistCard.setAttribute('aria-live','polite');var row=document.createElement('div'),av=document.createElement('img'),col=document.createElement('div'),top=document.createElement('div'),ttl=document.createElement('p'),edit=document.createElement('img'),meta=document.createElement('div'),note=document.createElement('p');row.className='hm-booked-row';av.className='hm-booked-avatar';av.src=providerImage(p);av.alt='';col.className='hm-booked-col';top.className='hm-booked-top';ttl.className='hm-booked-title';ttl.textContent='Appointment with '+p.n.split(' ')[0];edit.className='hm-booked-edit';edit.src='https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=Edit.svg';edit.alt='';top.append(ttl);meta.className='hm-booked-meta';[['https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=Calendar.svg',book.d+' at '+book.t],['https://richardcollins-pixel.github.io/thoughtful-prototypes/icons/Name=clock.svg','45 mins']].forEach(function(m){var l=document.createElement('div'),ic=document.createElement('img'),tx=document.createElement('span');l.className='hm-booked-label';ic.src=m[0];ic.alt='';tx.textContent=m[1];l.append(ic,tx);meta.appendChild(l);});var join=document.createElement('button');join.className='hm-booked-join';join.type='button';join.textContent='Join Appointment';join.addEventListener('click',function(e){e.stopPropagation();if(window.launchAppointment)window.launchAppointment(p);});col.append(top,meta,join);row.append(av,col);therapistCard.appendChild(row);}
     var toastTimer=null;
     function showToast(){toast.innerHTML='';var bar=document.createElement('div'),body=document.createElement('div'),icw=document.createElement('div'),ic=document.createElement('span'),txt=document.createElement('div'),t=document.createElement('strong'),m=document.createElement('span');bar.className='hm-toast-bar';body.className='hm-toast-body';icw.className='hm-toast-icon';ic.className='hm-toast-check';icw.appendChild(ic);txt.className='hm-toast-text';t.textContent='Appointment confirmed';m.textContent='Check your email to join, reschedule, or cancel your session';txt.append(t,m);body.append(icw,txt);toast.append(bar,body);toast.setAttribute('role','status');clearTimeout(toastTimer);toast.classList.remove('show');void toast.offsetWidth;toast.classList.add('show');toastTimer=setTimeout(function(){toast.classList.remove('show');},3500);}
     function confirmBooking(){var p=book.p;renderBookedCard(p);session.appointment={provider:p,status:'booked',d:book.d,t:book.t};sections.insertBefore(therapistSec,sections.firstChild);tabEls.forEach(function(el,k){el.classList.toggle('active',k===0);});page.scrollTop=0;restoreHomeBlob();booking.classList.add('closing');setTimeout(function(){booking.classList.remove('open','closing');setTimeout(showToast,120);},400);}
@@ -760,6 +760,7 @@ Components['home'] = {
     }
 
     function revealHomeContent() {
+      tabBar.style.display = '';
       intro.style.display = 'none';
       hero.style.display = '';
       sections.style.display = '';
@@ -809,6 +810,7 @@ Components['home'] = {
 
     function mountHome() {
       if (!name) {
+        tabBar.style.display = 'none';
         hero.style.display = 'none';
         sections.style.display = 'none';
         intro.style.display = 'flex';
@@ -847,7 +849,7 @@ Components['home'] = {
     function renderNextCard(p) {
       therapistCard.innerHTML = '';
       therapistCard.className = 'hm-next-card';
-      therapistCard.addEventListener('click', openBookingFlow);
+      therapistCard.addEventListener('click', openModal);
       var row = document.createElement('div'); row.className = 'hm-next-row';
       var av = document.createElement('img'); av.className = 'hm-next-avatar'; av.src = providerImage(p); av.alt = '';
       var col = document.createElement('div'); col.className = 'hm-next-col';
@@ -882,8 +884,14 @@ Components['home'] = {
       });
     };
 
+    // Starts the Appointment Thoughts chat from the summary.
+    window.launchPat = function () {
+      launchChat({ title: 'Appointment Thoughts', type: 'PAT' });
+    };
+
     window.onAppointmentEnded = function (p) {
-      session.appointment = { provider: p, status: 'completed' };
+      var booked = session.appointment || {};
+      session.appointment = { provider: p, status: 'completed', d: booked.d, t: booked.t };
       sections.appendChild(therapistSec);
       renderNextCard(p);
     };

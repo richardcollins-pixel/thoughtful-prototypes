@@ -19,16 +19,43 @@
 .ap-join{flex:none;height:64px;border:0;border-radius:999px;background:#fff;color:#1F0E41;font:600 18px/1 'Inter',-apple-system,sans-serif;cursor:pointer}
 
 /* Call */
-.ap-call{background:linear-gradient(180deg,rgba(31,14,65,.92) 0%,rgba(63,7,134,.72) 100%),var(--bg-base,#1F0E41);justify-content:flex-start}
-.ap-backdrop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(40px) saturate(1.15);opacity:.6;transform:scale(1.15);z-index:0}
+.ap-call{background:var(--bg-base,#1F0E41);justify-content:flex-start}
+.ap-backdrop{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:blur(40px) saturate(1.15);opacity:.22;transform:scale(1.15);z-index:0}
 /* Therapist video: 4:3, centred between the top bar and the notes */
-.ap-remote{position:relative;flex:none;width:100%;aspect-ratio:4/3;margin:auto 0;z-index:2}
+.ap-remote{position:relative;flex:none;width:100%;aspect-ratio:3/4;margin:auto 0;z-index:2}
 .ap-remote-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ap-self{position:absolute;right:20px;bottom:104px;width:30%;aspect-ratio:3/4;border-radius:16px;object-fit:cover;z-index:3;box-shadow:0 8px 24px rgba(0,0,0,.25)}
-.ap-notes{position:relative;flex:none;z-index:3;display:flex;align-items:center;gap:10px;font-size:16px}
-.ap-dot{position:relative;display:block;width:24px;height:24px;flex:none}
-.ap-dot .blob{position:absolute;left:0;top:0}
+.ap-bottom{position:relative;z-index:3;display:flex;align-items:flex-end;justify-content:space-between;gap:8px}
+.ap-self{position:relative;width:30%;aspect-ratio:3/4;border-radius:16px;object-fit:cover;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.ap-notes{display:flex;align-items:center;gap:8px;font-size:16px}
+.ap-notes .blob{width:32px;height:32px;flex:none;position:relative}
+.ap-notes .blob > canvas{position:static !important;display:block;width:32px !important;height:32px !important;margin:0 !important;transform:none !important}
 
 /* Loader: the design system's loading state, centred */
 .ap-loader{align-items:center;justify-content:center;padding:0}
-.ap-loader .loading-state{width:100%}
+.ap-loader-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:transparent}
+
+/* Call layout: one group, centred vertically. Therapist video edge to edge; your video overlaps its bottom;
+   the notes line sits on your video's bottom edge. The controls sit above the group, outside the flow. */
+.ap-call{justify-content:center}
+.ap-call .ap-top{position:absolute;top:20px;left:20px;right:20px;z-index:5}
+.ap-call .ap-remote{margin:0 -20px;width:auto}
+.ap-call .ap-bottom{position:relative;z-index:3;display:flex;align-items:flex-end;justify-content:space-between;margin-top:-64px}
+.ap-call .ap-self{width:30%;margin-left:auto}
+.ap-call .ap-notes{padding-bottom:0}
+
+/* Call layout, from the design system's video screen (402 x 874), as percentages so it scales with the phone.
+   Therapist video: full width. Your video: overlaps its bottom right. Notes: bottom-aligned with your video.
+   The whole group is shifted up about 7% to sit centred. */
+.ap-call .ap-top{top:20px;left:20px;right:20px}
+.ap-call .ap-remote{position:absolute;top:12.8%;left:0;right:0;height:54.2%;width:auto;aspect-ratio:auto;margin:0}
+.ap-call .ap-bottom{display:contents}
+.ap-call .ap-self{position:absolute;top:68.2%;right:4%;width:31%;aspect-ratio:3/4;margin:0}
+.ap-call .ap-notes{position:absolute;left:8%;bottom:12.6%;padding:0}
+
+/* Call: your video overlaps the bottom of the therapist video; the group is centred on the screen */
+.ap-call .ap-remote{top:19.8%;height:54.2%}
+.ap-call .ap-self{top:65%}
+.ap-call .ap-notes{bottom:19.5%}
+
+/* Your video sits on top of the therapist video */
+.ap-call .ap-self{z-index:4}

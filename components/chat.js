@@ -128,6 +128,12 @@ Components['chat'] = {
         'Remaining: ' + formatTiming(remainingSeconds);
     }
 
+    // The therapist the member booked, for {{provider_name}} in prompts.
+    function providerFirstName() {
+      var appt = session.appointment;
+      return appt && appt.provider && appt.provider.n ? appt.provider.n.split(' ')[0] : 'your therapist';
+    }
+
     function buildPrompt(promptKey, transcript) {
       var name = session.name || 'there';
       var now  = new Date();
@@ -140,6 +146,7 @@ Components['chat'] = {
         .replace(/\{\{preferred_name\}\}/g, name)
         .replace(/\{\{preferredName\}\}/g, name)
         .replace(/\{\{current_date\}\}/g, dateStr)
+        .replace(/\{\{provider_name\}\}/g, providerFirstName())
         .replace(/\{\{currentDate\}\}/g, dateStr)
         .replace(/\{\{conversation\}\}/g, transcript || '')
         .replace(/\{\{userTimelineLast21DaysReverse\}\}/g, 'None available.')
@@ -213,6 +220,7 @@ Components['chat'] = {
     closeImg.style.cssText = 'width:18px;height:18px;display:block;filter:brightness(0) invert(1);';
     closeBtn.appendChild(closeImg);
     closeBtn.addEventListener('click', function() {
+      if (activeSessionType === 'PAT') { finishPat(); return; }
       if (activePrompt && !ended && hasMemberMessage) {
         if (timerId) { clearInterval(timerId); timerId = null; }
         hTimer.classList.remove('active');
@@ -855,6 +863,48 @@ Components['chat'] = {
       });
     }
 
+    /* ── Appointment Thoughts (PAT): a chat session that the summary starts and picks up when it finishes ── */
+    function startPat() {
+      ended = false;
+      activeSessionType = 'PAT';
+      activeSessionLabel = 'Appointment Thoughts';
+      activePromptKey = 'Post_Appointment_Thoughts_Session';
+      activePrompt = buildPrompt(activePromptKey, '');
+      hName.textContent = 'Appointment Thoughts';
+      bar.classList.remove('dc-bar--hidden');
+      hasMemberMessage = false;
+      history = [{ role: 'user', content: '[The user has opened the appointment conversation. Begin.]' }];
+      showTyping();
+      fetch(chatUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ system_prompt: activePrompt, messages: history, model: llmModel })
+      }).then(function(r) { return r.json(); }).then(function(response) {
+        var data = normalizePayload(response);
+        hideTyping();
+        var message = cleanSessionMessage(data.message || '');
+        if (!message) { addT('Something went wrong — please try again.'); return; }
+        addT(message);
+        history.push({ role: 'assistant', content: message });
+      }).catch(function() {
+        hideTyping();
+        addT('Something went wrong — please try again.');
+      });
+    }
+
+    function finishPat() {
+      if (ended && !activePrompt) return;
+      var transcript = transcriptFromHistory();
+      ended = true;
+      if (timerId) { clearInterval(timerId); timerId = null; }
+      screen.classList.remove('dc-screen--in');
+      setTimeout(function() {
+        screen.remove();
+        onNext('pat');
+        if (window.onPatFinished) window.onPatFinished(transcript);
+      }, 380);
+    }
+
     function showSessionEnd() {
       if (ended) return;
       ended = true;
@@ -872,7 +922,7 @@ Components['chat'] = {
       var reviewButton = document.createElement('button');
       reviewButton.className = 'dc-session-end-button';
       reviewButton.textContent = 'Review key takeaways';
-      reviewButton.addEventListener('click', showReviewLoading);
+      reviewButton.addEventListener('click', activeSessionType === 'PAT' ? finishPat : showReviewLoading);
       endCard.appendChild(eyebrow); endCard.appendChild(title); endCard.appendChild(reviewButton);
       msgs.appendChild(endCard);
       scrollBottom();
@@ -1082,7 +1132,7 @@ Components['chat'] = {
             return;
           }
 
-          if (activeSessionType === '5' && data.status === 'EXIT') {
+          if ((activeSessionType === '5' || activeSessionType === 'PAT') && data.status === 'EXIT') {
             showSessionEnd();
             return;
           }
@@ -1134,7 +1184,9 @@ Components['chat'] = {
     }
     var pendingBiteSession = session.pendingBiteSession || null;
     delete session.pendingBiteSession;
-    if (pendingBiteSession) {
+    if (pendingBiteSession && pendingBiteSession.type === 'PAT') {
+      setTimeout(startPat, 400);
+    } else if (pendingBiteSession) {
       setTimeout(function() { selectSession(pendingBiteSession); }, 400);
     } else {
       setTimeout(sendIntro, 400);

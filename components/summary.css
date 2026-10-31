@@ -1,19 +1,49 @@
-/* Summary: the design system's summary screen (summary.css in ds.css) fills the frame; this file adds the close button and the PAT chat. */
-.ap-summary{display:block;padding:0;overflow-y:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
-.ap-summary::-webkit-scrollbar{display:none}
-.ap-sum-close{position:absolute;top:56px;right:20px;z-index:10;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
-.ap-sum-close .icon{width:22px;height:22px;background-color:currentColor}
+/* Summary: plain layout from the design. Spacing and colours follow the design system's summary and header-card styles. */
+.ap-summary{display:block;padding:0;overflow:hidden;color:#fff;font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:linear-gradient(180deg,#1F0E41 0%,#2B1258 55%,#3F0786 100%);animation:ap-sum-in .38s cubic-bezier(.32,.72,0,1) both}
+.sum-scroll{position:relative;z-index:1;height:100%;overflow-y:auto;scrollbar-width:none}
+.sum-scroll::-webkit-scrollbar{display:none}
+.ap-summary--out{animation:ap-sum-out .38s cubic-bezier(.32,.72,0,1) both}
+@keyframes ap-sum-in{from{transform:translateY(100%)}to{transform:translateY(0)}}
+@keyframes ap-sum-out{from{transform:translateY(0)}to{transform:translateY(100%)}}
 
-/* PAT chat, shown under T's follow-up prompt */
-.ap-chat{display:flex;flex-direction:column;gap:12px;margin:16px 16px 0;padding:16px;border-radius:20px;background:rgba(255,255,255,.08)}
-.ap-chat-thread{display:flex;flex-direction:column;gap:10px;max-height:340px;overflow-y:auto}
-.ap-bubble{max-width:85%;padding:10px 14px;border-radius:16px;font-size:15px;line-height:1.45;white-space:pre-wrap}
-.ap-bubble.is-t{align-self:flex-start;background:rgba(255,255,255,.16)}
-.ap-bubble.is-user{align-self:flex-end;background:rgba(255,255,255,.88);color:#1F0E41}
-.ap-bubble.is-typing{letter-spacing:3px}
-.ap-chat-bar{display:flex;align-items:center;gap:8px;height:48px;padding:0 6px 0 16px;border-radius:999px;background:rgba(255,245,250,.84)}
-.ap-chat-input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:#1F0E41;font:inherit;font-size:16px}
-.ap-chat-input::placeholder{color:rgba(31,14,65,.6)}
-.ap-chat-send{width:36px;height:36px;flex:none;border:0;border-radius:50%;background:transparent;color:#1F0E41;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.ap-chat-send .icon{width:22px;height:22px;background-color:currentColor}
-.ap-chat-wrap{align-self:center;border:0;background:none;color:rgba(255,255,255,.85);font:inherit;font-size:14px;text-decoration:underline;cursor:pointer}
+/* Header: the card runs to the edges, with rounded bottom corners */
+.sum-hero{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:72px 24px 32px;background:#4D3B73;border-radius:0 0 40px 40px}
+.sum-close{position:absolute;top:24px;right:20px;width:48px;height:48px;border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+.sum-close .icon{width:22px;height:22px;background-color:currentColor;display:block}
+.sum-photo{width:72px;height:72px;border-radius:50%;object-fit:cover;display:block;margin:0 auto}
+.sum-when{margin:16px 0 0;font-size:16px;color:rgba(255,255,255,.7)}
+.sum-title{margin:6px 0 0;font-size:30px;font-weight:400;line-height:1.2;letter-spacing:-.4px}
+.sum-body{margin:16px 0 0;font-size:16px;line-height:1.5;color:rgba(255,255,255,.8);max-width:320px}
+.sum-duration{display:flex;align-items:center;gap:8px;margin:16px 0 0;font-size:16px}
+.sum-duration .icon{width:18px;height:18px;background-color:currentColor}
+
+/* Prompt state: T's lead line and the follow-up box */
+.sum-lead{display:flex;align-items:center;justify-content:center;gap:8px;margin:28px 0 0;font-size:17px;color:rgba(255,255,255,.9)}
+.sum-prompt{position:relative;width:100%;box-sizing:border-box;margin-top:16px;min-height:150px;padding:20px 20px 52px;border-radius:24px;background:rgba(255,255,255,.72);color:#1F0E41;text-align:left;font-size:18px;line-height:1.45;cursor:pointer}
+.sum-prompt p{margin:0}
+.sum-prompt .icon{position:absolute;right:20px;bottom:18px;width:22px;height:22px;background-color:currentColor}
+
+/* Sections */
+.sum-sections{display:flex;flex-direction:column;gap:40px;padding:40px 28px 48px}
+.sum-section{display:flex;flex-direction:column;gap:10px}
+.sum-h{margin:0;font-family:'PP Editorial New',Georgia,serif;font-size:26px;font-weight:400;line-height:1.2}
+.sum-copy{margin:0;font-size:16px;line-height:1.55;color:rgba(255,255,255,.82);white-space:pre-line}
+
+/* Loading skeleton for Your Thoughts */
+.sum-skel{display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.sum-skel span{display:block;height:14px;border-radius:7px;background:linear-gradient(90deg,rgba(255,255,255,.10) 0%,rgba(255,255,255,.22) 50%,rgba(255,255,255,.10) 100%);background-size:200% 100%;animation:sum-shimmer 1.4s linear infinite}
+.sum-skel span:nth-child(1){width:92%}
+.sum-skel span:nth-child(2){width:100%}
+.sum-skel span:nth-child(3){width:64%}
+@keyframes sum-shimmer{from{background-position:200% 0}to{background-position:-200% 0}}
+
+/* Glow: the design system's glow, held inside the frame behind the content */
+.sum-glow-wrap{position:absolute;left:0;right:0;top:0;bottom:0;overflow:hidden;pointer-events:none;z-index:0}
+
+
+/* The design-system blob takes its 24px in the line, with 8px to the text */
+.sum-lead .blob{width:32px;height:32px;flex:none;position:relative}
+.sum-lead .blob + span{margin-left:0}
+
+/* The design-system blob, in its 24px slot: its canvas sits in the flow and is drawn at the centre of the box */
+.sum-lead .blob > canvas{position:static !important;display:block;width:32px !important;height:32px !important;margin:0 !important;transform:none !important}
