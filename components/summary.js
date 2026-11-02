@@ -105,7 +105,7 @@
 
     if (isPrompt) {
       html += '<div class="sum-lead"><div class="blob" data-size="32" data-theme="warm"><canvas aria-hidden="true"></canvas></div><span>I’m here to chat</span></div>' +
-        '<div class="sum-prompt"><p>' + esc(state.question || FALLBACK_QUESTION) + '</p><i class="icon icon-arrow-up"></i></div>';
+        '<div class="sum-prompt"><p>' + esc('Want to follow up on what you spoke about with ' + state.first + '?') + '</p><i class="icon icon-arrow-up"></i></div>';
     } else {
       html += '<p class="sum-body">' + esc(SUMMARY_BODY) + '</p>' +
         '<p class="sum-duration"><i class="icon icon-clock"></i><span>45 min</span></p>';
