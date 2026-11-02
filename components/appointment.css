@@ -59,3 +59,13 @@
 
 /* Your video sits on top of the therapist video */
 .ap-call .ap-self{z-index:4}
+
+/* Preview glow: behind the content, clipped to the frame */
+.ap-glow-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.ap-preview > *:not(.ap-glow-wrap){position:relative;z-index:1}
+
+/* Demo notice on the call: pops up over the therapist video */
+.ap-demo-card{position:absolute;left:20px;right:20px;top:88px;z-index:6;box-sizing:border-box;padding:20px;border-radius:24px;background:rgba(255,255,255,.78);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:#1F0E41;animation:ap-demo-pop .3s ease-out both}
+.ap-demo-text{margin:0;font-size:17px;line-height:1.45}
+.ap-demo-end{display:block;width:100%;height:52px;margin-top:16px;border:0;border-radius:999px;background:#1F0E41;color:#fff;font:600 16px/1 'Inter',-apple-system,sans-serif;cursor:pointer}
+@keyframes ap-demo-pop{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:none}}

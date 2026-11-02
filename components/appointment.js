@@ -83,6 +83,10 @@
   function renderPreview(p) {
     closeAll();
     var s = makeScreen('ap-preview');
+    // The design system's glow, held inside the frame behind the content
+    var glow = el('div', 'ap-glow-wrap');
+    glow.innerHTML = '<div class="glow" data-theme="cool" data-placement="bottom" aria-hidden="true"><canvas></canvas></div>';
+    s.appendChild(glow);
 
     var top = el('div', 'ap-top');
     top.appendChild(el('span', 'ap-spacer'));
@@ -139,6 +143,15 @@
     top.appendChild(left);
     top.appendChild(iconButton('Leave call', 'x', function () { renderLoader(p); }));
     s.appendChild(top);
+
+    // The demo notice: ending the appointment is how the member reaches the post-session experience
+    var notice = el('div', 'ap-demo-card');
+    notice.appendChild(el('p', 'ap-demo-text', 'End the demo appointment and chat with T to see the post session experience'));
+    var endBtn = el('button', 'ap-demo-end', 'End Appointment');
+    endBtn.type = 'button';
+    endBtn.addEventListener('click', function () { renderLoader(p); });
+    notice.appendChild(endBtn);
+    s.appendChild(notice);
 
     var remote = el('div', 'ap-remote');
     var remoteVideo = el('video', 'ap-remote-video');
