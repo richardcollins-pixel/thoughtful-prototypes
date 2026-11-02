@@ -8,7 +8,7 @@
   var PROVIDER_VIDEO = DS_SITE + 'assets/videos/provider-video.mp4';
   var USER_VIDEO = DS_SITE + 'assets/videos/user-video.mp4';
   // Long enough for the loader's three captions to play through once (see behaviors/loader.js).
-  var LOADER_MS = 20000;
+  var LOADER_MS = 16000;
 
   var loaderToken = 0;
 
