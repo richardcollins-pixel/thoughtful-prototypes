@@ -59,3 +59,7 @@
 
 /* Your video sits on top of the therapist video */
 .ap-call .ap-self{z-index:4}
+
+/* Preview glow: behind the content, clipped to the frame */
+.ap-glow-wrap{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.ap-preview > *:not(.ap-glow-wrap){position:relative;z-index:1}

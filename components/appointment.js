@@ -83,6 +83,10 @@
   function renderPreview(p) {
     closeAll();
     var s = makeScreen('ap-preview');
+    // The design system's glow, held inside the frame behind the content
+    var glow = el('div', 'ap-glow-wrap');
+    glow.innerHTML = '<div class="glow" data-theme="cool" data-placement="bottom" aria-hidden="true"><canvas></canvas></div>';
+    s.appendChild(glow);
 
     var top = el('div', 'ap-top');
     top.appendChild(el('span', 'ap-spacer'));
