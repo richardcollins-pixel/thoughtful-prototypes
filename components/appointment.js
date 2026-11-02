@@ -186,6 +186,10 @@
     closeAll();
     var token = loaderToken;
     var s = makeScreen('ap-loader');
+    // The design system's glow, behind the loader, held inside the frame
+    var loaderGlow = el('div', 'ap-glow-wrap');
+    loaderGlow.innerHTML = '<div class="glow" data-theme="cool" data-placement="bottom" aria-hidden="true"><canvas></canvas></div>';
+    s.appendChild(loaderGlow);
     var frame = el('iframe', 'ap-loader-frame');
     frame.setAttribute('title', 'Loading');
     frame.srcdoc = window.LOADER_SRCDOC || '';
