@@ -146,12 +146,17 @@
 
     // The demo notice: ending the appointment is how the member reaches the post-session experience
     var notice = el('div', 'ap-demo-card');
+    notice.hidden = true;
     notice.appendChild(el('p', 'ap-demo-text', 'End the demo appointment and chat with T to see the post session experience'));
     var endBtn = el('button', 'ap-demo-end', 'End Appointment');
     endBtn.type = 'button';
     endBtn.addEventListener('click', function () { renderLoader(p); });
     notice.appendChild(endBtn);
     s.appendChild(notice);
+    // The notice pops up a few seconds into the call, if the call is still open
+    setTimeout(function () {
+      if (notice.isConnected) notice.hidden = false;
+    }, 3000);
 
     var remote = el('div', 'ap-remote');
     var remoteVideo = el('video', 'ap-remote-video');
